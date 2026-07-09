@@ -27,13 +27,15 @@ export function currentTimeString(date = new Date()) {
 }
 
 export function longTodayString(date = new Date()) {
-  const text = date.toLocaleDateString("es-AR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  }).toLowerCase();
+  const text = date
+    .toLocaleDateString("es-AR", {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    })
+    .toLowerCase();
 
-  return capitalizeFirst(text);
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 export function greeting() {

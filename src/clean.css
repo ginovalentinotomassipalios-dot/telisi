@@ -91,14 +91,14 @@ body {
 }
 
 .premium-nav {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 22px;
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(18px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  z-index: 999999 !important;
 
-  z-index: 9999;
-
-  width: min(430px, calc(100% - 34px));
+  width: min(430px, calc(100% - 24px));
   border-radius: 999px;
   padding: 8px;
 
