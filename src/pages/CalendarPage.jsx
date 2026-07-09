@@ -1,0 +1,86 @@
+import { monthNames } from "../data";
+import { Month } from "../components/Month";
+import { getCalendar } from "../utils/calendar";
+import { shortDate } from "../utils/date";
+
+export function CalendarPage({
+  year,
+  setYear,
+  calendars,
+  active,
+  setActive,
+  visibleEvents,
+  newEvent,
+  setNewEvent,
+  addEvent,
+  deleteEvent,
+  openModal
+}) {
+  const activeCalendar = getCalendar(calendars, active);
+
+  return (
+    <section>
+      <div className="year-toolbar">
+        <button onClick={() => setYear(Number(year) - 1)}>←</button>
+        <strong>{year}</strong>
+        <button onClick={() => setYear(Number(year) + 1)}>→</button>
+      </div>
+
+      <nav className="tabs">
+        {calendars.map(cal => (
+          <button
+            key={cal.id}
+            onClick={() => setActive(cal.id)}
+            className={active === cal.id ? "active" : ""}
+            style={{ "--tab": cal.color }}
+          >
+            {cal.icon} {cal.name}
+          </button>
+        ))}
+        <button className="plus-tab" onClick={openModal}>+</button>
+      </nav>
+
+      <section className="layout">
+        <section className="calendar-grid">
+          {monthNames.map((m, i) => (
+            <Month key={m} year={Number(year)} month={i} events={visibleEvents} calendars={calendars} />
+          ))}
+        </section>
+
+        <aside className="panel event-panel">
+          <h2>{active === "todos" ? "Todos los eventos" : `${activeCalendar.icon} ${activeCalendar.name}`}</h2>
+
+          <form className="event-form" onSubmit={addEvent}>
+            <input
+              type="date"
+              min={`${year}-01-01`}
+              max={`${year}-12-31`}
+              value={newEvent.date}
+              onChange={e => setNewEvent({ ...newEvent, date: e.target.value.replace(/^\d{4}/, String(year)) })}
+            />
+            <input type="time" value={newEvent.time} onChange={e => setNewEvent({ ...newEvent, time: e.target.value })} />
+            <input placeholder="Nuevo evento" value={newEvent.text} onChange={e => setNewEvent({ ...newEvent, text: e.target.value })} />
+            <button>Agregar</button>
+          </form>
+
+          <div className="events-list">
+            {visibleEvents.map((ev, idx) => {
+              const cal = getCalendar(calendars, ev.calendarId);
+              return (
+                <div key={idx} className="event-row">
+                  <div>
+                    <b style={{ color: cal.color }}>{shortDate(ev.date)}</b>
+                    <small>{ev.time}</small>
+                  </div>
+                  {active === "todos" && <span className="dot" style={{ background: cal.color }}></span>}
+                  <p>{ev.text}</p>
+                  <button className="delete" onClick={() => deleteEvent(ev)}>×</button>
+                </div>
+              );
+            })}
+          </div>
+        </aside>
+      </section>
+    </section>
+  );
+}
