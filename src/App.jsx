@@ -14,6 +14,7 @@ export function App() {
   const [year, setYear] = useState(2026);
   const [active, setActive] = useState(() => localStorage.getItem("telisi_active") || "academico");
   const [theme, setTheme] = useState(() => localStorage.getItem("telisi_theme") || "light");
+  const [appTheme, setAppTheme] = useState(() => localStorage.getItem("telisi_app_theme") || "amethyst");
   const [calendars, setCalendars] = useState(() => JSON.parse(localStorage.getItem("telisi_calendars")) || defaultCalendars);
   const [events, setEvents] = useState(() => JSON.parse(localStorage.getItem("telisi_events")) || defaultEvents);
   const [newEvent, setNewEvent] = useState({ date: "2026-01-01", time: "09:00", text: "" });
@@ -24,6 +25,7 @@ export function App() {
   useEffect(() => localStorage.setItem("telisi_events", JSON.stringify(events)), [events]);
   useEffect(() => localStorage.setItem("telisi_active", active), [active]);
   useEffect(() => localStorage.setItem("telisi_theme", theme), [theme]);
+  useEffect(() => localStorage.setItem("telisi_app_theme", appTheme), [appTheme]);
 
   useEffect(() => {
     const parts = newEvent.date.split("-");
@@ -75,7 +77,7 @@ export function App() {
   }
 
   function exportData() {
-    const data = { version: "0.3.0", calendars, events };
+    const data = { version: "0.4.0", calendars, events, theme, appTheme };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -84,7 +86,7 @@ export function App() {
   }
 
   return (
-    <main className={`shell theme-${theme}`} style={{ "--accent": activeCalendar.color }}>
+    <main className={`shell theme-${theme} app-theme-${appTheme}`} style={{ "--accent": activeCalendar.color }}>
       <AppHeader view={view} theme={theme} setTheme={setTheme} />
 
       <div className="view-fade" key={view}>
@@ -117,7 +119,7 @@ export function App() {
         )}
 
         {view === "settings" && (
-          <Settings theme={theme} setTheme={setTheme} exportData={exportData} />
+          <Settings theme={theme} setTheme={setTheme} appTheme={appTheme} setAppTheme={setAppTheme} exportData={exportData} />
         )}
       </div>
 

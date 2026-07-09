@@ -1,24 +1,56 @@
+import { useEffect, useMemo, useState } from "react";
 import { getCalendar } from "../utils/calendar";
-import { formatHumanDate, greeting, smartMessage } from "../utils/date";
+import {
+  currentTimeString,
+  formatHumanDate,
+  greeting,
+  isDateInCurrentWeek,
+  longTodayString,
+  smartMessage
+} from "../utils/date";
 
 export function Home({ calendars, events, nextEvent, todayEvents, setActive, setView, openModal }) {
-  const nextCal = nextEvent ? getCalendar(calendars, nextEvent.calendarId) : null;
-  const today = new Date();
+  const [now, setNow] = useState(new Date());
 
-  const summary = calendars
-    .filter(c => c.id !== "todos")
-    .map(cal => ({ ...cal, count: todayEvents.filter(e => e.calendarId === cal.id).length }));
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000 * 20);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextCal = nextEvent ? getCalendar(calendars, nextEvent.calendarId) : null;
+  const regularCalendars = calendars.filter(c => c.id !== "todos");
+
+  const todaySummary = regularCalendars.map(cal => ({
+    ...cal,
+    count: todayEvents.filter(e => e.calendarId === cal.id).length
+  }));
+
+  const weekSummary = useMemo(() => {
+    return regularCalendars.map(cal => ({
+      ...cal,
+      count: events.filter(e => e.calendarId === cal.id && isDateInCurrentWeek(e.date)).length
+    }));
+  }, [events, calendars]);
+
+  const firstTodayEvent = todayEvents[0];
 
   return (
-    <section className="home">
-      <article className="hero-card">
-        <p>{greeting()}, Gino 👋</p>
-        <h2>{today.toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" })}</h2>
-        <span>{smartMessage(todayEvents.length)}</span>
+    <section className="home dashboard">
+      <article className="hero-card dashboard-hero">
+        <div>
+          <p className="eyebrow">TELISI</p>
+          <h2>{greeting()}, Gino 👋</h2>
+          <span>{smartMessage(todayEvents, nextEvent)}</span>
+        </div>
+
+        <div className="hero-clock">
+          <strong>{currentTimeString(now)}</strong>
+          <small>{longTodayString(now)}</small>
+        </div>
       </article>
 
       <section className="today-summary">
-        {summary.map(item => (
+        {todaySummary.map(item => (
           <article key={item.id} className="mini-stat" style={{ "--stat": item.color }}>
             <span>{item.icon}</span>
             <strong>{item.count}</strong>
@@ -27,7 +59,7 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
         ))}
       </section>
 
-      <article className="next-card">
+      <article className="next-card premium-next">
         <div className="big-icon" style={{ background: nextCal?.color + "22", color: nextCal?.color }}>
           {nextCal?.icon || "📅"}
         </div>
@@ -38,22 +70,43 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
         </div>
       </article>
 
-      <section className="panel">
-        <div className="section-title">
-          <h2>Hoy</h2>
-          <span>{todayEvents.length} evento(s)</span>
-        </div>
-        {todayEvents.length === 0 && <p className="muted">No hay eventos para hoy.</p>}
-        {todayEvents.map((ev, idx) => {
-          const cal = getCalendar(calendars, ev.calendarId);
-          return (
-            <div key={idx} className="timeline-item">
-              <b style={{ color: cal.color }}>{ev.time}</b>
-              <span>{cal.icon}</span>
-              <p>{ev.text}</p>
-            </div>
-          );
-        })}
+      <section className="dashboard-grid">
+        <article className="panel">
+          <div className="section-title">
+            <h2>Hoy</h2>
+            <span>{todayEvents.length} evento(s)</span>
+          </div>
+
+          {todayEvents.length === 0 && <p className="muted">No hay eventos para hoy.</p>}
+
+          {todayEvents.map((ev, idx) => {
+            const cal = getCalendar(calendars, ev.calendarId);
+            return (
+              <div key={idx} className="timeline-item">
+                <b style={{ color: cal.color }}>{ev.time}</b>
+                <span>{cal.icon}</span>
+                <p>{ev.text}</p>
+              </div>
+            );
+          })}
+        </article>
+
+        <article className="panel">
+          <div className="section-title">
+            <h2>Esta semana</h2>
+            <span>{weekSummary.reduce((acc, c) => acc + c.count, 0)} total</span>
+          </div>
+
+          <div className="week-list">
+            {weekSummary.map(item => (
+              <div key={item.id} className="week-row">
+                <span style={{ background: item.color + "22", color: item.color }}>{item.icon}</span>
+                <p>{item.name}</p>
+                <strong>{item.count}</strong>
+              </div>
+            ))}
+          </div>
+        </article>
       </section>
 
       <section className="panel">
@@ -61,8 +114,9 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
           <h2>Tus calendarios</h2>
           <button className="small-plus" onClick={openModal}>+</button>
         </div>
+
         <div className="calendar-cards">
-          {calendars.filter(c => c.id !== "todos").map(cal => (
+          {regularCalendars.map(cal => (
             <button key={cal.id} className="calendar-card" onClick={() => { setActive(cal.id); setView("calendar"); }}>
               <span style={{ background: cal.color + "22", color: cal.color }}>{cal.icon}</span>
               <strong>{cal.name}</strong>

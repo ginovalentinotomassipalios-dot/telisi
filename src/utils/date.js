@@ -13,6 +13,18 @@ export function todayString() {
   return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 }
 
+export function currentTimeString(date = new Date()) {
+  return date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
+}
+
+export function longTodayString(date = new Date()) {
+  return date.toLocaleDateString("es-AR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+}
+
 export function greeting() {
   const h = new Date().getHours();
   if (h < 12) return "Buenos días";
@@ -20,9 +32,44 @@ export function greeting() {
   return "Buenas noches";
 }
 
-export function smartMessage(count) {
-  if (count === 0) return "Hoy no tenés eventos. Disfrutá el día.";
-  if (count <= 2) return `Hoy tenés ${count} evento(s). Día tranqui.`;
-  if (count <= 5) return `Hoy tenés ${count} eventos. Organizate con calma.`;
-  return `Hoy tenés ${count} eventos. No olvides descansar.`;
+export function smartMessage(todayEvents, nextEvent) {
+  const count = todayEvents.length;
+
+  if (count === 0) {
+    return "Hoy está bastante tranquilo. Aprovechá para descansar o adelantar algo pendiente.";
+  }
+
+  if (count === 1) {
+    return "Solo tenés un compromiso hoy. El resto del día es tuyo.";
+  }
+
+  if (count <= 3) {
+    return `Hoy tenés ${count} eventos. Se ve manejable.`;
+  }
+
+  if (count <= 6) {
+    return `Hoy viene cargado: son ${count} eventos. Mejor ir de a uno.`;
+  }
+
+  return `Hoy tenés ${count} eventos. No olvides descansar entre medio.`;
+}
+
+export function weekRange(date = new Date()) {
+  const day = date.getDay();
+  const mondayOffset = day === 0 ? -6 : 1 - day;
+  const monday = new Date(date);
+  monday.setDate(date.getDate() + mondayOffset);
+  monday.setHours(0, 0, 0, 0);
+
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  sunday.setHours(23, 59, 59, 999);
+
+  return { monday, sunday };
+}
+
+export function isDateInCurrentWeek(dateString) {
+  const d = new Date(dateString + "T12:00:00");
+  const { monday, sunday } = weekRange();
+  return d >= monday && d <= sunday;
 }
