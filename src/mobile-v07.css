@@ -379,3 +379,18 @@ body,
     padding: 6px 4px !important;
   }
 }
+/* Quitar resaltado celeste al tocar en mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+.month,
+.calendar-card,
+.event-row,
+.tabs button,
+.bottom-nav button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
