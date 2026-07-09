@@ -1,0 +1,6 @@
+.app-theme-amethyst { --brand: #7C4D8B; --brand-soft: #eadff0; --brand-contrast: #241029; --brand-glow: rgba(124,77,139,.22); }
+.app-theme-ocean { --brand: #3F5F93; --brand-soft: #dfe8f7; --brand-contrast: #17263f; --brand-glow: rgba(63,95,147,.22); }
+.app-theme-forest { --brand: #34805A; --brand-soft: #e2f2e8; --brand-contrast: #153826; --brand-glow: rgba(52,128,90,.22); }
+.app-theme-crimson { --brand: #B35068; --brand-soft: #f6e2e9; --brand-contrast: #4a1726; --brand-glow: rgba(179,80,104,.22); }
+.app-theme-obsidian { --brand: #241029; --brand-soft: #e6dfea; --brand-contrast: #0f0712; --brand-glow: rgba(36,16,41,.26); }
+.app-theme-pearl { --brand: #8f7798; --brand-soft: #f4edf7; --brand-contrast: #3a2d3f; --brand-glow: rgba(143,119,152,.2); }

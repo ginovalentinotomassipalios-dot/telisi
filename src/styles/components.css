@@ -1,0 +1,49 @@
+.ghost, .icon-button {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 16px;
+  background: var(--brand); color: white;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand) 20%, transparent);
+}
+.logo-mark, .splash-mark {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border-radius: 16px; color: white;
+  background: radial-gradient(circle at 25% 20%, rgba(255,255,255,.34), transparent 34%), linear-gradient(135deg, var(--brand), color-mix(in srgb, var(--brand) 55%, #0d0610));
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--brand) 28%, transparent);
+  font-size: 22px; font-weight: 900;
+}
+.panel, .next-card, .calendar-card, .month, .mini-stat, .modal {
+  position: relative; overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--brand) 14%, rgba(255,255,255,.8));
+  background: var(--card); backdrop-filter: blur(22px); box-shadow: var(--shadow-soft);
+}
+.panel, .next-card { margin-top: 16px; border-radius: var(--radius-lg); padding: 22px; }
+.calendar-card, .mini-stat { border-radius: 28px; padding: 18px; }
+.section-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.section-title h2, .panel h2 { margin: 0; font-size: 18px; letter-spacing: -0.03em; color: color-mix(in srgb, var(--brand) 78%, var(--ink)); }
+.section-title span { color: var(--muted); font-size: 13px; }
+.small-plus, .plus-tab, .pill-button, .event-form button, .modal-actions button {
+  border: 0; border-radius: var(--radius-pill); background: var(--brand); color: white; font-weight: 900;
+}
+.small-plus, .plus-tab { width: 36px; height: 36px; display: grid; place-items: center; }
+.pill-button { padding: 9px 12px; }
+.event-form input, .modal input {
+  border: 1px solid var(--line); border-radius: 18px; padding: 11px 12px; background: white; color: var(--ink);
+}
+.event-form input:focus, .modal input:focus {
+  outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 18%, transparent);
+}
+.delete {
+  width: 32px; height: 32px; border: 0; border-radius: 12px;
+  color: #8b748f; background: rgba(36,16,41,.06); font-size: 18px;
+}
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 100000; display: grid; place-items: center;
+  padding: 18px; background: rgba(0,0,0,.38); backdrop-filter: blur(8px);
+}
+.modal { width: min(420px, 100%); padding: 18px; border-radius: 28px; background: white; box-shadow: var(--shadow-lg); }
+.modal h3 { margin: 0 0 16px; }
+.modal label { display: block; margin-top: 10px; color: var(--muted); font-weight: 900; font-size: 12px; }
+.modal input { margin-top: 6px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.modal-actions button { padding: 11px 14px; }
+.modal-actions .secondary { color: var(--ink); background: #eee8f0; }

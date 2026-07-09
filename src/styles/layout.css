@@ -1,0 +1,45 @@
+.shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 18px 18px 132px;
+  --accent: var(--brand);
+  transform: none !important;
+  animation: none !important;
+}
+.app-header {
+  position: sticky; top: 0; z-index: 80;
+  display: grid; grid-template-columns: 44px 1fr 44px; gap: 12px; align-items: center;
+  padding: 12px 0; backdrop-filter: blur(14px);
+  transition: transform .22s ease, opacity .22s ease;
+}
+.app-header.header-hidden { transform: translateY(-115%); opacity: 0; pointer-events: none; }
+.app-header h1 { margin: 0; font-size: 24px; letter-spacing: -0.04em; }
+.brand-block { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.bottom-nav.premium-nav, .bottom-nav {
+  position: fixed !important; left: 50% !important; right: auto !important;
+  bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important; z-index: 999999 !important;
+  width: min(430px, calc(100% - 24px)) !important;
+  display: grid !important; grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px; padding: 8px; border-radius: var(--radius-pill);
+  border: 1px solid rgba(255,255,255,.68); background: rgba(255,255,255,.74);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(36,16,41,.22), inset 0 1px 0 rgba(255,255,255,.65);
+  pointer-events: auto !important;
+}
+.bottom-nav button {
+  display: grid; justify-items: center; align-content: center; gap: 3px;
+  min-height: 54px; border: 0; border-radius: var(--radius-pill);
+  padding: 8px 6px; background: transparent; color: var(--muted); font-weight: 900;
+}
+.bottom-nav button svg { width: 22px; height: 22px; }
+.bottom-nav span { display: block; margin-top: 2px; font-size: 11px; }
+.bottom-nav button.selected {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--brand), color-mix(in srgb, var(--brand) 65%, #151019));
+  color: white;
+}
+.layout, .calendar-layout-fixed {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr);
+  gap: 18px; align-items: start;
+}
