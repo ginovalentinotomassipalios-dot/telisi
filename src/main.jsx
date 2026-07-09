@@ -9,5 +9,5 @@ import "./polish.css";
 import "./fix.css";
 import "./header-scroll.css";
 import "./unified-theme.css";
-
+import "./mobile.css";
 createRoot(document.getElementById("root")).render(<App />);
