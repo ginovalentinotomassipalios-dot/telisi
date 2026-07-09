@@ -1,0 +1,170 @@
+
+/* Telisi v0.7.0 - mobile/tablet polish */
+
+/* 1) Fecha del reloj: primera palabra con mayúscula, resto minúscula */
+.hero-clock small {
+  text-transform: none !important;
+}
+
+/* 2) Barra inferior siempre visible durante toda la navegación */
+.bottom-nav,
+.bottom-nav.premium-nav,
+.premium-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(14px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  z-index: 999999 !important;
+  width: min(430px, calc(100% - 24px)) !important;
+  pointer-events: auto !important;
+}
+
+.shell {
+  padding-bottom: 132px !important;
+}
+
+/* Evita que algún contenedor padre interfiera con la barra fija */
+body,
+#root {
+  min-height: 100dvh;
+}
+
+/* 3) Mejor soporte para modo horizontal en celular/tablet */
+@media (orientation: landscape) and (max-height: 620px) {
+  .shell {
+    max-width: 100%;
+    padding: 8px 14px 88px !important;
+  }
+
+  .app-header {
+    padding: 6px 0;
+  }
+
+  .logo-mark,
+  .ghost {
+    width: 36px;
+    height: 36px;
+    border-radius: 13px;
+  }
+
+  .app-header h1 {
+    font-size: 18px;
+  }
+
+  .dashboard-hero {
+    min-height: 130px !important;
+    padding: 16px 18px !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    border-radius: 24px !important;
+  }
+
+  .dashboard-hero h2 {
+    font-size: clamp(26px, 4vw, 42px) !important;
+  }
+
+  .dashboard-hero span {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .hero-clock {
+    min-width: 122px;
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  .hero-clock strong {
+    font-size: 30px;
+  }
+
+  .hero-clock small {
+    font-size: 11px;
+  }
+
+  .today-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .next-card,
+  .panel {
+    padding: 14px;
+    border-radius: 24px;
+  }
+
+  .calendar-layout-fixed,
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 320px !important;
+    align-items: start;
+  }
+
+  .annual-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  .month h3 {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .day {
+    min-height: 26px;
+    font-size: 11px;
+  }
+
+  .event-panel {
+    position: sticky !important;
+    top: 10px !important;
+  }
+
+  .premium-nav button {
+    min-height: 44px !important;
+    padding: 6px 4px !important;
+  }
+
+  .premium-nav button svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .premium-nav span {
+    font-size: 10px;
+  }
+}
+
+/* Modal de mes en horizontal: ocupa pantalla y arranca arriba */
+@media (orientation: landscape) and (max-height: 620px) {
+  .month-detail-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1000000 !important;
+    display: block !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .month-detail-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+    padding: 12px !important;
+  }
+
+  .month-detail-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .month-detail-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr) !important;
+    gap: 12px !important;
+  }
+}

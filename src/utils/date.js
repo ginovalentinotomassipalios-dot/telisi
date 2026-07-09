@@ -5,7 +5,13 @@ export function shortDate(dateString) {
 
 export function formatHumanDate(dateString) {
   const d = new Date(dateString + "T00:00:00");
-  return d.toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
+  return capitalizeFirst(
+    d.toLocaleDateString("es-AR", {
+      weekday: "short",
+      day: "numeric",
+      month: "short"
+    }).toLowerCase()
+  );
 }
 
 export function todayString() {
@@ -14,15 +20,20 @@ export function todayString() {
 }
 
 export function currentTimeString(date = new Date()) {
-  return date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
+  return date.toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 }
 
 export function longTodayString(date = new Date()) {
-  return date.toLocaleDateString("es-AR", {
+  const text = date.toLocaleDateString("es-AR", {
     weekday: "long",
     day: "numeric",
     month: "long"
-  });
+  }).toLowerCase();
+
+  return capitalizeFirst(text);
 }
 
 export function greeting() {
@@ -72,4 +83,9 @@ export function isDateInCurrentWeek(dateString) {
   const d = new Date(dateString + "T12:00:00");
   const { monday, sunday } = weekRange();
   return d >= monday && d <= sunday;
+}
+
+function capitalizeFirst(text) {
+  if (!text) return "";
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
