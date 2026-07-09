@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { monthNames } from "../data";
 import { Month } from "../components/Month";
-import { MonthDetailModal } from "../components/MonthDetailModal";
 import { getCalendar } from "../utils/calendar";
 import { shortDate } from "../utils/date";
 
@@ -18,7 +16,6 @@ export function CalendarPage({
   deleteEvent,
   openModal
 }) {
-  const [selectedMonth, setSelectedMonth] = useState(null);
   const activeCalendar = getCalendar(calendars, active);
 
   return (
@@ -52,7 +49,7 @@ export function CalendarPage({
               month={i}
               events={visibleEvents}
               calendars={calendars}
-              onOpenMonth={setSelectedMonth}
+
             />
           ))}
         </section>
@@ -92,15 +89,7 @@ export function CalendarPage({
         </aside>
       </section>
 
-      {selectedMonth !== null && (
-        <MonthDetailModal
-          year={Number(year)}
-          month={selectedMonth}
-          events={visibleEvents}
-          calendars={calendars}
-          closeModal={() => setSelectedMonth(null)}
-        />
-      )}
+    
     </section>
   );
 }
