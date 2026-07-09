@@ -1,15 +1,76 @@
 
-/* Telisi v0.4.0 dashboard additions */
+/* Telisi v0.4.1 - Theme engine */
 
-.app-theme-amethyst { --brand: #7C4D8B; --brand-2: #eadff0; }
-.app-theme-ocean { --brand: #3F5F93; --brand-2: #dfe8f7; }
-.app-theme-forest { --brand: #34805A; --brand-2: #e2f2e8; }
-.app-theme-crimson { --brand: #B35068; --brand-2: #f6e2e9; }
-.app-theme-obsidian { --brand: #241029; --brand-2: #e6dfea; }
-.app-theme-pearl { --brand: #8f7798; --brand-2: #f4edf7; }
+/* Theme variables */
+.app-theme-amethyst {
+  --brand: #7C4D8B;
+  --brand-soft: #eadff0;
+  --brand-contrast: #241029;
+  --brand-glow: rgba(124, 77, 139, .25);
+}
 
+.app-theme-ocean {
+  --brand: #3F5F93;
+  --brand-soft: #dfe8f7;
+  --brand-contrast: #17263f;
+  --brand-glow: rgba(63, 95, 147, .25);
+}
+
+.app-theme-forest {
+  --brand: #34805A;
+  --brand-soft: #e2f2e8;
+  --brand-contrast: #153826;
+  --brand-glow: rgba(52, 128, 90, .25);
+}
+
+.app-theme-crimson {
+  --brand: #B35068;
+  --brand-soft: #f6e2e9;
+  --brand-contrast: #4a1726;
+  --brand-glow: rgba(179, 80, 104, .25);
+}
+
+.app-theme-obsidian {
+  --brand: #241029;
+  --brand-soft: #e6dfea;
+  --brand-contrast: #0f0712;
+  --brand-glow: rgba(36, 16, 41, .28);
+}
+
+.app-theme-pearl {
+  --brand: #8f7798;
+  --brand-soft: #f4edf7;
+  --brand-contrast: #3a2d3f;
+  --brand-glow: rgba(143, 119, 152, .22);
+}
+
+/* Apply selected theme across the original design system */
 .shell {
   --accent: var(--brand);
+  --dark: var(--brand-contrast);
+  --lavender: var(--brand-soft);
+  --lavender-2: color-mix(in srgb, var(--brand-soft) 78%, white);
+}
+
+/* Background now follows selected app theme */
+body:has(.shell.app-theme-amethyst),
+body:has(.shell.app-theme-ocean),
+body:has(.shell.app-theme-forest),
+body:has(.shell.app-theme-crimson),
+body:has(.shell.app-theme-obsidian),
+body:has(.shell.app-theme-pearl) {
+  background:
+    radial-gradient(circle at top left, var(--brand-glow), transparent 38%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--brand) 16%, transparent), transparent 35%),
+    linear-gradient(180deg, var(--brand-soft), #fff);
+}
+
+/* Dark mode background */
+body:has(.shell.theme-dark) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--brand) 35%, transparent), transparent 38%),
+    radial-gradient(circle at top right, rgba(255,255,255,.06), transparent 35%),
+    linear-gradient(180deg, #120816, color-mix(in srgb, var(--brand-contrast) 80%, #050307));
 }
 
 .dashboard-hero {
@@ -18,7 +79,7 @@
   gap: 18px;
   align-items: end;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--brand) 78%, #241029), var(--brand)),
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 72%, #241029), var(--brand)),
     radial-gradient(circle at top right, rgba(255,255,255,.28), transparent 46%);
 }
 
@@ -132,9 +193,128 @@
   border-color: var(--brand);
 }
 
+/* Override old purple-heavy UI elements */
+.app-header .ghost,
+.year-toolbar button,
+.bottom-nav button.selected,
+.small-plus,
+.plus-tab,
+.pill-button,
+.event-form button,
+.modal-actions button {
+  background: var(--brand);
+  color: white;
+}
+
+.bottom-nav button.selected {
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand) 22%, transparent);
+}
+
+.month h3 {
+  background: var(--brand-contrast);
+}
+
+.hero-card {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 72%, #241029), var(--brand)),
+    radial-gradient(circle at top right, rgba(255,255,255,.25), transparent 45%);
+}
+
+.events-panel h2,
+.panel h2,
+.section-title h2 {
+  color: color-mix(in srgb, var(--brand) 78%, var(--ink));
+}
+
+.event-form button,
+.pill-button {
+  background: var(--brand);
+}
+
+.tabs button.active {
+  background: var(--tab);
+  color: white;
+  border-color: var(--tab);
+}
+
+/* Cards take subtle tint from selected app theme */
+.next-card,
+.panel,
+.mini-stat,
+.calendar-card,
+.month,
+.bottom-nav,
+.modal {
+  border-color: color-mix(in srgb, var(--brand) 16%, var(--line));
+}
+
+.day.empty {
+  background: color-mix(in srgb, var(--brand-soft) 70%, white);
+}
+
+.weekdays span {
+  background: color-mix(in srgb, var(--brand-soft) 50%, white);
+}
+
+/* Dark mode refinements */
+.theme-dark {
+  --bg: #140b18;
+  --card: rgba(35, 22, 40, .82);
+  --card-solid: #24182a;
+  --ink: #f7eff8;
+  --muted: #c7b7cc;
+  --line: rgba(255,255,255,.12);
+  --dark: var(--brand-contrast);
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+
+.theme-dark .hero-card,
+.theme-dark .dashboard-hero {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 55%, #050307), color-mix(in srgb, var(--brand) 80%, #111)),
+    radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 45%);
+}
+
+.theme-dark input,
+.theme-dark .tabs button,
+.theme-dark .calendar-card,
+.theme-dark .month,
+.theme-dark .modal,
+.theme-dark .event-form input {
+  background: rgba(35,22,40,.95);
+  color: var(--ink);
+}
+
+.theme-dark .day {
+  background: rgba(45,29,52,.78);
+}
+
+.theme-dark .day.empty {
+  background: color-mix(in srgb, var(--brand) 18%, #24182a);
+}
+
+.theme-dark .weekdays span {
+  background: rgba(255,255,255,.06);
+}
+
 .theme-dark .week-row,
 .theme-dark .theme-option {
   background: rgba(35,22,40,.78);
+}
+
+.calendar-card,
+.next-card,
+.panel,
+.mini-stat,
+.month,
+.bottom-nav {
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.calendar-card:active,
+.bottom-nav button:active,
+.tabs button:active {
+  transform: scale(.98);
 }
 
 @media (max-width: 760px) {

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { monthNames } from "../data";
 import { Month } from "../components/Month";
+import { MonthDetailModal } from "../components/MonthDetailModal";
 import { getCalendar } from "../utils/calendar";
 import { shortDate } from "../utils/date";
 
@@ -16,6 +18,7 @@ export function CalendarPage({
   deleteEvent,
   openModal
 }) {
+  const [selectedMonth, setSelectedMonth] = useState(null);
   const activeCalendar = getCalendar(calendars, active);
 
   return (
@@ -32,7 +35,7 @@ export function CalendarPage({
             key={cal.id}
             onClick={() => setActive(cal.id)}
             className={active === cal.id ? "active" : ""}
-            style={{ "--tab": cal.color }}
+            style={{ "--tab": "var(--brand)" }}
           >
             {cal.icon} {cal.name}
           </button>
@@ -40,10 +43,17 @@ export function CalendarPage({
         <button className="plus-tab" onClick={openModal}>+</button>
       </nav>
 
-      <section className="layout">
-        <section className="calendar-grid">
+      <section className="layout calendar-layout-fixed">
+        <section className="calendar-grid annual-grid">
           {monthNames.map((m, i) => (
-            <Month key={m} year={Number(year)} month={i} events={visibleEvents} calendars={calendars} />
+            <Month
+              key={m}
+              year={Number(year)}
+              month={i}
+              events={visibleEvents}
+              calendars={calendars}
+              onOpenMonth={setSelectedMonth}
+            />
           ))}
         </section>
 
@@ -69,10 +79,10 @@ export function CalendarPage({
               return (
                 <div key={idx} className="event-row">
                   <div>
-                    <b style={{ color: cal.color }}>{shortDate(ev.date)}</b>
+                    <b style={{ color: "var(--brand)" }}>{shortDate(ev.date)}</b>
                     <small>{ev.time}</small>
                   </div>
-                  {active === "todos" && <span className="dot" style={{ background: cal.color }}></span>}
+                  {active === "todos" && <span className="dot" style={{ background: "var(--brand)" }}></span>}
                   <p>{ev.text}</p>
                   <button className="delete" onClick={() => deleteEvent(ev)}>×</button>
                 </div>
@@ -81,6 +91,16 @@ export function CalendarPage({
           </div>
         </aside>
       </section>
+
+      {selectedMonth !== null && (
+        <MonthDetailModal
+          year={Number(year)}
+          month={selectedMonth}
+          events={visibleEvents}
+          calendars={calendars}
+          closeModal={() => setSelectedMonth(null)}
+        />
+      )}
     </section>
   );
 }

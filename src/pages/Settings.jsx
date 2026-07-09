@@ -7,14 +7,15 @@ const appThemes = [
   { id: "pearl", name: "Perla", color: "#C9B7D0" }
 ];
 
-export function Settings({ theme, setTheme, appTheme, setAppTheme, exportData }) {
+export function Settings({ appTheme, setAppTheme, exportData }) {
   return (
-    <section className="panel">
+    <section className="panel settings-panel">
       <h2>Ajustes</h2>
-      <p className="muted">Telisi v0.4.0</p>
+      <p className="muted">Telisi v0.6.4</p>
 
       <div className="setting-block">
         <h3>Apariencia</h3>
+        <p className="muted compact">Elegí un color principal para toda la aplicación.</p>
         <div className="theme-picker">
           {appThemes.map(item => (
             <button
@@ -27,13 +28,6 @@ export function Settings({ theme, setTheme, appTheme, setAppTheme, exportData })
             </button>
           ))}
         </div>
-      </div>
-
-      <div className="setting-row">
-        <span>Tema</span>
-        <button className="pill-button" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-          {theme === "light" ? "Modo oscuro" : "Modo claro"}
-        </button>
       </div>
 
       <div className="setting-row">

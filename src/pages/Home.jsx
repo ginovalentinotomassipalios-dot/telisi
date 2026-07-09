@@ -39,7 +39,7 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
       <article className="hero-card dashboard-hero">
         <div>
           <p className="eyebrow">TELISI</p>
-          <h2>{greeting()}, Gino 👋</h2>
+          <h2>{greeting()}, Gino</h2>
           <span>{smartMessage(todayEvents, nextEvent)}</span>
         </div>
 
@@ -51,7 +51,7 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
 
       <section className="today-summary">
         {todaySummary.map(item => (
-          <article key={item.id} className="mini-stat" style={{ "--stat": item.color }}>
+          <article key={item.id} className="mini-stat" style={{ "--stat": "var(--brand)" }}>
             <span>{item.icon}</span>
             <strong>{item.count}</strong>
             <small>{item.name}</small>
@@ -60,7 +60,7 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
       </section>
 
       <article className="next-card premium-next">
-        <div className="big-icon" style={{ background: nextCal?.color + "22", color: nextCal?.color }}>
+        <div className="big-icon" style={{ background: "color-mix(in srgb, var(--brand) 18%, transparent)", color: "var(--brand)" }}>
           {nextCal?.icon || "📅"}
         </div>
         <div>
@@ -83,7 +83,7 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
             const cal = getCalendar(calendars, ev.calendarId);
             return (
               <div key={idx} className="timeline-item">
-                <b style={{ color: cal.color }}>{ev.time}</b>
+                <b style={{ color: "var(--brand)" }}>{ev.time}</b>
                 <span>{cal.icon}</span>
                 <p>{ev.text}</p>
               </div>
@@ -118,7 +118,7 @@ export function Home({ calendars, events, nextEvent, todayEvents, setActive, set
         <div className="calendar-cards">
           {regularCalendars.map(cal => (
             <button key={cal.id} className="calendar-card" onClick={() => { setActive(cal.id); setView("calendar"); }}>
-              <span style={{ background: cal.color + "22", color: cal.color }}>{cal.icon}</span>
+              <span style={{ background: "color-mix(in srgb, var(--brand) 18%, transparent)", color: "var(--brand)" }}>{cal.icon}</span>
               <strong>{cal.name}</strong>
               <small>{events.filter(e => e.calendarId === cal.id).length} eventos</small>
             </button>

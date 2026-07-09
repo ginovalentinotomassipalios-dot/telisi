@@ -1,0 +1,201 @@
+
+/* Telisi v0.6.2 - fixed nav and restored annual calendar */
+
+.logo-mark {
+  font-size: 22px;
+  letter-spacing: 0;
+}
+
+.bottom-nav.premium-nav,
+.premium-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(18px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  z-index: 99999 !important;
+}
+
+.shell {
+  padding-bottom: 132px !important;
+}
+
+.calendar-layout-fixed {
+  grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr);
+}
+
+.annual-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px;
+}
+
+.annual-grid .month {
+  display: block !important;
+}
+
+.month h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+}
+
+.month h3 small {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: .72;
+  text-transform: none;
+}
+
+.month-clickable {
+  cursor: pointer;
+}
+
+.month-clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.day {
+  display: grid;
+  place-items: center;
+  gap: 2px;
+}
+
+.day > span {
+  line-height: 1;
+}
+
+.day-dots {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  min-height: 4px;
+}
+
+.day-dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+}
+
+.month-detail-backdrop {
+  z-index: 100000;
+}
+
+.month-detail-modal {
+  width: min(980px, 96vw);
+  max-height: 88vh;
+  overflow: auto;
+}
+
+.month-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.month-detail-header h3 {
+  margin: 0;
+  font-size: 28px;
+  text-transform: capitalize;
+}
+
+.month-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(260px, .9fr);
+  gap: 16px;
+}
+
+.month-detail-layout .month {
+  min-height: auto;
+}
+
+.month-detail-layout .day {
+  min-height: 44px;
+}
+
+.month-event-list {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.month-event-list h4 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.month-event-card {
+  display: grid;
+  grid-template-columns: 72px 42px 1fr;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 10px;
+  background: rgba(255,255,255,.62);
+}
+
+.month-event-card b,
+.month-event-card small {
+  display: block;
+}
+
+.month-event-card small {
+  color: var(--muted);
+}
+
+.month-event-card span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+}
+
+.month-event-card p {
+  margin: 0;
+}
+
+.month-focus,
+.month-scroll,
+.month-slide {
+  display: none !important;
+}
+
+/* Disable previous symbol logo rules if present */
+.logo-mark.telisi-mark::before,
+.logo-mark.telisi-mark::after,
+.logo-mark.telisi-mark span {
+  display: none !important;
+}
+
+@media (max-width: 1040px) {
+  .calendar-layout-fixed {
+    grid-template-columns: 1fr;
+  }
+
+  .event-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .annual-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .month-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .month-detail-modal {
+    width: 96vw;
+    max-height: 86vh;
+  }
+}

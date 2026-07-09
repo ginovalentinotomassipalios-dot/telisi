@@ -1,9 +1,13 @@
 import { monthNames, shortWeekdays } from "../data";
 import { getCalendar } from "../utils/calendar";
 
-export function Month({ year, month, events, calendars }) {
+export function Month({ year, month, events, calendars, onOpenMonth }) {
   const firstDay = new Date(year, month, 1).getDay();
   const totalDays = new Date(year, month + 1, 0).getDate();
+  const monthEvents = events.filter(e => {
+    const eventMonth = Number(e.date.split("-")[1]) - 1;
+    return eventMonth === month;
+  });
   const cells = [];
 
   for (let i = 0; i < firstDay; i++) {
@@ -19,17 +23,36 @@ export function Month({ year, month, events, calendars }) {
       <div
         key={date}
         className={"day " + (dayEvents.length ? "has-event" : "")}
-        style={cal ? { "--day": cal.color } : {}}
+        style={cal ? { "--day": "var(--brand)" } : {}}
         title={dayEvents.map(e => e.text).join("\n")}
       >
-        {d}
+        <span>{d}</span>
+        {dayEvents.length > 0 && (
+          <div className="day-dots">
+            {dayEvents.slice(0, 3).map((ev, idx) => {
+              const eventCal = getCalendar(calendars, ev.calendarId);
+              return <i key={idx} style={{ background: "var(--brand)" }}></i>;
+            })}
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <article className="month">
-      <h3>{monthNames[month]}</h3>
+    <article
+      className={"month " + (onOpenMonth ? "month-clickable" : "")}
+      onClick={onOpenMonth ? () => onOpenMonth(month) : undefined}
+      role={onOpenMonth ? "button" : undefined}
+      tabIndex={onOpenMonth ? 0 : undefined}
+      onKeyDown={onOpenMonth ? (e) => {
+        if (e.key === "Enter" || e.key === " ") onOpenMonth(month);
+      } : undefined}
+    >
+      <h3>
+        {monthNames[month]}
+        <small>{monthEvents.length} evento{monthEvents.length === 1 ? "" : "s"}</small>
+      </h3>
       <div className="weekdays">
         {shortWeekdays.map((w, idx) => <span key={idx}>{w}</span>)}
       </div>

@@ -13,19 +13,42 @@ export function App() {
   const [view, setView] = useState("home");
   const [year, setYear] = useState(2026);
   const [active, setActive] = useState(() => localStorage.getItem("telisi_active") || "academico");
-  const [theme, setTheme] = useState(() => localStorage.getItem("telisi_theme") || "light");
   const [appTheme, setAppTheme] = useState(() => localStorage.getItem("telisi_app_theme") || "amethyst");
   const [calendars, setCalendars] = useState(() => JSON.parse(localStorage.getItem("telisi_calendars")) || defaultCalendars);
   const [events, setEvents] = useState(() => JSON.parse(localStorage.getItem("telisi_events")) || defaultEvents);
   const [newEvent, setNewEvent] = useState({ date: "2026-01-01", time: "09:00", text: "" });
   const [modal, setModal] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
+  const [splash, setSplash] = useState(() => !sessionStorage.getItem("telisi_splash_seen"));
   const [newCal, setNewCal] = useState({ name: "", icon: "📅", color: "#7C4D8B" });
 
   useEffect(() => localStorage.setItem("telisi_calendars", JSON.stringify(calendars)), [calendars]);
   useEffect(() => localStorage.setItem("telisi_events", JSON.stringify(events)), [events]);
   useEffect(() => localStorage.setItem("telisi_active", active), [active]);
-  useEffect(() => localStorage.setItem("telisi_theme", theme), [theme]);
   useEffect(() => localStorage.setItem("telisi_app_theme", appTheme), [appTheme]);
+
+  useEffect(() => {
+    if (!splash) return;
+    const timer = setTimeout(() => {
+      sessionStorage.setItem("telisi_splash_seen", "true");
+      setSplash(false);
+    }, 950);
+    return () => clearTimeout(timer);
+  }, [splash]);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+
+    function handleScroll() {
+      const currentY = window.scrollY;
+      const goingDown = currentY > lastY && currentY > 80;
+      setHideHeader(goingDown);
+      lastY = currentY;
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const parts = newEvent.date.split("-");
@@ -77,7 +100,7 @@ export function App() {
   }
 
   function exportData() {
-    const data = { version: "0.4.0", calendars, events, theme, appTheme };
+    const data = { version: "0.6.4", calendars, events, appTheme };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -86,8 +109,8 @@ export function App() {
   }
 
   return (
-    <main className={`shell theme-${theme} app-theme-${appTheme}`} style={{ "--accent": activeCalendar.color }}>
-      <AppHeader view={view} theme={theme} setTheme={setTheme} />
+    <main className={`shell app-theme-${appTheme}`} style={{ "--accent": "var(--brand)" }}>
+      <AppHeader view={view} hideHeader={hideHeader} />
 
       <div className="view-fade" key={view}>
         {view === "home" && (
@@ -119,9 +142,18 @@ export function App() {
         )}
 
         {view === "settings" && (
-          <Settings theme={theme} setTheme={setTheme} appTheme={appTheme} setAppTheme={setAppTheme} exportData={exportData} />
+          <Settings appTheme={appTheme} setAppTheme={setAppTheme} exportData={exportData} />
         )}
       </div>
+
+      {splash && (
+        <div className="splash-screen">
+          <div className="splash-mark">T</div>
+          <strong>TELISI</strong>
+          <span>Organizá tu día.</span>
+          <div className="splash-dots"><i></i><i></i><i></i></div>
+        </div>
+      )}
 
       <BottomNav view={view} setView={setView} />
 

@@ -1,0 +1,18 @@
+
+/* Telisi v0.6.3 - header behavior and greeting casing */
+
+.app-header {
+  transition: transform .22s ease, opacity .22s ease;
+}
+
+.app-header.header-hidden {
+  transform: translateY(-115%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Avoid "Buenas Noches"; Spanish greeting should keep only the first word capitalized. */
+.hero-card h2,
+.dashboard-hero h2 {
+  text-transform: none !important;
+}
