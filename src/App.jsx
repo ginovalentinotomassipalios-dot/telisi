@@ -7,6 +7,7 @@ import { NewEventModal } from "./components/NewEventModal";
 
 import { Home } from "./pages/Home";
 import { CalendarPage } from "./pages/CalendarPage";
+import { CalendarMobile } from "./pages/CalendarMobile";
 import { Settings } from "./pages/Settings";
 
 import { defaultCalendars, defaultEvents } from "./data";
@@ -64,6 +65,7 @@ export function App() {
   const [modal, setModal] = useState(false);
   const [eventModal, setEventModal] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
+const isMobile = window.innerWidth <= 768;
 
   const [splash, setSplash] = useState(
     () => !sessionStorage.getItem("telisi_splash_seen")
@@ -492,26 +494,44 @@ export function App() {
 />
         )}
 
-        {view === "calendar" && (
-          <CalendarPage
-            year={year}
-            setYear={setYear}
-            calendars={calendars}
-            active={active}
-            setActive={setActive}
-            visibleEvents={visibleEvents}
-            newEvent={newEvent}
-            setNewEvent={setNewEvent}
-            addEvent={addEvent}
-            deleteEvent={deleteEvent}
-            openModal={() =>
-              setModal(true)
-            }
-            openEventModal={() =>
-              setEventModal(true)
-            }
-          />
-        )}
+       {view === "calendar" && (
+
+  isMobile ? (
+
+    <CalendarMobile
+      year={year}
+      setYear={setYear}
+      calendars={calendars}
+      active={active}
+      setActive={setActive}
+      visibleEvents={visibleEvents}
+      newEvent={newEvent}
+      setNewEvent={setNewEvent}
+      addEvent={addEvent}
+      deleteEvent={deleteEvent}
+      openModal={() => setModal(true)}
+    />
+
+  ) : (
+
+    <CalendarPage
+      year={year}
+      setYear={setYear}
+      calendars={calendars}
+      active={active}
+      setActive={setActive}
+      visibleEvents={visibleEvents}
+      newEvent={newEvent}
+      setNewEvent={setNewEvent}
+      addEvent={addEvent}
+      deleteEvent={deleteEvent}
+      openModal={() => setModal(true)}
+      openEventModal={() => setEventModal(true)}
+    />
+
+  )
+
+)}
 
         {view === "settings" && (
           <Settings
