@@ -1,0 +1,13 @@
+{
+  "appId": "com.telisi.app",
+  "appName": "Telisi",
+  "webDir": "dist",
+  "plugins": {
+    "FirebaseAuthentication": {
+      "skipNativeAuth": false,
+      "providers": [
+        "google.com"
+      ]
+    }
+  }
+}

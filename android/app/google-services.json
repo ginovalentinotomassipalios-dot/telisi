@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "286285003684",
+    "project_id": "telisi",
+    "storage_bucket": "telisi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286285003684:android:c838a93f01efc500765f31",
+        "android_client_info": {
+          "package_name": "com.telisi.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286285003684-babgdi8b143nldcucbsseqrm5ge9lc5b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.telisi.app",
+            "certificate_hash": "0e23ad685090df043c44c365186a115735a81620"
+          }
+        },
+        {
+          "client_id": "286285003684-rcis6amtgoiimr71tgp6rpmkmbbn9go8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3se_aAUzrt80atnfU-gKelj39B1ZLrLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286285003684-rcis6amtgoiimr71tgp6rpmkmbbn9go8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
