@@ -5,10 +5,10 @@
   --card: rgba(255,255,255,.82);
   --card-solid: #ffffff;
   --ink: #1f1324;
-  --muted: #756579;
+  --muted: var(--text-secondary, #6b7280);
   --line: rgba(36,16,41,.12);
   --dark: #241029;
-  --accent: #7C4D8B;
+  --accent: var(--brand);
   --shadow: 0 18px 50px rgba(36,16,41,.12);
 }
 
@@ -62,7 +62,7 @@ button {
   font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: white;
   font-weight: 800;
 }
 
@@ -411,7 +411,7 @@ button {
   height: 32px;
   border: 0;
   border-radius: 12px;
-  color: #8b748f;
+  color: var(--text-secondary);
   background: rgba(36,16,41,.06);
   font-size: 18px;
 }
@@ -517,7 +517,7 @@ button {
 
 .modal-actions .secondary {
   color: var(--ink);
-  background: #eee8f0;
+  background: var(--brand-light);
 }
 
 @media (max-width: 900px) {
@@ -591,7 +591,7 @@ button {
   --card: rgba(35, 22, 40, .82);
   --card-solid: #24182a;
   --ink: #f7eff8;
-  --muted: #c7b7cc;
+  --muted: var(--text-soft, #9ca3af);
   --line: rgba(255,255,255,.12);
   --dark: #0f0712;
   --shadow: 0 18px 50px rgba(0,0,0,.35);
@@ -893,7 +893,7 @@ button {
 
   letter-spacing:2px;
 
-  color:#7C4D8B;
+  color:white;
 
   font-weight:800;
 
@@ -1021,7 +1021,7 @@ button {
 
 .save {
 
-  background:#7C4D8B;
+ background: var(--brand);
 
   color:white;
 
@@ -1201,7 +1201,7 @@ button {
 
   border-radius:24px;
 
-  background:#241029;
+  background: var(--brand-dark);
 
   color:white;
 
@@ -1222,7 +1222,7 @@ button {
 
   font-weight:700;
 
-  color:#7C4D8B;
+  color:white;
 
   margin-bottom:12px;
 
@@ -1237,7 +1237,7 @@ button {
 
   font-size:34px;
 
-  color:#241029;
+  color: var(--brand-dark);
 
 }
 
@@ -1248,7 +1248,7 @@ button {
 
   margin:16px 0 32px;
 
-  color:#756878;
+  color: var(--text-secondary);
 
   line-height:1.5;
 
@@ -1269,7 +1269,7 @@ button {
 
   cursor:pointer;
 
-  background:#241029;
+ background: var(--brand-dark);
 
   color:white;
 
@@ -1516,13 +1516,13 @@ button {
 
 .event-form .telisi-select:hover,
 .telisi-modal-form .telisi-select:hover {
-  border-color: var(--brand, #7c4d8b);
+  border-color: var(--brand);
 }
 
 .event-form .telisi-select:focus,
 .telisi-modal-form .telisi-select:focus {
   outline: none;
-  border-color: var(--brand, #7c4d8b);
+  border-color: var(--brand);
   box-shadow:
     0 0 0 3px
     color-mix(

@@ -6,7 +6,7 @@
 .week-row span,
 .month-event-card span {
   background: color-mix(in srgb, var(--brand) 18%, transparent) !important;
-  color: var(--brand) !important;
+  color: var(--text-secondary) !important;
 }
 
 .timeline-item b,

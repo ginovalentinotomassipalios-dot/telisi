@@ -4,44 +4,128 @@
 /* Theme variables */
 .app-theme-amethyst {
   --brand: #7C4D8B;
-  --brand-soft: #eadff0;
-  --brand-contrast: #241029;
-  --brand-glow: rgba(124, 77, 139, .25);
+  --brand-light: #E9DDF0;
+  --brand-dark: #4E2E59;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F7F2F9;
+  --surface-soft: #FBF8FC;
+
+  --text-main: #2F2433;
+  --text-secondary: #675A6D;
+  --text-soft: #97899C;
+
+  --border: #E7DCEB;
+  --shadow: rgba(61, 37, 68, 0.12);
+
+  --success: #4F8A68;
+  --warning: #C8953D;
+  --danger: #B75A68;
 }
 
 .app-theme-ocean {
   --brand: #3F5F93;
-  --brand-soft: #dfe8f7;
-  --brand-contrast: #17263f;
-  --brand-glow: rgba(63, 95, 147, .25);
+  --brand-light: #DCE6F4;
+  --brand-dark: #243B63;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F5FA;
+  --surface-soft: #F8FAFD;
+
+  --text-main: #233047;
+  --text-secondary: #53647E;
+  --text-soft: #8794A7;
+
+  --border: #DCE4EF;
+  --shadow: rgba(34, 58, 94, 0.12);
+
+  --success: #4B7D68;
+  --warning: #C58E3E;
+  --danger: #B85A67;
 }
 
 .app-theme-forest {
   --brand: #34805A;
-  --brand-soft: #e2f2e8;
-  --brand-contrast: #153826;
-  --brand-glow: rgba(52, 128, 90, .25);
+  --brand-light: #DCEFE4;
+  --brand-dark: #20543A;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F8F4;
+  --surface-soft: #F8FCF9;
+
+  --text-main: #22372C;
+  --text-secondary: #52695D;
+  --text-soft: #87988F;
+
+  --border: #D9E9E0;
+  --shadow: rgba(32, 84, 58, 0.12);
+
+  --success: #3E8A5F;
+  --warning: #C89A45;
+  --danger: #B75C64;
 }
 
 .app-theme-crimson {
   --brand: #B35068;
-  --brand-soft: #f6e2e9;
-  --brand-contrast: #4a1726;
-  --brand-glow: rgba(179, 80, 104, .25);
+  --brand-light: #F3DCE2;
+  --brand-dark: #783346;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #FAF2F4;
+  --surface-soft: #FDF9FA;
+
+  --text-main: #422831;
+  --text-secondary: #75545F;
+  --text-soft: #A0858D;
+
+  --border: #EEDDE2;
+  --shadow: rgba(120, 51, 70, 0.12);
+
+  --success: #5A8469;
+  --warning: #C69342;
+  --danger: #B35068;
 }
 
 .app-theme-obsidian {
   --brand: #241029;
-  --brand-soft: #e6dfea;
-  --brand-contrast: #0f0712;
-  --brand-glow: rgba(36, 16, 41, .28);
+  --brand-light: #E2D9E4;
+  --brand-dark: #120816;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F4F1F5;
+  --surface-soft: #FAF8FA;
+
+  --text-main: #241A27;
+  --text-secondary: #5D5261;
+  --text-soft: #908692;
+
+  --border: #E3DDE5;
+  --shadow: rgba(18, 8, 22, 0.16);
+
+  --success: #4F7D62;
+  --warning: #BD8A3C;
+  --danger: #A94F60;
 }
 
 .app-theme-pearl {
-  --brand: #8f7798;
-  --brand-soft: #f4edf7;
-  --brand-contrast: #3a2d3f;
-  --brand-glow: rgba(143, 119, 152, .22);
+  --brand: #8F7798;
+  --brand-light: #EEE8F0;
+  --brand-dark: #5D4C63;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F8F5F9;
+  --surface-soft: #FCFAFC;
+
+  --text-main: #373039;
+  --text-secondary: #6C626F;
+  --text-soft: #9D949F;
+
+  --border: #E8E2EA;
+  --shadow: rgba(93, 76, 99, 0.1);
+
+  --success: #668271;
+  --warning: #C19A58;
+  --danger: #AD6877;
 }
 
 /* Apply selected theme across the original design system */
@@ -262,7 +346,7 @@ body:has(.shell.theme-dark) {
   --card: rgba(35, 22, 40, .82);
   --card-solid: #24182a;
   --ink: #f7eff8;
-  --muted: #c7b7cc;
+  --muted: var(--text-soft, #9ca3af);
   --line: rgba(255,255,255,.12);
   --dark: var(--brand-contrast);
   --shadow: 0 18px 50px rgba(0,0,0,.35);
@@ -330,4 +414,92 @@ body:has(.shell.theme-dark) {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* =========================================
+   TELISI — COLORES GLOBALES DEL TEMA
+========================================= */
+
+.app-header h1,
+.brand-block h1,
+.brand-block strong {
+  color: white;
+}
+
+.app-header p,
+.brand-block p,
+.home-dashboard small,
+.home-dashboard p {
+  color: var(--text-secondary);
+}
+
+.bottom-nav button,
+.premium-nav button {
+  color: var(--text-soft);
+}
+
+.bottom-nav button.selected,
+.premium-nav button.selected {
+  color: white;
+  background: var(--brand);
+}
+
+.bottom-nav button.selected svg,
+.premium-nav button.selected svg {
+  color: white;
+  stroke: currentColor;
+}
+
+.bottom-nav,
+.premium-nav {
+  border-color: var(--border);
+  background: var(--surface);
+}
+/* =====================================
+   HOME - TEXTO ADAPTATIVO POR TEMA
+===================================== */
+
+.dashboard-hero h2,
+.dashboard-hero span {
+  color: white;
+}
+
+.dashboard-hero p,
+.dashboard-hero small,
+.home-dashboard small,
+.home-dashboard p,
+.calendar-card span,
+.month-event-card span {
+  color: var(--text-secondary);
+}
+
+.calendar-card b,
+.month-event-card b {
+  color: var(--brand);
+}
+/* =====================================
+   HERO HOME - AJUSTE FINAL
+===================================== */
+
+.dashboard-hero h2,
+.hero-card h2 {
+  color: white !important;
+}
+
+.dashboard-hero .hero-clock small,
+.hero-card .hero-clock small {
+  color: rgba(255,255,255,.75) !important;
+}
+
+.dashboard-hero .hero-clock strong,
+.hero-card .hero-clock strong {
+  color: white !important;
+}
+/* =====================================
+   HOME EYEBROW
+===================================== */
+
+.dashboard-hero .eyebrow,
+.hero-card .eyebrow {
+  color: white !important;
 }
