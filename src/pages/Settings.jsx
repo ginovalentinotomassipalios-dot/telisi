@@ -1,6 +1,8 @@
 import { requestNotificationPermission } from "../services/remindersService";
 import { requestFCMToken } from "../services/fcmService";
 import { saveDeviceToken } from "../services/deviceService";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 
 const appThemes = [
@@ -43,7 +45,26 @@ export function Settings({
   setAppTheme,
   exportData
 }) {
+async function logout(){
 
+  try{
+
+    await signOut(auth);
+
+    window.location.reload();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Error cerrando sesión:",
+      error
+    );
+
+  }
+
+}
 
 
   async function activateNotifications(){
@@ -280,7 +301,28 @@ export function Settings({
 
 
 
+<div className="setting-row">
 
+
+  <span>
+    Sesión
+  </span>
+
+
+  <button
+
+    className="pill-button"
+
+    onClick={logout}
+
+  >
+
+    Cerrar sesión
+
+  </button>
+
+
+</div>
     </section>
 
   );

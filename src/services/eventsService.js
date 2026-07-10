@@ -12,6 +12,9 @@ import {
 
 import { db } from "../firebase/firebase";
 import { getCurrentUser } from "./currentUserService";
+import { scheduleEventNotification } from "./notificationService";
+
+
 
 
 
@@ -37,6 +40,9 @@ function getUserEventsCollection(){
   );
 
 }
+
+
+
 
 
 
@@ -72,6 +78,10 @@ export async function getEventsFromCloud(){
 
 
 
+
+
+
+
 // Guardar evento
 
 export async function saveEventToCloud(event){
@@ -89,9 +99,25 @@ export async function saveEventToCloud(event){
     );
 
 
+
+  await scheduleEventNotification({
+
+    ...event,
+
+    id: docRef.id
+
+  });
+
+
+
   return docRef.id;
 
 }
+
+
+
+
+
 
 
 
@@ -121,6 +147,10 @@ export async function deleteEventFromCloud(cloudId){
   );
 
 }
+
+
+
+
 
 
 
@@ -158,6 +188,11 @@ export async function updateEventInCloud(
 
 
 
+
+
+
+
+
 // Escuchar eventos en tiempo real
 
 export function listenEventsFromCloud(callback){
@@ -165,6 +200,7 @@ export function listenEventsFromCloud(callback){
 
   const eventsCollection =
     getUserEventsCollection();
+
 
 
 
@@ -180,6 +216,7 @@ export function listenEventsFromCloud(callback){
 
 
 
+
   return onSnapshot(
 
     q,
@@ -187,17 +224,47 @@ export function listenEventsFromCloud(callback){
     snapshot => {
 
 
+
       const events =
         snapshot.docs.map(item => ({
 
+
           cloudId:item.id,
 
+
           ...item.data()
+
 
         }));
 
 
+
+
+
+      // Programar notificaciones
+      // de eventos creados desde otros dispositivos
+
+      events.forEach(event => {
+
+
+        scheduleEventNotification({
+
+          ...event,
+
+          id:
+            event.cloudId
+
+        });
+
+
+      });
+
+
+
+
+
       callback(events);
+
 
 
     }

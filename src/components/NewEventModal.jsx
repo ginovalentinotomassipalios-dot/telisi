@@ -7,38 +7,50 @@ export function NewEventModal({
   closeModal
 }) {
 
+
   function handleSubmit(e) {
+
     e.preventDefault();
 
     addEvent(e);
 
     closeModal();
+
   }
 
 
+
   return createPortal(
+
 
     <div
       className="telisi-modal-overlay"
       onClick={closeModal}
     >
 
+
       <section
         className="telisi-modal-card"
         onClick={(e) => e.stopPropagation()}
       >
 
+
         <div className="telisi-modal-header">
 
+
           <div>
+
             <small>
               NUEVO EVENTO
             </small>
 
+
             <h2>
               Agendar actividad
             </h2>
+
           </div>
+
 
 
           <button
@@ -48,7 +60,9 @@ export function NewEventModal({
             ×
           </button>
 
+
         </div>
+
 
 
 
@@ -58,11 +72,14 @@ export function NewEventModal({
         >
 
 
+
           <div className="field">
+
 
             <label>
               Fecha
             </label>
+
 
             <input
               type="date"
@@ -75,16 +92,21 @@ export function NewEventModal({
               }
             />
 
+
           </div>
+
+
 
 
 
 
           <div className="field">
 
+
             <label>
               Hora
             </label>
+
 
             <input
               type="time"
@@ -97,12 +119,18 @@ export function NewEventModal({
               }
             />
 
+
           </div>
 
 
 
 
+
+
+
+
           <div className="field full">
+
 
             <label>
               Evento
@@ -121,7 +149,87 @@ export function NewEventModal({
               }
             />
 
+
           </div>
+
+
+
+
+
+
+
+
+
+          <div className="field full">
+
+
+            <label>
+              🔔 Recordatorio
+            </label>
+
+
+            <select
+
+              className="telisi-select"
+
+              value={
+                newEvent.reminder ?? 10
+              }
+
+              onChange={(e) =>
+                setNewEvent({
+
+                  ...newEvent,
+
+                  reminder:
+                    Number(e.target.value)
+
+                })
+              }
+
+            >
+
+
+              <option value="-1">
+                Sin aviso
+              </option>
+
+
+              <option value="0">
+                Al comenzar
+              </option>
+
+
+              <option value="5">
+                5 minutos antes
+              </option>
+
+
+              <option value="10">
+                10 minutos antes
+              </option>
+
+
+              <option value="30">
+                30 minutos antes
+              </option>
+
+
+              <option value="60">
+                1 hora antes
+              </option>
+
+
+            </select>
+
+
+          </div>
+
+
+
+
+
+
 
 
 
@@ -129,13 +237,21 @@ export function NewEventModal({
           <div className="telisi-modal-actions">
 
 
+
             <button
               type="button"
               className="cancel"
               onClick={closeModal}
             >
+
               Cancelar
+
             </button>
+
+
+
+
+
 
 
 
@@ -143,22 +259,32 @@ export function NewEventModal({
               type="submit"
               className="save"
             >
+
               Guardar
+
             </button>
+
 
 
           </div>
 
 
+
+
+
         </form>
+
 
 
       </section>
 
 
+
     </div>,
+
 
     document.body
 
   );
+
 }
