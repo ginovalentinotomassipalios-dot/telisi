@@ -1,4 +1,4 @@
-import { Icon } from "./Icon";
+import { Icon } from "../ui/Icon";
 
 export function AppHeader({ view, hideHeader }) {
   const title = view === "home" ? "Inicio" : view === "calendar" ? "Calendario" : "Ajustes";

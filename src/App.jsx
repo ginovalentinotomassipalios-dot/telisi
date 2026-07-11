@@ -4,10 +4,10 @@ import {
   useState
 } from "react";
 
-import { AppHeader } from "./components/AppHeader";
-import { BottomNav } from "./components/BottomNav";
-import { NewCalendarModal } from "./components/NewCalendarModal";
-import { NewEventModal } from "./components/NewEventModal";
+import { AppHeader } from "./components/layout/AppHeader";
+import { BottomNav } from "./components/navigation/BottomNav";
+import { NewCalendarModal } from "./components/modals/NewCalendarModal";
+import { NewEventModal } from "./components/modals/NewEventModal";
 
 import { CalendarMobile } from "./pages/CalendarMobile";
 import { CalendarPage } from "./pages/CalendarPage";

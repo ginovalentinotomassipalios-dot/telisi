@@ -1,5 +1,5 @@
-import { monthNames, shortWeekdays } from "../data";
-import { getCalendar } from "../utils/calendar";
+import { monthNames, shortWeekdays } from "../../data";
+import { getCalendar } from "../../utils/calendar";
 
 export function Month({
   year,

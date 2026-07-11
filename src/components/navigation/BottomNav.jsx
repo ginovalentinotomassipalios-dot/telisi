@@ -1,4 +1,4 @@
-import { Icon } from "./Icon";
+import { Icon } from "../ui/Icon";
 
 export function BottomNav({ view, setView }) {
   return (
