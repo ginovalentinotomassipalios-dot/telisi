@@ -123,7 +123,13 @@ export function App() {
   const hideHeader = useHideHeader();
 
   const splash = useSplash();
+useEffect(() => {
+  document.body.className = `app-theme-${appTheme}`;
 
+  return () => {
+    document.body.className = "";
+  };
+}, [appTheme]);
   const [newCal, setNewCal] = useState({
     name: "",
     icon: "📅",
