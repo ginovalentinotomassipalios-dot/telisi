@@ -4,6 +4,7 @@ import {
   useState
 } from "react";
 import { useIsMobile } from "./hooks/useIsMobile";
+import { useHideHeader } from "./hooks/useHideHeader";
 import { AppHeader } from "./components/layout/AppHeader";
 import { BottomNav } from "./components/navigation/BottomNav";
 import { NewCalendarModal } from "./components/modals/NewCalendarModal";
@@ -122,8 +123,7 @@ export function App() {
   const [eventModal, setEventModal] =
     useState(false);
 
-  const [hideHeader, setHideHeader] =
-    useState(false);
+  const hideHeader = useHideHeader();
 
   const [splash, setSplash] = useState(
     () =>
@@ -271,45 +271,7 @@ export function App() {
       clearTimeout(timer);
     };
   }, [splash]);
-
-
-  /* =========================
-     HEADER AL HACER SCROLL
-  ========================= */
-
-  useEffect(() => {
-    let lastY =
-      window.scrollY;
-
-    function handleScroll() {
-      const currentY =
-        window.scrollY;
-
-      setHideHeader(
-        currentY > lastY &&
-        currentY > 80
-      );
-
-      lastY = currentY;
-    }
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true
-      }
-    );
-
-    return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-    };
-  }, []);
-
-
+ 
   /* =========================
      EVENTOS VISIBLES
   ========================= */
