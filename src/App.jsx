@@ -5,6 +5,7 @@ import {
 } from "react";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { useHideHeader } from "./hooks/useHideHeader";
+import { useAuth } from "./hooks/useAuth";
 import { AppHeader } from "./components/layout/AppHeader";
 import { BottomNav } from "./components/navigation/BottomNav";
 import { NewCalendarModal } from "./components/modals/NewCalendarModal";
@@ -34,18 +35,13 @@ import {
   checkUpcomingNotifications
 } from "./services/notificationsService";
 
-import {
-  listenAuth
-} from "./services/authService";
-
-
 export function App() {
   const isMobile = useIsMobile();
 
-  const [user, setUser] = useState(null);
-
-  const [checkingAuth, setCheckingAuth] =
-    useState(true);
+  const {
+  user,
+  checkingAuth
+} = useAuth();
 
   const [view, setView] =
     useState("home");
@@ -142,29 +138,6 @@ export function App() {
   /* =========================
      CONFIGURACIÓN INICIAL
   ========================= */
-
-  /* =========================
-     AUTENTICACIÓN
-  ========================= */
-
-  useEffect(() => {
-    const unsubscribe = listenAuth(
-      currentUser => {
-        console.log(
-          "USUARIO FIREBASE:",
-          currentUser
-        );
-
-        setUser(currentUser);
-        setCheckingAuth(false);
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
 
   /* =========================
      ALMACENAMIENTO LOCAL
