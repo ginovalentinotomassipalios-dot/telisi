@@ -1,18 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 
 import { AppHeader } from "./components/AppHeader";
 import { BottomNav } from "./components/BottomNav";
 import { NewCalendarModal } from "./components/NewCalendarModal";
 import { NewEventModal } from "./components/NewEventModal";
 
-import { Home } from "./pages/Home";
-import { CalendarPage } from "./pages/CalendarPage";
 import { CalendarMobile } from "./pages/CalendarMobile";
+import { CalendarPage } from "./pages/CalendarPage";
+import { Home } from "./pages/Home";
+import { Login } from "./pages/Login";
 import { Settings } from "./pages/Settings";
 
-import { defaultCalendars, defaultEvents } from "./data";
+import {
+  defaultCalendars,
+  defaultEvents
+} from "./data";
 
-import { getCalendar } from "./utils/calendar";
 import { todayString } from "./utils/date";
 import { firebaseTest } from "./utils/firebaseTest";
 
@@ -22,38 +29,87 @@ import {
   listenEventsFromCloud
 } from "./services/eventsService";
 
-import { checkUpcomingNotifications } from "./services/notificationsService";
-import { listenAuth } from "./services/authService";
-import { Login } from "./pages/Login";
+import {
+  checkUpcomingNotifications
+} from "./services/notificationsService";
+
+import {
+  listenAuth
+} from "./services/authService";
+
 
 export function App() {
-  console.log("TELISI APP NUEVA CARGADA");
-  window.firebaseTest = firebaseTest;
+  const [isMobile, setIsMobile] = useState(
+    () => window.innerWidth <= 768
+  );
 
   const [user, setUser] = useState(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
-  const [view, setView] = useState("home");
-  const [year, setYear] = useState(2026);
+  const [checkingAuth, setCheckingAuth] =
+    useState(true);
+
+  const [view, setView] =
+    useState("home");
+
+  const [year, setYear] =
+    useState(2026);
 
   const [active, setActive] = useState(
-    () => localStorage.getItem("telisi_active") || "academico"
+    () =>
+      localStorage.getItem(
+        "telisi_active"
+      ) || "academico"
   );
 
   const [appTheme, setAppTheme] = useState(
-    () => localStorage.getItem("telisi_app_theme") || "amethyst"
+    () =>
+      localStorage.getItem(
+        "telisi_app_theme"
+      ) || "amethyst"
   );
 
   const [calendars, setCalendars] = useState(
-    () =>
-      JSON.parse(localStorage.getItem("telisi_calendars")) ||
-      defaultCalendars
+    () => {
+      try {
+        const storedCalendars =
+          localStorage.getItem(
+            "telisi_calendars"
+          );
+
+        return storedCalendars
+          ? JSON.parse(storedCalendars)
+          : defaultCalendars;
+      } catch (error) {
+        console.error(
+          "No se pudieron leer los calendarios locales:",
+          error
+        );
+
+        return defaultCalendars;
+      }
+    }
   );
 
   const [events, setEvents] = useState(
-    () =>
-      JSON.parse(localStorage.getItem("telisi_events")) ||
-      defaultEvents
+    () => {
+      try {
+        const storedEvents =
+          localStorage.getItem(
+            "telisi_events"
+          );
+
+        return storedEvents
+          ? JSON.parse(storedEvents)
+          : defaultEvents;
+      } catch (error) {
+        console.error(
+          "No se pudieron leer los eventos locales:",
+          error
+        );
+
+        return defaultEvents;
+      }
+    }
   );
 
   const [newEvent, setNewEvent] = useState({
@@ -62,13 +118,20 @@ export function App() {
     text: ""
   });
 
-  const [modal, setModal] = useState(false);
-  const [eventModal, setEventModal] = useState(false);
-  const [hideHeader, setHideHeader] = useState(false);
-const isMobile = window.innerWidth <= 768;
+  const [modal, setModal] =
+    useState(false);
+
+  const [eventModal, setEventModal] =
+    useState(false);
+
+  const [hideHeader, setHideHeader] =
+    useState(false);
 
   const [splash, setSplash] = useState(
-    () => !sessionStorage.getItem("telisi_splash_seen")
+    () =>
+      !sessionStorage.getItem(
+        "telisi_splash_seen"
+      )
   );
 
   const [newCal, setNewCal] = useState({
@@ -79,30 +142,65 @@ const isMobile = window.innerWidth <= 768;
 
 
   /* =========================
+     CONFIGURACIÓN INICIAL
+  ========================= */
+
+  useEffect(() => {
+    console.log(
+      "TELISI APP NUEVA CARGADA"
+    );
+
+    window.firebaseTest =
+      firebaseTest;
+  }, []);
+
+
+  /* =========================
+     DETECCIÓN MÓVIL
+  ========================= */
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(
+        window.innerWidth <= 768
+      );
+    }
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+    };
+  }, []);
+
+
+  /* =========================
      AUTENTICACIÓN
   ========================= */
 
   useEffect(() => {
+    const unsubscribe = listenAuth(
+      currentUser => {
+        console.log(
+          "USUARIO FIREBASE:",
+          currentUser
+        );
 
-  const unsubscribe = listenAuth((currentUser) => {
-
-    console.log(
-      "USUARIO FIREBASE:",
-      currentUser
+        setUser(currentUser);
+        setCheckingAuth(false);
+      }
     );
 
-
-    setUser(currentUser);
-
-    setCheckingAuth(false);
-
-  });
-
-
-  return () => unsubscribe();
-
-
-}, []);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
 
   /* =========================
@@ -143,18 +241,27 @@ const isMobile = window.innerWidth <= 768;
   ========================= */
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      return undefined;
+    }
 
-    const unsubscribe = listenEventsFromCloud((cloudEvents) => {
-      setEvents(cloudEvents);
+    const unsubscribe =
+      listenEventsFromCloud(
+        cloudEvents => {
+          setEvents(cloudEvents);
 
-      localStorage.setItem(
-        "telisi_events",
-        JSON.stringify(cloudEvents)
+          localStorage.setItem(
+            "telisi_events",
+            JSON.stringify(
+              cloudEvents
+            )
+          );
+        }
       );
-    });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, [user]);
 
 
@@ -163,9 +270,16 @@ const isMobile = window.innerWidth <= 768;
   ========================= */
 
   useEffect(() => {
-    if (!user || events.length === 0) return;
+    if (
+      !user ||
+      events.length === 0
+    ) {
+      return;
+    }
 
-    checkUpcomingNotifications(events);
+    checkUpcomingNotifications(
+      events
+    );
   }, [events, user]);
 
 
@@ -174,18 +288,25 @@ const isMobile = window.innerWidth <= 768;
   ========================= */
 
   useEffect(() => {
-    if (!splash) return;
+    if (!splash) {
+      return undefined;
+    }
 
-    const timer = setTimeout(() => {
-      sessionStorage.setItem(
-        "telisi_splash_seen",
-        "true"
-      );
+    const timer = setTimeout(
+      () => {
+        sessionStorage.setItem(
+          "telisi_splash_seen",
+          "true"
+        );
 
-      setSplash(false);
-    }, 950);
+        setSplash(false);
+      },
+      950
+    );
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [splash]);
 
 
@@ -194,13 +315,16 @@ const isMobile = window.innerWidth <= 768;
   ========================= */
 
   useEffect(() => {
-    let lastY = window.scrollY;
+    let lastY =
+      window.scrollY;
 
     function handleScroll() {
-      const currentY = window.scrollY;
+      const currentY =
+        window.scrollY;
 
       setHideHeader(
-        currentY > lastY && currentY > 80
+        currentY > lastY &&
+        currentY > 80
       );
 
       lastY = currentY;
@@ -209,7 +333,9 @@ const isMobile = window.innerWidth <= 768;
     window.addEventListener(
       "scroll",
       handleScroll,
-      { passive: true }
+      {
+        passive: true
+      }
     );
 
     return () => {
@@ -225,62 +351,88 @@ const isMobile = window.innerWidth <= 768;
      EVENTOS VISIBLES
   ========================= */
 
-  const visibleEvents = useMemo(() => {
-    const list =
-      active === "todos"
-        ? events
-        : events.filter(
-            event => event.calendarId === active
-          );
+  const visibleEvents = useMemo(
+    () => {
+      const list =
+        active === "todos"
+          ? events
+          : events.filter(
+              event =>
+                event.calendarId ===
+                active
+            );
 
-    return list
-      .filter(
-        event =>
-          event.date.startsWith(String(year))
-      )
-      .sort(
-        (a, b) =>
-          `${a.date}${a.time || ""}`.localeCompare(
-            `${b.date}${b.time || ""}`
+      return list
+        .filter(event =>
+          event.date?.startsWith(
+            String(year)
           )
-      );
-  }, [events, active, year]);
-
-
-  const todayEvents = useMemo(() => {
-    return events
-      .filter(
-        event => event.date === todayString()
-      )
-      .sort(
-        (a, b) =>
-          (a.time || "").localeCompare(
-            b.time || ""
-          )
-      );
-  }, [events]);
-
-
-  const nextEvent = useMemo(() => {
-    const now = new Date();
-
-    return (
-      events
-        .slice()
-        .sort(
-          (a, b) =>
-            `${a.date}${a.time || ""}`.localeCompare(
+        )
+        .sort((a, b) =>
+          `${a.date}${a.time || ""}`
+            .localeCompare(
               `${b.date}${b.time || ""}`
             )
-        )
-        .find(
+        );
+    },
+    [
+      events,
+      active,
+      year
+    ]
+  );
+
+
+  const todayEvents = useMemo(
+    () => {
+      return events
+        .filter(
           event =>
-            new Date(
-              `${event.date}T${event.time || "00:00"}`
-            ) >= now
-        ) || events[0]
-    );
-  }, [events]);
+            event.date ===
+            todayString()
+        )
+        .sort((a, b) =>
+          (a.time || "")
+            .localeCompare(
+              b.time || ""
+            )
+        );
+    },
+    [events]
+  );
+
+
+  const nextEvent = useMemo(
+    () => {
+      const now =
+        new Date();
+
+      return (
+        events
+          .slice()
+          .sort((a, b) =>
+            `${a.date}${a.time || ""}`
+              .localeCompare(
+                `${b.date}${b.time || ""}`
+              )
+          )
+          .find(event => {
+            const eventDate =
+              new Date(
+                `${event.date}T${
+                  event.time ||
+                  "00:00"
+                }`
+              );
+
+            return eventDate >= now;
+          }) ||
+        events[0] ||
+        null
+      );
+    },
+    [events]
+  );
 
 
   /* =========================
@@ -290,7 +442,11 @@ const isMobile = window.innerWidth <= 768;
   async function addEvent(event) {
     event.preventDefault();
 
-    if (!newEvent.text.trim()) return;
+    if (
+      !newEvent.text.trim()
+    ) {
+      return;
+    }
 
     const target =
       active === "todos"
@@ -302,13 +458,17 @@ const isMobile = window.innerWidth <= 768;
       calendarId: target
     };
 
-    setEvents(currentEvents => [
-      ...currentEvents,
-      eventToAdd
-    ]);
+    setEvents(
+      currentEvents => [
+        ...currentEvents,
+        eventToAdd
+      ]
+    );
 
     try {
-      await saveEventToCloud(eventToAdd);
+      await saveEventToCloud(
+        eventToAdd
+      );
     } catch (error) {
       console.error(
         "Error guardando evento:",
@@ -321,6 +481,8 @@ const isMobile = window.innerWidth <= 768;
       time: "09:00",
       text: ""
     });
+
+    setEventModal(false);
   }
 
 
@@ -328,14 +490,20 @@ const isMobile = window.innerWidth <= 768;
      ELIMINAR EVENTO
   ========================= */
 
-  async function deleteEvent(event) {
-    setEvents(currentEvents =>
-      currentEvents.filter(
-        currentEvent => currentEvent !== event
-      )
+  async function deleteEvent(
+    event
+  ) {
+    setEvents(
+      currentEvents =>
+        currentEvents.filter(
+          currentEvent =>
+            currentEvent !== event
+        )
     );
 
-    if (!event.cloudId) return;
+    if (!event.cloudId) {
+      return;
+    }
 
     try {
       await deleteEventFromCloud(
@@ -355,17 +523,24 @@ const isMobile = window.innerWidth <= 768;
   ========================= */
 
   function createCalendar() {
-    if (!newCal.name.trim()) return;
+    if (!newCal.name.trim()) {
+      return;
+    }
 
-    const id = `cal_${Date.now()}`;
+    const id =
+      `cal_${Date.now()}`;
 
-    const allCalendar = calendars.find(
-      calendar => calendar.id === "todos"
-    );
+    const allCalendar =
+      calendars.find(
+        calendar =>
+          calendar.id === "todos"
+      );
 
-    const regularCalendars = calendars.filter(
-      calendar => calendar.id !== "todos"
-    );
+    const regularCalendars =
+      calendars.filter(
+        calendar =>
+          calendar.id !== "todos"
+      );
 
     const updatedCalendars = [
       ...regularCalendars,
@@ -376,10 +551,15 @@ const isMobile = window.innerWidth <= 768;
     ];
 
     if (allCalendar) {
-      updatedCalendars.push(allCalendar);
+      updatedCalendars.push(
+        allCalendar
+      );
     }
 
-    setCalendars(updatedCalendars);
+    setCalendars(
+      updatedCalendars
+    );
+
     setActive(id);
 
     setNewCal({
@@ -398,26 +578,44 @@ const isMobile = window.innerWidth <= 768;
 
   function exportData() {
     const data = {
-      version: "0.8.0",
+      version: "0.9.0",
       calendars,
       events,
       appTheme
     };
 
     const blob = new Blob(
-      [JSON.stringify(data, null, 2)],
+      [
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      ],
       {
-        type: "application/json"
+        type:
+          "application/json"
       }
     );
 
-    const link = document.createElement("a");
+    const link =
+      document.createElement(
+        "a"
+      );
 
-    link.href = URL.createObjectURL(blob);
-    link.download = "telisi-backup.json";
+    link.href =
+      URL.createObjectURL(
+        blob
+      );
+
+    link.download =
+      "telisi-backup.json";
+
     link.click();
 
-    URL.revokeObjectURL(link.href);
+    URL.revokeObjectURL(
+      link.href
+    );
   }
 
 
@@ -456,9 +654,12 @@ const isMobile = window.innerWidth <= 768;
 
   return (
     <main
-      className={`shell app-theme-${appTheme}`}
+      className={
+        `shell app-theme-${appTheme}`
+      }
       style={{
-        "--accent": "var(--brand)"
+        "--accent":
+          "var(--brand)"
       }}
     >
       <AppHeader
@@ -471,72 +672,77 @@ const isMobile = window.innerWidth <= 768;
         key={view}
       >
         {view === "home" && (
-       <Home
-
-  user={user}
-
-  calendars={calendars}
-
-  events={events}
-
-  nextEvent={nextEvent}
-
-  todayEvents={todayEvents}
-
-  setActive={setActive}
-
-  setView={setView}
-
-  openModal={() =>
-    setModal(true)
-  }
-
-/>
+          <Home
+            user={user}
+            calendars={calendars}
+            events={events}
+            nextEvent={nextEvent}
+            todayEvents={todayEvents}
+            setActive={setActive}
+            setView={setView}
+            openModal={() =>
+              setModal(true)
+            }
+          />
         )}
 
-       {view === "calendar" && (
-
-  isMobile ? (
-
-    <CalendarMobile
-      year={year}
-      setYear={setYear}
-      calendars={calendars}
-      active={active}
-      setActive={setActive}
-      visibleEvents={visibleEvents}
-      newEvent={newEvent}
-      setNewEvent={setNewEvent}
-      addEvent={addEvent}
-      deleteEvent={deleteEvent}
-      openModal={() => setModal(true)}
-    />
-
-  ) : (
-
-    <CalendarPage
-      year={year}
-      setYear={setYear}
-      calendars={calendars}
-      active={active}
-      setActive={setActive}
-      visibleEvents={visibleEvents}
-      newEvent={newEvent}
-      setNewEvent={setNewEvent}
-      addEvent={addEvent}
-      deleteEvent={deleteEvent}
-      openModal={() => setModal(true)}
-      openEventModal={() => setEventModal(true)}
-    />
-
-  )
-
-)}
+        {view === "calendar" && (
+          isMobile ? (
+            <CalendarMobile
+              year={year}
+              setYear={setYear}
+              calendars={calendars}
+              active={active}
+              setActive={setActive}
+              visibleEvents={
+                visibleEvents
+              }
+              newEvent={newEvent}
+              setNewEvent={
+                setNewEvent
+              }
+              addEvent={addEvent}
+              deleteEvent={
+                deleteEvent
+              }
+              openModal={() =>
+                setModal(true)
+              }
+            />
+          ) : (
+            <CalendarPage
+              year={year}
+              setYear={setYear}
+              calendars={calendars}
+              active={active}
+              setActive={setActive}
+              visibleEvents={
+                visibleEvents
+              }
+              newEvent={newEvent}
+              setNewEvent={
+                setNewEvent
+              }
+              addEvent={addEvent}
+              deleteEvent={
+                deleteEvent
+              }
+              openModal={() =>
+                setModal(true)
+              }
+              openEventModal={() =>
+                setEventModal(true)
+              }
+            />
+          )
+        )}
 
         {view === "settings" && (
           <Settings
             appTheme={appTheme}
-            setAppTheme={setAppTheme}
+            setAppTheme={
+              setAppTheme
+            }
             exportData={exportData}
           />
         )}
@@ -567,7 +773,9 @@ const isMobile = window.innerWidth <= 768;
         <NewCalendarModal
           newCal={newCal}
           setNewCal={setNewCal}
-          createCalendar={createCalendar}
+          createCalendar={
+            createCalendar
+          }
           closeModal={() =>
             setModal(false)
           }
@@ -577,7 +785,9 @@ const isMobile = window.innerWidth <= 768;
       {eventModal && (
         <NewEventModal
           newEvent={newEvent}
-          setNewEvent={setNewEvent}
+          setNewEvent={
+            setNewEvent
+          }
           addEvent={addEvent}
           closeModal={() =>
             setEventModal(false)

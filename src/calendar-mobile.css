@@ -3,6 +3,12 @@
 ========================================= */
 
 .calendar-mobile {
+<<<<<<< HEAD
+=======
+  --calendar-text: var(--text-main);
+  --calendar-text-secondary: var(--text-secondary);
+  --calendar-text-soft: var(--text-soft);
+>>>>>>> feature/calendario-mobile
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -19,9 +25,12 @@
 ========================================= */
 
 .calendar-mobile-create {
+<<<<<<< HEAD
   --calendar-text: var(--text-main);
   --calendar-text-secondary: var(--text-secondary);
   --calendar-text-soft: var(--text-soft);
+=======
+>>>>>>> feature/calendario-mobile
   width: 100%;
   padding: 18px;
   box-sizing: border-box;
