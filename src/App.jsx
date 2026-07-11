@@ -4,7 +4,7 @@ import { AppHeader } from "./components/AppHeader";
 import { BottomNav } from "./components/BottomNav";
 import { NewCalendarModal } from "./components/NewCalendarModal";
 import { NewEventModal } from "./components/NewEventModal";
-
+import { CalendarMobile } from "./pages/CalendarMobile";
 import { Home } from "./pages/Home";
 import { CalendarPage } from "./pages/CalendarPage";
 import { Settings } from "./pages/Settings";
@@ -26,6 +26,26 @@ import { listenAuth } from "./services/authService";
 import { Login } from "./pages/Login";
 
 export function App() {
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 768
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+  }, []);
   console.log("TELISI APP NUEVA CARGADA");
   window.firebaseTest = firebaseTest;
 
@@ -492,26 +512,42 @@ export function App() {
 />
         )}
 
-        {view === "calendar" && (
-          <CalendarPage
-            year={year}
-            setYear={setYear}
-            calendars={calendars}
-            active={active}
-            setActive={setActive}
-            visibleEvents={visibleEvents}
-            newEvent={newEvent}
-            setNewEvent={setNewEvent}
-            addEvent={addEvent}
-            deleteEvent={deleteEvent}
-            openModal={() =>
-              setModal(true)
-            }
-            openEventModal={() =>
-              setEventModal(true)
-            }
-          />
-        )}
+       {view === "calendar" && (
+
+  isMobile ? (
+
+    <CalendarMobile
+      year={year}
+      setYear={setYear}
+      calendars={calendars}
+      active={active}
+      setActive={setActive}
+      visibleEvents={visibleEvents}
+      newEvent={newEvent}
+      setNewEvent={setNewEvent}
+      addEvent={addEvent}
+      deleteEvent={deleteEvent}
+      openModal={() => setModal(true)}
+    />
+
+  ) : (
+
+    <CalendarPage
+      year={year}
+      setYear={setYear}
+      calendars={calendars}
+      active={active}
+      setActive={setActive}
+      visibleEvents={visibleEvents}
+      newEvent={newEvent}
+      setNewEvent={setNewEvent}
+      addEvent={addEvent}
+      deleteEvent={deleteEvent}
+      openModal={() => setModal(true)}
+    />
+
+  )
+)}
 
         {view === "settings" && (
           <Settings

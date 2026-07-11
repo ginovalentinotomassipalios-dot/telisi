@@ -12,4 +12,5 @@ import "./unified-theme.css";
 import "./mobile.css";
 import "./mobile-v07.css";
 import "./nav-lock.css";
+import "./calendar-mobile.css";
 createRoot(document.getElementById("root")).render(<App />);

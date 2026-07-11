@@ -1,0 +1,715 @@
+/* =========================================
+   TELISI — CALENDARIO MOBILE
+========================================= */
+
+.calendar-mobile {
+  --calendar-text: var(--text-main);
+  --calendar-text-secondary: var(--text-secondary);
+  --calendar-text-soft: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 12px 120px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
+/* =========================================
+   CREAR EVENTO
+========================================= */
+
+.calendar-mobile-create {
+  width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  border: 1px solid rgba(124, 77, 139, 0.14);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow:
+    0 12px 32px rgba(38, 19, 45, 0.08);
+}
+
+.calendar-mobile-create h2 {
+  margin: 0 0 14px;
+  color: var(--brand-dark);
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.calendar-mobile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.calendar-mobile-form input,
+.calendar-mobile-form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  background: var(--surface-secondary);
+  color: var(--brand-dark);
+  font: inherit;
+}
+
+.calendar-mobile-form input:focus,
+.calendar-mobile-form select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(124, 77, 139, 0.12);
+}
+
+.calendar-mobile-date-time {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.calendar-mobile-form > button {
+  min-height: 48px;
+  border: none;
+  border-radius: 15px;
+  background: var(--brand);
+  color: white;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow:
+    0 8px 18px rgba(67, 28, 76, 0.2);
+}
+
+.calendar-mobile-form > button:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================
+   SOLAPAS DE CALENDARIOS
+========================================= */
+
+.calendar-mobile-tabs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  padding: 2px 1px 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.calendar-mobile-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.calendar-mobile-tabs button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(80, 61, 86, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.calendar-mobile-tabs button.active {
+  border-color: transparent;
+  background: var(--brand);
+  color: white;
+  box-shadow:
+    0 7px 16px rgba(67, 28, 76, 0.18);
+}
+
+.calendar-mobile-tabs .calendar-mobile-plus {
+  width: 40px;
+  padding: 0;
+  font-size: 22px;
+}
+
+
+/* =========================================
+   AÑO Y BARRA HORIZONTAL DE MESES
+========================================= */
+
+.calendar-mobile-months {
+  width: 100%;
+  padding: 16px 0 4px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 8px 26px rgba(38, 19, 45, 0.06);
+}
+
+.calendar-mobile-year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 14px 14px;
+}
+
+.calendar-mobile-year strong {
+  min-width: 76px;
+  color: var(--text-main);
+  font-size: 19px;
+  text-align: center;
+}
+
+.calendar-mobile-year button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: var(--brand-light);
+color: var(--brand-dark);
+  font-size: 19px;
+  cursor: pointer;
+}
+
+
+/* =========================================
+   CUADRÍCULA DEL MES
+========================================= */
+
+.calendar-mobile-grid-card {
+  width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 12px 32px rgba(38, 19, 45, 0.07);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.calendar-mobile-grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.calendar-mobile-grid-header h2 {
+  margin: 0;
+  color: var(--brand-dark);
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-grid-header span {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.calendar-mobile-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 9px 6px;
+  border-radius: 999px;
+background: var(--brand-light);
+  background: var(--brand-light);
+}
+
+.calendar-mobile-weekdays span {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.calendar-mobile-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.calendar-mobile-empty-day {
+  aspect-ratio: 1;
+}
+
+.calendar-mobile-day-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: 13px;
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.calendar-mobile-day-button:active {
+  transform: scale(0.92);
+}
+
+.calendar-mobile-day-number {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.calendar-mobile-day-button.today {
+ background: var(--brand-light);
+color: var(--brand-dark);
+}
+
+.calendar-mobile-day-button.today::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(124, 77, 139, 0.22);
+  border-radius: 11px;
+}
+
+.calendar-mobile-day-button.selected {
+  background: var(--brand);
+  color: white;
+  box-shadow:
+    border:2px solid var(--brand-dark);
+}
+
+.calendar-mobile-day-event-dot {
+  position: absolute;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.calendar-mobile-day-button.selected
+.calendar-mobile-day-event-dot {
+  background: white;
+}
+
+@media (max-width: 360px) {
+  .calendar-mobile-grid-card {
+    padding: 14px;
+  }
+
+  .calendar-mobile-days-grid {
+    gap: 3px;
+  }
+
+  .calendar-mobile-day-button {
+    border-radius: 10px;
+  }
+
+  .calendar-mobile-day-number {
+    font-size: 12px;
+  }
+}
+
+/* =========================================
+   DETALLE DEL MES
+========================================= */
+
+.calendar-mobile-detail {
+  width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 12px 32px rgba(38, 19, 45, 0.07);
+}
+
+.calendar-mobile-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.calendar-mobile-detail-header small {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.calendar-mobile-detail-header h2 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 25px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-detail-header > span {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 9px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: rgba(124, 77, 139, 0.1);
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.calendar-mobile-empty {
+  padding: 30px 16px;
+  border: 1px dashed rgba(124, 77, 139, 0.22);
+  border-radius: 18px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+
+/* =========================================
+   EVENTOS AGRUPADOS POR DÍA
+========================================= */
+
+.calendar-mobile-events {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.calendar-mobile-day {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-mobile-day h3 {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-event-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 13px 10px 13px 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid rgba(80, 61, 86, 0.1);
+  border-radius: 18px;
+  background: var(--surface-soft);
+}
+
+.calendar-mobile-event-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 18px 0 0 18px;
+  background: var(--brand);
+}
+
+.calendar-mobile-event-time {
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.calendar-mobile-event-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 5px;
+}
+
+.calendar-mobile-event-info strong {
+  overflow: hidden;
+  color: var(--text-main);
+  font-size: 15px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-mobile-event-info small {
+  overflow: hidden;
+  color: var(--text-soft);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-mobile-delete {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(122, 81, 127, 0.08);
+  color: var(--text-secondary);
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.calendar-mobile-delete:active {
+  transform: scale(0.94);
+}
+
+
+/* =========================================
+   PANTALLAS MUY PEQUEÑAS
+========================================= */
+
+@media (max-width: 360px) {
+  .calendar-mobile {
+    padding-inline: 8px;
+  }
+
+  .calendar-mobile-create,
+  .calendar-mobile-detail {
+    padding: 15px;
+  }
+
+  .calendar-mobile-date-time {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-mobile-event-card {
+    grid-template-columns: 52px minmax(0, 1fr) 32px;
+    gap: 8px;
+  }
+}
+
+
+/* =========================================
+   SEGURIDAD: SOLO CELULAR
+========================================= */
+
+@media (min-width: 769px) {
+  .calendar-mobile {
+    display: none;
+  }
+}
+/* =========================================
+   ANIMACIÓN AL CAMBIAR DE MES
+========================================= */
+
+.calendar-mobile-grid-card {
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+  will-change: transform, opacity;
+}
+
+.calendar-mobile-grid-card.slide-left {
+  transform: translateX(-45px);
+  opacity: 0;
+}
+
+.calendar-mobile-grid-card.slide-right {
+  transform: translateX(45px);
+  opacity: 0;
+}
+
+.calendar-mobile-grid-card.enter-right {
+  animation: calendar-enter-right 220ms ease;
+}
+
+.calendar-mobile-grid-card.enter-left {
+  animation: calendar-enter-left 220ms ease;
+}
+
+@keyframes calendar-enter-right {
+  from {
+    transform: translateX(45px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes calendar-enter-left {
+  from {
+    transform: translateX(-45px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+/* =========================================
+   BARRA INFINITA DE MESES
+========================================= */
+
+.calendar-mobile-month-window {
+  position: relative;
+  width: 100%;
+  height: 54px;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+/* Pastilla fija en el centro */
+.calendar-mobile-month-window::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  z-index: 2;
+  width: 20%;
+  min-width: 82px;
+  max-width: 100px;
+  height: 48px;
+  border-radius: 15px;
+  background: var(--brand);
+  transform: translateX(-50%);
+  box-shadow:
+    0 7px 16px rgba(67, 28, 76, 0.2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/*
+ * La pista mide 140% del contenedor.
+ * Cada uno de los 7 meses ocupa 20% del ancho visible.
+ * El cuarto mes queda exactamente en el centro.
+ */
+.calendar-mobile-month-track {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 140%;
+  height: 54px;
+  transform: translateX(-50%);
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+  will-change: transform, opacity;
+}
+
+.calendar-mobile-month-name {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 54px;
+  padding: 0 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-month-name span {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-mobile-month-name small {
+  margin-top: 1px;
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.calendar-mobile-month-name.current {
+  color: white;
+}
+
+/* Salida hacia el mes siguiente */
+.calendar-mobile-month-track.months-moving-left {
+  transform:
+    translateX(calc(-50% - 14.2857%));
+  opacity: 0;
+}
+
+/* Salida hacia el mes anterior */
+.calendar-mobile-month-track.months-moving-right {
+  transform:
+    translateX(calc(-50% + 14.2857%));
+  opacity: 0;
+}
+
+/* Entrada del nuevo conjunto de meses */
+.calendar-mobile-month-track.months-enter-right {
+  animation:
+    months-enter-right 220ms ease;
+}
+
+.calendar-mobile-month-track.months-enter-left {
+  animation:
+    months-enter-left 220ms ease;
+}
+
+@keyframes months-enter-right {
+  from {
+    transform:
+      translateX(calc(-50% + 14.2857%));
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      translateX(-50%);
+    opacity: 1;
+  }
+}
+
+@keyframes months-enter-left {
+  from {
+    transform:
+      translateX(calc(-50% - 14.2857%));
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      translateX(-50%);
+    opacity: 1;
+  }
+}
