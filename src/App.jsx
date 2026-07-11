@@ -21,7 +21,7 @@ import {
 } from "./data";
 
 import { todayString } from "./utils/date";
-import { firebaseTest } from "./utils/firebaseTest";
+
 
 import {
   saveEventToCloud,
@@ -145,14 +145,7 @@ export function App() {
      CONFIGURACIÓN INICIAL
   ========================= */
 
-  useEffect(() => {
-    console.log(
-      "TELISI APP NUEVA CARGADA"
-    );
-
-    window.firebaseTest =
-      firebaseTest;
-  }, []);
+ 
 
 
   /* =========================
