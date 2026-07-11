@@ -6,6 +6,7 @@ import {
 import { useIsMobile } from "./hooks/useIsMobile";
 import { useHideHeader } from "./hooks/useHideHeader";
 import { useAuth } from "./hooks/useAuth";
+import { useSplash } from "./hooks/useSplash";
 import { AppHeader } from "./components/layout/AppHeader";
 import { BottomNav } from "./components/navigation/BottomNav";
 import { NewCalendarModal } from "./components/modals/NewCalendarModal";
@@ -121,12 +122,7 @@ export function App() {
 
   const hideHeader = useHideHeader();
 
-  const [splash, setSplash] = useState(
-    () =>
-      !sessionStorage.getItem(
-        "telisi_splash_seen"
-      )
-  );
+  const splash = useSplash();
 
   const [newCal, setNewCal] = useState({
     name: "",
@@ -218,33 +214,6 @@ export function App() {
     );
   }, [events, user]);
 
-
-  /* =========================
-     SPLASH
-  ========================= */
-
-  useEffect(() => {
-    if (!splash) {
-      return undefined;
-    }
-
-    const timer = setTimeout(
-      () => {
-        sessionStorage.setItem(
-          "telisi_splash_seen",
-          "true"
-        );
-
-        setSplash(false);
-      },
-      950
-    );
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [splash]);
- 
   /* =========================
      EVENTOS VISIBLES
   ========================= */
