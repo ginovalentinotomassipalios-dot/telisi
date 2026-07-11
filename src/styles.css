@@ -301,8 +301,8 @@ button {
   padding: 10px;
   text-align: center;
   text-transform: capitalize;
-  color: white;
-  background: var(--dark);
+  color: var(--brand-dark);
+background: transparent;
   font-size: 14px;
 }
 
