@@ -3,7 +3,7 @@ import {
   useMemo,
   useState
 } from "react";
-
+import { useIsMobile } from "./hooks/useIsMobile";
 import { AppHeader } from "./components/layout/AppHeader";
 import { BottomNav } from "./components/navigation/BottomNav";
 import { NewCalendarModal } from "./components/modals/NewCalendarModal";
@@ -39,9 +39,7 @@ import {
 
 
 export function App() {
-  const [isMobile, setIsMobile] = useState(
-    () => window.innerWidth <= 768
-  );
+  const isMobile = useIsMobile();
 
   const [user, setUser] = useState(null);
 
@@ -144,34 +142,6 @@ export function App() {
   /* =========================
      CONFIGURACIÓN INICIAL
   ========================= */
-
- 
-
-
-  /* =========================
-     DETECCIÓN MÓVIL
-  ========================= */
-
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(
-        window.innerWidth <= 768
-      );
-    }
-
-    window.addEventListener(
-      "resize",
-      handleResize
-    );
-
-    return () => {
-      window.removeEventListener(
-        "resize",
-        handleResize
-      );
-    };
-  }, []);
-
 
   /* =========================
      AUTENTICACIÓN
