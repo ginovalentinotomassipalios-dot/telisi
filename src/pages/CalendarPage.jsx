@@ -1,3 +1,9 @@
+import {
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
+
 import { Month } from "../components/calendar/Month";
 import { TeliSelect } from "../components/ui/TeliSelect";
 import { monthNames } from "../data";
@@ -40,6 +46,7 @@ function getRecurrenceLabel(event) {
 
   if (frequency === "monthly") {
     const day = Number(event.date.split("-")[2]);
+
     return `Todos los días ${day}`;
   }
 
@@ -85,8 +92,49 @@ export function CalendarPage({
   openModal,
   openEventModal
 }) {
+  const calendarGridRef = useRef(null);
+  const [calendarHeight, setCalendarHeight] =
+    useState(null);
+
   const activeCalendar =
     getCalendar(calendars, active);
+
+  useLayoutEffect(() => {
+    const grid = calendarGridRef.current;
+
+    if (!grid) {
+      return undefined;
+    }
+
+    function updateHeight() {
+      const nextHeight = Math.ceil(
+        grid.getBoundingClientRect().height
+      );
+
+      setCalendarHeight(nextHeight);
+    }
+
+    updateHeight();
+
+    const observer =
+      new ResizeObserver(updateHeight);
+
+    observer.observe(grid);
+
+    window.addEventListener(
+      "resize",
+      updateHeight
+    );
+
+    return () => {
+      observer.disconnect();
+
+      window.removeEventListener(
+        "resize",
+        updateHeight
+      );
+    };
+  }, []);
 
   const listEvents = visibleEvents.filter(
     (event, index, allEvents) => {
@@ -177,20 +225,35 @@ export function CalendarPage({
       </nav>
 
       <section className="layout calendar-layout-fixed">
-        <section className="calendar-grid annual-grid">
-          {monthNames.map((monthName, monthIndex) => (
-            <Month
-              key={monthName}
-              year={Number(year)}
-              month={monthIndex}
-              events={visibleEvents}
-              calendars={calendars}
-              onDayClick={handleDayClick}
-            />
-          ))}
+        <section
+          ref={calendarGridRef}
+          className="calendar-grid annual-grid"
+        >
+          {monthNames.map(
+            (monthName, monthIndex) => (
+              <Month
+                key={monthName}
+                year={Number(year)}
+                month={monthIndex}
+                events={visibleEvents}
+                calendars={calendars}
+                onDayClick={handleDayClick}
+              />
+            )
+          )}
         </section>
 
-        <aside className="panel event-panel">
+        <aside
+          className="panel event-panel"
+          style={
+            calendarHeight
+              ? {
+                  height: `${calendarHeight}px`,
+                  maxHeight: `${calendarHeight}px`
+                }
+              : undefined
+          }
+        >
           <h2>
             {active === "todos"
               ? "Todos los eventos"
@@ -237,46 +300,50 @@ export function CalendarPage({
             />
 
             <div className="quick-event-option">
-  <label>🔔 Recordatorio</label>
+              <label>🔔 Recordatorio</label>
 
-  <TeliSelect
-    value={newEvent.reminder ?? 10}
-    ariaLabel="Elegir recordatorio"
-    options={reminderOptions}
-    onChange={value =>
-      setNewEvent({
-        ...newEvent,
-        reminder: Number(value)
-      })
-    }
-  />
-</div>
+              <TeliSelect
+                value={newEvent.reminder ?? 10}
+                ariaLabel="Elegir recordatorio"
+                options={reminderOptions}
+                onChange={value =>
+                  setNewEvent({
+                    ...newEvent,
+                    reminder: Number(value)
+                  })
+                }
+              />
+            </div>
 
-<div className="quick-event-option">
-  <label>🔁 Recurrencia</label>
+            <div className="quick-event-option">
+              <label>🔁 Recurrencia</label>
 
-  <TeliSelect
-    value={
-      newEvent.recurrence?.frequency ??
-      "none"
-    }
-    ariaLabel="Elegir recurrencia"
-    options={recurrenceOptions}
-    onChange={frequency =>
-      setNewEvent({
-        ...newEvent,
-        recurrence:
-          frequency === "none"
-            ? null
-            : {
-                frequency,
-                interval: 1
-              }
-      })
-    }
-  />
-</div>
-            <button type="submit">
+              <TeliSelect
+                value={
+                  newEvent.recurrence?.frequency ??
+                  "none"
+                }
+                ariaLabel="Elegir recurrencia"
+                options={recurrenceOptions}
+                onChange={frequency =>
+                  setNewEvent({
+                    ...newEvent,
+                    recurrence:
+                      frequency === "none"
+                        ? null
+                        : {
+                            frequency,
+                            interval: 1
+                          }
+                  })
+                }
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="quick-event-submit"
+            >
               Agregar
             </button>
           </form>

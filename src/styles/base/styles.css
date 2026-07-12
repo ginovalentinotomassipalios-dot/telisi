@@ -1807,24 +1807,25 @@ background: transparent;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
   gap: 24px;
-  align-items: stretch;
+
+  /* Importante: la lista no puede estirar el calendario */
+  align-items: start;
 }
 
 .annual-grid {
-  align-self: stretch;
+  align-self: start;
+  min-height: 0;
 }
 
 .event-panel {
   position: sticky;
   top: 0;
-
-  align-self: stretch;
-  min-height: 0;
-  height: 98.5%;
+  align-self: start;
 
   display: flex;
   flex-direction: column;
 
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -1833,7 +1834,6 @@ background: transparent;
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-
   padding-right: 4px;
   overscroll-behavior: contain;
 }
