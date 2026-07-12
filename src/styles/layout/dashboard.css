@@ -1,0 +1,544 @@
+
+/* Telisi v0.4.1 - Theme engine */
+
+/* Theme variables */
+.app-theme-amethyst {
+  --brand: #7C4D8B;
+  --brand-light: #E9DDF0;
+  --brand-dark: #4E2E59;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F7F2F9;
+  --surface-soft: #FBF8FC;
+
+  --text-main: #2F2433;
+  --text-secondary: #675A6D;
+  --text-soft: #97899C;
+
+  --border: #E7DCEB;
+  --shadow: rgba(61, 37, 68, 0.12);
+
+  --success: #4F8A68;
+  --warning: #C8953D;
+  --danger: #B75A68;
+}
+
+.app-theme-ocean {
+  --brand: #3F5F93;
+  --brand-light: #DCE6F4;
+  --brand-dark: #243B63;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F5FA;
+  --surface-soft: #F8FAFD;
+
+  --text-main: #233047;
+  --text-secondary: #53647E;
+  --text-soft: #8794A7;
+
+  --border: #DCE4EF;
+  --shadow: rgba(34, 58, 94, 0.12);
+
+  --success: #4B7D68;
+  --warning: #C58E3E;
+  --danger: #B85A67;
+}
+
+.app-theme-forest {
+  --brand: #34805A;
+  --brand-light: #DCEFE4;
+  --brand-dark: #20543A;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F8F4;
+  --surface-soft: #F8FCF9;
+
+  --text-main: #22372C;
+  --text-secondary: #52695D;
+  --text-soft: #87988F;
+
+  --border: #D9E9E0;
+  --shadow: rgba(32, 84, 58, 0.12);
+
+  --success: #3E8A5F;
+  --warning: #C89A45;
+  --danger: #B75C64;
+}
+
+.app-theme-crimson {
+  --brand: #B35068;
+  --brand-light: #F3DCE2;
+  --brand-dark: #783346;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #FAF2F4;
+  --surface-soft: #FDF9FA;
+
+  --text-main: #422831;
+  --text-secondary: #75545F;
+  --text-soft: #A0858D;
+
+  --border: #EEDDE2;
+  --shadow: rgba(120, 51, 70, 0.12);
+
+  --success: #5A8469;
+  --warning: #C69342;
+  --danger: #B35068;
+}
+
+.app-theme-obsidian {
+  --brand: #241029;
+  --brand-light: #E2D9E4;
+  --brand-dark: #120816;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F4F1F5;
+  --surface-soft: #FAF8FA;
+
+  --text-main: #241A27;
+  --text-secondary: #5D5261;
+  --text-soft: #908692;
+
+  --border: #E3DDE5;
+  --shadow: rgba(18, 8, 22, 0.16);
+
+  --success: #4F7D62;
+  --warning: #BD8A3C;
+  --danger: #A94F60;
+}
+
+.app-theme-pearl {
+  --brand: #8F7798;
+  --brand-light: #EEE8F0;
+  --brand-dark: #5D4C63;
+
+  --surface: #FFFFFF;
+  --surface-secondary: #F8F5F9;
+  --surface-soft: #FCFAFC;
+
+  --text-main: #373039;
+  --text-secondary: #6C626F;
+  --text-soft: #9D949F;
+
+  --border: #E8E2EA;
+  --shadow: rgba(93, 76, 99, 0.1);
+
+  --success: #668271;
+  --warning: #C19A58;
+  --danger: #AD6877;
+}
+
+/* Apply selected theme across the original design system */
+.shell {
+  --accent: var(--brand);
+  --dark: var(--brand-contrast);
+  --lavender: var(--brand-soft);
+  --lavender-2: color-mix(in srgb, var(--brand-soft) 78%, white);
+}
+
+/* Background now follows selected app theme */
+body:has(.shell.app-theme-amethyst),
+body:has(.shell.app-theme-ocean),
+body:has(.shell.app-theme-forest),
+body:has(.shell.app-theme-crimson),
+body:has(.shell.app-theme-obsidian),
+body:has(.shell.app-theme-pearl) {
+  background:
+    radial-gradient(circle at top left, var(--brand-glow), transparent 38%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--brand) 16%, transparent), transparent 35%),
+    linear-gradient(180deg, var(--brand-soft), #fff);
+}
+
+/* Dark mode background */
+body:has(.shell.theme-dark) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--brand) 35%, transparent), transparent 38%),
+    radial-gradient(circle at top right, rgba(255,255,255,.06), transparent 35%),
+    linear-gradient(180deg, #120816, color-mix(in srgb, var(--brand-contrast) 80%, #050307));
+}
+
+.dashboard-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: end;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 72%, #241029), var(--brand)),
+    radial-gradient(circle at top right, rgba(255,255,255,.28), transparent 46%);
+}
+
+.hero-clock {
+  min-width: 150px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 26px;
+  text-align: right;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+}
+
+.hero-clock strong {
+  display: block;
+  font-size: clamp(34px, 6vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.07em;
+}
+
+.hero-clock small {
+  display: block;
+  margin-top: 8px;
+  opacity: .82;
+  text-transform: none;
+}
+
+.premium-next {
+  border-left: 8px solid var(--brand);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr .85fr;
+  gap: 16px;
+}
+
+.week-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: 42px 1fr 36px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.46);
+}
+
+.week-row span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  font-size: 20px;
+}
+
+.week-row p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.week-row strong {
+  font-size: 20px;
+  text-align: right;
+}
+
+.setting-block {
+  margin-top: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.setting-block h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.theme-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 10px 12px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.theme-option span {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+}
+
+.theme-option.active {
+  outline: 3px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  border-color: var(--brand);
+}
+
+/* Override old purple-heavy UI elements */
+.app-header .ghost,
+.year-toolbar button,
+.bottom-nav button.selected,
+.small-plus,
+.plus-tab,
+.pill-button,
+.event-form button,
+.modal-actions button {
+  background: var(--brand);
+  color: white;
+}
+
+.bottom-nav button.selected {
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand) 22%, transparent);
+}
+
+.month h3 {
+  background: var(--brand-contrast);
+}
+
+.hero-card {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 72%, #241029), var(--brand)),
+    radial-gradient(circle at top right, rgba(255,255,255,.25), transparent 45%);
+}
+
+.events-panel h2,
+.panel h2,
+.section-title h2 {
+  color: color-mix(in srgb, var(--brand) 78%, var(--ink));
+}
+
+.event-form button,
+.pill-button {
+  background: var(--brand);
+}
+
+.tabs button.active {
+  background: var(--tab);
+  color: white;
+  border-color: var(--tab);
+}
+
+/* Cards take subtle tint from selected app theme */
+.next-card,
+.panel,
+.mini-stat,
+.calendar-card,
+.month,
+.bottom-nav,
+.modal {
+  border-color: color-mix(in srgb, var(--brand) 16%, var(--line));
+}
+
+.day.empty {
+    background: color-mix(
+        in srgb,
+        var(--accent) 18%,
+        white
+    );
+}
+
+.weekdays span {
+  background: color-mix(in srgb, var(--brand-soft) 50%, white);
+}
+
+/* Dark mode refinements */
+.theme-dark {
+  --bg: #140b18;
+  --card: rgba(35, 22, 40, .82);
+  --card-solid: #24182a;
+  --ink: #f7eff8;
+  --muted: var(--text-soft, #9ca3af);
+  --line: rgba(255,255,255,.12);
+  --dark: var(--brand-contrast);
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+
+.theme-dark .hero-card,
+.theme-dark .dashboard-hero {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 55%, #050307), color-mix(in srgb, var(--brand) 80%, #111)),
+    radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 45%);
+}
+
+.theme-dark input,
+.theme-dark .tabs button,
+.theme-dark .calendar-card,
+.theme-dark .month,
+.theme-dark .modal,
+.theme-dark .event-form input {
+  background: rgba(35,22,40,.95);
+  color: var(--ink);
+}
+
+.theme-dark .day {
+  background: rgba(45,29,52,.78);
+}
+
+.theme-dark .day.empty {
+  background: color-mix(in srgb, var(--brand) 18%, #24182a);
+}
+
+.theme-dark .weekdays span {
+  background: rgba(255,255,255,.06);
+}
+
+.theme-dark .week-row,
+.theme-dark .theme-option {
+  background: rgba(35,22,40,.78);
+}
+
+.calendar-card,
+.next-card,
+.panel,
+.mini-stat,
+.month,
+.bottom-nav {
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.calendar-card:active,
+.bottom-nav button:active,
+.tabs button:active {
+  transform: scale(.98);
+}
+
+@media (max-width: 760px) {
+  .dashboard-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-clock {
+    min-width: auto;
+    text-align: left;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   TELISI — COLORES GLOBALES DEL TEMA
+========================================= */
+
+.app-header h1,
+.brand-block h1,
+.brand-block strong {
+  color: white;
+}
+
+.app-header p,
+.brand-block p,
+.home-dashboard small,
+.home-dashboard p {
+  color: var(--text-secondary);
+}
+
+.bottom-nav button,
+.premium-nav button {
+  color: var(--text-soft);
+}
+
+.bottom-nav button.selected,
+.premium-nav button.selected {
+  color: white;
+  background: var(--brand);
+}
+
+.bottom-nav button.selected svg,
+.premium-nav button.selected svg {
+  color: white;
+  stroke: currentColor;
+}
+
+.bottom-nav,
+.premium-nav {
+  border-color: var(--border);
+  background: var(--surface);
+}
+/* =====================================
+   HOME - TEXTO ADAPTATIVO POR TEMA
+===================================== */
+
+.dashboard-hero h2,
+.dashboard-hero span {
+  color: white;
+}
+
+.dashboard-hero p,
+.dashboard-hero small,
+.home-dashboard small,
+.home-dashboard p,
+.calendar-card span,
+.month-event-card span {
+  color: var(--text-secondary);
+}
+
+.calendar-card b,
+.month-event-card b {
+  color: var(--brand);
+}
+/* =====================================
+   HERO HOME - AJUSTE FINAL
+===================================== */
+
+.dashboard-hero h2,
+.hero-card h2 {
+  color: white !important;
+}
+
+.dashboard-hero .hero-clock small,
+.hero-card .hero-clock small {
+  color: rgba(255,255,255,.75) !important;
+}
+
+.dashboard-hero .hero-clock strong,
+.hero-card .hero-clock strong {
+  color: white !important;
+}
+/* =====================================
+   HOME EYEBROW
+===================================== */
+
+.dashboard-hero .eyebrow,
+.hero-card .eyebrow {
+  color: white !important;
+}
+/* Calendario anual — color suave del tema en PC */
+@media (min-width: 769px) {
+  .calendar-grid .month {
+    background: color-mix(
+      in srgb,
+      var(--accent) 5%,
+      white
+    );
+
+    border-color: color-mix(
+      in srgb,
+      var(--accent) 16%,
+      var(--line)
+    );
+  }
+
+  .calendar-grid .month h3 {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .calendar-grid .weekdays span {
+    background: color-mix(
+      in srgb,
+      var(--accent) 10%,
+      white
+    );
+
+    color: color-mix(
+      in srgb,
+      var(--accent) 75%,
+      var(--ink)
+    );
+  }
+}

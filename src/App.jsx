@@ -3,25 +3,29 @@ import {
   useMemo,
   useState
 } from "react";
-
-import { AppHeader } from "./components/AppHeader";
-import { BottomNav } from "./components/BottomNav";
-import { NewCalendarModal } from "./components/NewCalendarModal";
-import { NewEventModal } from "./components/NewEventModal";
+import { useIsMobile } from "./hooks/useIsMobile";
+import { useHideHeader } from "./hooks/useHideHeader";
+import { useAuth } from "./hooks/useAuth";
+import { useSplash } from "./hooks/useSplash";
+import { AppHeader } from "./components/layout/AppHeader";
+import { SideMenu } from "./components/navigation/SideMenu";
+import { BottomNav } from "./components/navigation/BottomNav";
+import { NewCalendarModal } from "./components/modals/NewCalendarModal";
+import { NewEventModal } from "./components/modals/NewEventModal";
 
 import { CalendarMobile } from "./pages/CalendarMobile";
 import { CalendarPage } from "./pages/CalendarPage";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Settings } from "./pages/Settings";
-
+import { IntegrationsPage } from "./pages/IntegrationsPage";
 import {
   defaultCalendars,
   defaultEvents
 } from "./data";
 
 import { todayString } from "./utils/date";
-import { firebaseTest } from "./utils/firebaseTest";
+
 
 import {
   saveEventToCloud,
@@ -33,20 +37,13 @@ import {
   checkUpcomingNotifications
 } from "./services/notificationsService";
 
-import {
-  listenAuth
-} from "./services/authService";
-
-
 export function App() {
-  const [isMobile, setIsMobile] = useState(
-    () => window.innerWidth <= 768
-  );
+  const isMobile = useIsMobile();
 
-  const [user, setUser] = useState(null);
-
-  const [checkingAuth, setCheckingAuth] =
-    useState(true);
+  const {
+  user,
+  checkingAuth
+} = useAuth();
 
   const [view, setView] =
     useState("home");
@@ -121,19 +118,21 @@ export function App() {
   const [modal, setModal] =
     useState(false);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [eventModal, setEventModal] =
     useState(false);
 
-  const [hideHeader, setHideHeader] =
-    useState(false);
+  const hideHeader = useHideHeader();
 
-  const [splash, setSplash] = useState(
-    () =>
-      !sessionStorage.getItem(
-        "telisi_splash_seen"
-      )
-  );
+  const splash = useSplash();
+useEffect(() => {
+  document.body.className = `app-theme-${appTheme}`;
 
+  return () => {
+    document.body.className = "";
+  };
+}, [appTheme]);
   const [newCal, setNewCal] = useState({
     name: "",
     icon: "📅",
@@ -144,64 +143,6 @@ export function App() {
   /* =========================
      CONFIGURACIÓN INICIAL
   ========================= */
-
-  useEffect(() => {
-    console.log(
-      "TELISI APP NUEVA CARGADA"
-    );
-
-    window.firebaseTest =
-      firebaseTest;
-  }, []);
-
-
-  /* =========================
-     DETECCIÓN MÓVIL
-  ========================= */
-
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(
-        window.innerWidth <= 768
-      );
-    }
-
-    window.addEventListener(
-      "resize",
-      handleResize
-    );
-
-    return () => {
-      window.removeEventListener(
-        "resize",
-        handleResize
-      );
-    };
-  }, []);
-
-
-  /* =========================
-     AUTENTICACIÓN
-  ========================= */
-
-  useEffect(() => {
-    const unsubscribe = listenAuth(
-      currentUser => {
-        console.log(
-          "USUARIO FIREBASE:",
-          currentUser
-        );
-
-        setUser(currentUser);
-        setCheckingAuth(false);
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
 
   /* =========================
      ALMACENAMIENTO LOCAL
@@ -281,71 +222,6 @@ export function App() {
       events
     );
   }, [events, user]);
-
-
-  /* =========================
-     SPLASH
-  ========================= */
-
-  useEffect(() => {
-    if (!splash) {
-      return undefined;
-    }
-
-    const timer = setTimeout(
-      () => {
-        sessionStorage.setItem(
-          "telisi_splash_seen",
-          "true"
-        );
-
-        setSplash(false);
-      },
-      950
-    );
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [splash]);
-
-
-  /* =========================
-     HEADER AL HACER SCROLL
-  ========================= */
-
-  useEffect(() => {
-    let lastY =
-      window.scrollY;
-
-    function handleScroll() {
-      const currentY =
-        window.scrollY;
-
-      setHideHeader(
-        currentY > lastY &&
-        currentY > 80
-      );
-
-      lastY = currentY;
-    }
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true
-      }
-    );
-
-    return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-    };
-  }, []);
-
 
   /* =========================
      EVENTOS VISIBLES
@@ -663,9 +539,16 @@ export function App() {
       }}
     >
       <AppHeader
-        view={view}
-        hideHeader={hideHeader}
-      />
+  view={view}
+  hideHeader={hideHeader}
+  onOpenMenu={() => setMenuOpen(true)}
+/>
+<SideMenu
+  isOpen={menuOpen}
+  onClose={() => setMenuOpen(false)}
+  onNavigate={setView}
+  activeView={view}
+/>
 
       <div
         className="view-fade"
@@ -736,6 +619,10 @@ export function App() {
             />
           )
         )}
+
+        {view === "integrations" && (
+  <IntegrationsPage />
+)}
 
         {view === "settings" && (
           <Settings

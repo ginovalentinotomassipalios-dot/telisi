@@ -15,8 +15,6 @@
     "@capacitor/local-notifications": "^8.2.0",
     "@vitejs/plugin-react": "latest",
     "firebase": "^12.15.0",
-    "firebase-admin": "^13.10.0",
-    "firebase-functions": "^7.2.5",
     "react": "latest",
     "react-dom": "latest",
     "vite": "latest"

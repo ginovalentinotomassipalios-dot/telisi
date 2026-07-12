@@ -1,5 +1,5 @@
 import { monthNames } from "../data";
-import { Month } from "../components/Month";
+import { Month } from "../components/calendar/Month";
 import { getCalendar } from "../utils/calendar";
 import { shortDate } from "../utils/date";
 

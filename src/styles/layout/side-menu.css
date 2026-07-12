@@ -1,0 +1,118 @@
+.side-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  z-index: 999;
+}
+
+.side-menu {
+  width: 300px;
+  max-width: 85%;
+  height: 100%;
+  background: var(--surface, #1f1f2b);
+  box-shadow: 8px 0 30px rgba(0,0,0,.35);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  animation: slideMenu .25s ease;
+}
+
+.side-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.side-menu-header h2 {
+  margin: 4px 0 0;
+}
+
+.side-menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-menu-nav button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  width: 100%;
+
+  background: transparent;
+  border: none;
+
+  color: inherit;
+
+  text-align: left;
+
+  padding: 14px 0;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.menu-indicator {
+    width: 4px;
+    height: 22px;
+
+    border-radius: 999px;
+
+    background: transparent;
+
+    transform: scaleY(.4);
+
+    transition:
+        background .25s,
+        transform .25s;
+}
+
+.side-menu-nav button:hover .menu-indicator {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  transform: scaleY(.7);
+}
+
+.side-menu-nav button.active .menu-indicator{
+    background: var(--accent);
+    transform: scaleY(1);
+}
+
+.side-menu-nav button.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.side-menu-close {
+  border: none;
+  background: var(--accent);
+  color: white;
+
+  box-shadow: none;
+
+  transition:
+    transform .2s ease,
+    filter .2s ease;
+}
+
+.side-menu-close:hover {
+  filter: brightness(1.08);
+  transform: scale(1.05);
+}
+
+.side-menu-close:active {
+  transform: scale(.95);
+}
+
+@keyframes slideMenu {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
