@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vscode/
+.env
+.env.local
+
+# Firebase: archivos generados
+.firebase/hosting.*.cache
+
+# Documentación auxiliar de agentes
+.agents/

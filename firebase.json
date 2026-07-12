@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "**/node_modules/**"
+    ]
+  }
+}

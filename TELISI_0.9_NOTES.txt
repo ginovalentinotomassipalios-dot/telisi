@@ -1,0 +1,28 @@
+TELISI 0.9 - BASE LIMPIA
+
+Base tomada:
+Telisi 0.8 funcional
+
+Conservado:
+- Firebase Auth
+- Firestore
+- Sincronización eventos
+- Recordatorios Android
+- Selector de recordatorios
+- Calendarios
+- Ajustes
+- Temas
+
+Limpieza realizada:
+- Eliminadas dependencias generadas
+- Eliminadas cachés
+- Eliminados builds generados
+- Eliminados archivos de entorno local
+- Proyecto renombrado a Telisi 0.9
+
+Próximos pasos:
+- Limpieza interna de CSS
+- Unificación de servicios de notificaciones
+- Evitar duplicación de alarmas
+- Notificaciones web
+- Recordatorios inteligentes
