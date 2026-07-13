@@ -1,0 +1,34 @@
+
+/* Telisi v0.6.4 - unified theme color across calendars */
+
+.calendar-card span,
+.big-icon,
+.week-row span,
+.month-event-card span {
+  background: color-mix(in srgb, var(--brand) 18%, transparent) !important;
+  color: var(--text-secondary) !important;
+}
+
+.timeline-item b,
+.event-row b,
+.month-event-card b {
+  color: var(--brand) !important;
+}
+
+.dot,
+.day-dots i {
+  background: var(--brand) !important;
+}
+
+.tabs button.active {
+  background: var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+
+.day.has-event {
+  --day: var(--brand) !important;
+}
+
+.month h3 small {
+  color: rgba(255,255,255,.78);
+}

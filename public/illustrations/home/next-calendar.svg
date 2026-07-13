@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f23c91"/>
+      <stop offset="1" stop-color="#bd1e69"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff4fa"/>
+      <stop offset="1" stop-color="#f8dbe9"/>
+    </linearGradient>
+    <linearGradient id="clock" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e52f83"/>
+      <stop offset="1" stop-color="#b9145d"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f4a91"/>
+      <stop offset="1" stop-color="#38204f"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#c45886" flood-opacity=".28"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <rect x="92" y="112" width="292" height="284" rx="30" fill="url(#body)"/>
+    <path d="M122 112h232a30 30 0 0 1 30 30v49H92v-49a30 30 0 0 1 30-30z" fill="url(#top)"/>
+    <rect x="92" y="177" width="292" height="14" fill="#b51661" opacity=".28"/>
+
+    <g fill="url(#ring)">
+      <rect x="145" y="84" width="24" height="64" rx="12"/>
+      <rect x="305" y="84" width="24" height="64" rx="12"/>
+    </g>
+    <g fill="#8d679f" opacity=".55">
+      <rect x="150" y="86" width="7" height="44" rx="3.5"/>
+      <rect x="310" y="86" width="7" height="44" rx="3.5"/>
+    </g>
+
+    <g fill="#e9bed2">
+      <rect x="126" y="224" width="42" height="42" rx="8"/>
+      <rect x="187" y="224" width="42" height="42" rx="8"/>
+      <rect x="248" y="224" width="42" height="42" rx="8"/>
+      <rect x="309" y="224" width="42" height="42" rx="8"/>
+      <rect x="126" y="286" width="42" height="42" rx="8"/>
+      <rect x="187" y="286" width="42" height="42" rx="8"/>
+      <rect x="309" y="286" width="42" height="42" rx="8"/>
+      <rect x="126" y="348" width="42" height="42" rx="8"/>
+      <rect x="187" y="348" width="42" height="42" rx="8"/>
+      <rect x="248" y="348" width="42" height="42" rx="8"/>
+    </g>
+    <rect x="248" y="286" width="42" height="42" rx="8" fill="#f05a9b"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <circle cx="353" cy="377" r="72" fill="url(#clock)"/>
+    <circle cx="353" cy="377" r="72" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>
+    <path d="M353 337v42l31 18" fill="none" stroke="#fff7fb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

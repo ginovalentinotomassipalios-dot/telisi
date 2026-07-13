@@ -1,0 +1,181 @@
+
+/* Telisi v0.6.1 - interface polish */
+
+.logo-mark.telisi-mark {
+  position: relative;
+  overflow: hidden;
+  font-size: 0;
+}
+
+.logo-mark.telisi-mark::before,
+.logo-mark.telisi-mark::after,
+.logo-mark.telisi-mark span {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  background: white;
+}
+
+.logo-mark.telisi-mark::before {
+  width: 22px;
+  height: 5px;
+  top: 14px;
+  left: 11px;
+  transform: rotate(0deg);
+}
+
+.logo-mark.telisi-mark::after {
+  width: 5px;
+  height: 24px;
+  top: 10px;
+  left: 19px;
+}
+
+.logo-mark.telisi-mark span {
+  width: 12px;
+  height: 12px;
+  right: 9px;
+  bottom: 9px;
+  opacity: .68;
+}
+
+.dashboard-hero {
+  min-height: 188px !important;
+  padding: clamp(20px, 3vw, 30px) !important;
+  grid-template-columns: 1fr minmax(128px, auto);
+}
+
+.dashboard-hero h2 {
+  font-size: clamp(30px, 5vw, 54px) !important;
+}
+
+.dashboard-hero span {
+  margin-top: 14px;
+}
+
+.hero-clock {
+  min-width: 132px;
+  padding: 13px 14px;
+  border-radius: 24px;
+}
+
+.hero-clock strong {
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.hero-clock small {
+  font-size: 12px;
+}
+
+.month-focus-after {
+  margin-top: 18px;
+}
+
+.compact-year {
+  margin-bottom: 0;
+}
+
+.compact-year .month {
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--brand) 7%, transparent);
+}
+
+.month-focus-after .month-slide .month {
+  box-shadow: 0 16px 38px color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .event-panel {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 620px) {
+  .dashboard-hero {
+    min-height: 198px !important;
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid.compact-year {
+    display: grid;
+  }
+
+  .compact-year .month {
+    display: none;
+  }
+
+  .compact-year .month:nth-child(-n + 3) {
+    display: block;
+  }
+}
+/* =========================
+   MODAL ANIMATION V0.7
+========================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(8px);
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  z-index: 1000;
+
+  animation: modalFade .25s ease forwards;
+}
+
+
+.modal {
+  transform: translateY(40px) scale(.96);
+  opacity: 0;
+
+  animation: modalSlide .35s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+
+@keyframes modalFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+
+@keyframes modalSlide {
+
+  from {
+
+    transform:
+      translateY(40px)
+      scale(.96);
+
+    opacity: .5;
+
+  }
+
+
+  to {
+
+    transform:
+      translateY(0)
+      scale(1);
+
+    opacity: 1;
+
+  }
+
+}
