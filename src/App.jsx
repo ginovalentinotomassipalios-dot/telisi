@@ -82,10 +82,11 @@ export function App() {
       style={{ "--accent": "var(--brand)" }}
     >
       <AppHeader
-        view={ui.view}
-        hideHeader={hideHeader}
-        onOpenMenu={ui.openMenu}
-      />
+  view={ui.view}
+  hideHeader={hideHeader}
+  onOpenMenu={ui.openMenu}
+  onNavigate={ui.setView}
+/>
 
       <SideMenu
         isOpen={ui.menuOpen}
@@ -130,7 +131,11 @@ export function App() {
         )}
       </div>
 
-      <BottomNav view={ui.view} setView={ui.setView} />
+      <BottomNav
+  view={ui.view}
+  setView={ui.setView}
+  openEventModal={ui.openEventModal}
+/>
 
       {splash && (
         <div className="splash-screen">

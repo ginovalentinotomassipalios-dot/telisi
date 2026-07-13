@@ -1027,11 +1027,19 @@ body:has(.shell.app-theme-pearl) {
     height: 25px;
   }
 
+ .simplicity-welcome h2 {
+  max-width: none;
+  width: 100%;
+  font-size: 1.55rem;
+  line-height: 1.04;
+  white-space: nowrap;
+}
+@media (max-width: 350px) {
   .simplicity-welcome h2 {
-    max-width: calc(100% - 82px);
-    font-size: 1.55rem;
-    line-height: 1.04;
+    font-size: 1.4rem;
+    white-space: normal;
   }
+}
 
   .welcome-message {
     max-width: calc(100% - 25px);
@@ -1218,7 +1226,7 @@ body:has(.shell.app-theme-pearl) {
 
   /* TARJETA DÍA LIBRE */
   .day-status-card {
-    grid-template-columns: 62px minmax(0, 1fr) 82px;
+    grid-template-columns: 62px minmax(0, 1fr) 150px;
     gap: 12px;
     min-height: 125px;
     padding: 18px;
@@ -1245,12 +1253,117 @@ body:has(.shell.app-theme-pearl) {
   }
 
   .day-status-illustration {
-    width: 82px;
-    min-width: 82px;
-    min-height: 75px;
+    width: 150px;
+    min-width: 150px;
+    min-height: 85px;
   }
 
   .day-status-illustration img {
-    max-width: 82px;
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================================
+   BARRA INFERIOR — BOTÓN CENTRAL CREAR EVENTO
+   ========================================================= */
+
+.bottom-nav .add-event-button,
+.premium-nav .add-event-button {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  max-width: 58px !important;
+  flex: 0 0 58px !important;
+  align-self: center;
+  margin: -12px auto 0;
+  padding: 0 !important;
+  gap: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--brand) 88%, #ffffff),
+      var(--brand-dark)
+    ) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 12px 25px color-mix(in srgb, var(--brand) 32%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transform: translateY(-6px);
+  cursor: pointer;
+}
+
+.bottom-nav .add-event-button:hover,
+.premium-nav .add-event-button:hover {
+  transform: translateY(-6px);
+}
+
+.bottom-nav .add-event-button:active,
+.premium-nav .add-event-button:active {
+  transform: none;
+}
+
+.bottom-nav .add-event-button span,
+.premium-nav .add-event-button span {
+  display: none;
+}
+
+.bottom-nav .add-event-button svg,
+.premium-nav .add-event-button svg {
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+  stroke: currentColor;
+}
+
+.bottom-nav .add-event-button:focus-visible,
+.premium-nav .add-event-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--brand) 28%, #ffffff);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .bottom-nav .add-event-button,
+  .premium-nav .add-event-button {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    flex-basis: 56px !important;
+    margin-top: -10px;
+  }
+
+  .bottom-nav .add-event-button svg,
+  .premium-nav .add-event-button svg {
+    width: 27px;
+    height: 27px;
+  }
+}
+/* ALINEACIÓN FINAL DEL BOTÓN + EN PC */
+@media (min-width: 721px) {
+  .bottom-nav,
+  .premium-nav {
+    align-items: center !important;
+  }
+
+  .bottom-nav .add-event-button,
+  .premium-nav .add-event-button {
+    align-self: center !important;
+    margin: 0 auto !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  .bottom-nav .add-event-button:hover,
+  .premium-nav .add-event-button:hover {
+    transform: scale(1.04) !important;
+  }
+
+  .bottom-nav .add-event-button:active,
+  .premium-nav .add-event-button:active {
+    transform: scale(0.96) !important;
   }
 }

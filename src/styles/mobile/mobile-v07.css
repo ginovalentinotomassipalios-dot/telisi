@@ -394,3 +394,42 @@ a,
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
+/* ALINEACIÓN FINAL DE LA BARRA INFERIOR EN ANDROID */
+.bottom-nav,
+.premium-nav {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  align-items: center !important;
+}
+
+.bottom-nav > button,
+.premium-nav > button {
+  width: calc(100% - 12px) !important;
+  max-width: 120px;
+  align-self: center !important;
+  justify-self: stretch !important;
+  margin: 0 auto !important;
+}
+
+/* El botón + mantiene su forma circular */
+.bottom-nav .add-event-button,
+.premium-nav .add-event-button {
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  max-width: 56px !important;
+  justify-self: center !important;
+  margin: 0 !important;
+  transform: none !important;
+  translate: none !important;
+}
+
+.bottom-nav .add-event-button:hover,
+.premium-nav .add-event-button:hover {
+  transform: none !important;
+}
+
+.bottom-nav .add-event-button:active,
+.premium-nav .add-event-button:active {
+  transform: scale(0.96) !important;
+}
