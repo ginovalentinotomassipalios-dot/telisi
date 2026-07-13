@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <g id="flower6">
+      <ellipse cx="0" cy="-18" rx="9" ry="16"/>
+      <ellipse cx="0" cy="-18" rx="9" ry="16" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-18" rx="9" ry="16" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-18" rx="9" ry="16" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-18" rx="9" ry="16" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-18" rx="9" ry="16" transform="rotate(300)"/>
+      <circle r="7" fill="#F8BBD0"/>
+    </g>
+    <g id="flower5">
+      <ellipse cx="0" cy="-16" rx="8" ry="14"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="14" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="14" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="14" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="14" transform="rotate(288)"/>
+      <circle r="6" fill="#F8BBD0"/>
+    </g>
+  </defs>
+  <g fill="#F06292" opacity="0.92">
+    <use href="#flower6" transform="translate(54 52) scale(0.72)"/>
+    <use href="#flower5" transform="translate(154 44) scale(0.48) rotate(12)"/>
+    <use href="#flower6" transform="translate(270 62) scale(0.58) rotate(-8)"/>
+    <use href="#flower5" transform="translate(92 142) scale(0.62) rotate(-10)"/>
+    <use href="#flower6" transform="translate(214 152) scale(0.86)"/>
+    <use href="#flower5" transform="translate(42 250) scale(0.46) rotate(18)"/>
+    <use href="#flower6" transform="translate(146 274) scale(0.66)"/>
+    <use href="#flower5" transform="translate(286 244) scale(0.52) rotate(-12)"/>
+  </g>
+  <g fill="#F48FB1" opacity="0.8">
+    <use href="#flower5" transform="translate(246 284) scale(0.34)"/>
+    <use href="#flower6" transform="translate(28 154) scale(0.28)"/>
+    <use href="#flower5" transform="translate(304 154) scale(0.3)"/>
+  </g>
+</svg>

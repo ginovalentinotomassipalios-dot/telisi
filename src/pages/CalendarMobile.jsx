@@ -5,7 +5,6 @@ import {
   useState
 } from "react";
 
-import { TeliSelect } from "../components/ui/TeliSelect";
 import { monthNames } from "../data";
 import { getCalendar } from "../utils/calendar";
 import { shortDate } from "../utils/date";
@@ -20,23 +19,6 @@ const weekDays = [
   "Dom"
 ];
 
-const reminderOptions = [
-  { value: -1, label: "Sin aviso" },
-  { value: 0, label: "Al comenzar" },
-  { value: 5, label: "5 minutos antes" },
-  { value: 10, label: "10 minutos antes" },
-  { value: 30, label: "30 minutos antes" },
-  { value: 60, label: "1 hora antes" }
-];
-
-const recurrenceOptions = [
-  { value: "none", label: "No repetir" },
-  { value: "daily", label: "Todos los días" },
-  { value: "weekly", label: "Todas las semanas" },
-  { value: "monthly", label: "Todos los meses" },
-  { value: "yearly", label: "Todos los años" }
-];
-
 export function CalendarMobile({
   year,
   setYear,
@@ -48,7 +30,9 @@ export function CalendarMobile({
   setNewEvent,
   addEvent,
   deleteEvent,
-  openModal
+  openModal,
+  openEventModal,
+  calendarPattern
 }) {
   const today = new Date();
 
@@ -66,6 +50,19 @@ export function CalendarMobile({
 
   const [monthBarAnimation, setMonthBarAnimation] =
     useState("");
+
+  /*
+   * Settings actualmente guarda valores como:
+   * pattern-topography
+   * pattern-cats
+   * pattern-hearts
+   *
+   * Este normalizador también admite valores sin el prefijo.
+   */
+  const resolvedCalendarPattern =
+    calendarPattern?.startsWith("pattern-")
+      ? calendarPattern
+      : `pattern-${calendarPattern || "topography"}`;
 
   const visibleMonthItems = useMemo(() => {
     return [-3, -2, -1, 0, 1, 2, 3].map(
@@ -274,25 +271,28 @@ export function CalendarMobile({
   }
 
   function handleMobileDayClick(day) {
-    const monthNumber =
-      String(selectedMonth + 1).padStart(
-        2,
-        "0"
-      );
+    const monthNumber = String(
+      selectedMonth + 1
+    ).padStart(2, "0");
 
-    const dayNumber =
-      String(day).padStart(
-        2,
-        "0"
-      );
+    const dayNumber = String(day).padStart(
+      2,
+      "0"
+    );
 
     const selectedDate =
       `${year}-${monthNumber}-${dayNumber}`;
 
     setNewEvent({
       ...newEvent,
-      date: selectedDate
+      date: selectedDate,
+      time: "09:00",
+      text: "",
+      reminder: 10,
+      recurrence: null
     });
+
+    openEventModal();
   }
 
   function handleMonthBarTouchStart(event) {
@@ -329,99 +329,6 @@ export function CalendarMobile({
 
   return (
     <section className="calendar-mobile">
-      <section className="calendar-mobile-create">
-        <h2>Crear evento</h2>
-
-        <form
-          className="calendar-mobile-form"
-          onSubmit={addEvent}
-        >
-          <input
-            type="text"
-            placeholder="Nombre del evento"
-            value={newEvent.text}
-            onChange={event =>
-              setNewEvent({
-                ...newEvent,
-                text: event.target.value
-              })
-            }
-          />
-
-          <div className="calendar-mobile-date-time">
-            <input
-              type="date"
-              value={newEvent.date}
-              onChange={event =>
-                setNewEvent({
-                  ...newEvent,
-                  date: event.target.value
-                })
-              }
-            />
-
-            <input
-              type="time"
-              value={newEvent.time}
-              onChange={event =>
-                setNewEvent({
-                  ...newEvent,
-                  time: event.target.value
-                })
-              }
-            />
-          </div>
-
-          <div className="calendar-mobile-event-option">
-            <label>🔔 Recordatorio</label>
-
-            <TeliSelect
-              value={newEvent.reminder ?? 10}
-              ariaLabel="Elegir recordatorio"
-              options={reminderOptions}
-              onChange={value =>
-                setNewEvent({
-                  ...newEvent,
-                  reminder: Number(value)
-                })
-              }
-            />
-          </div>
-
-          <div className="calendar-mobile-event-option">
-            <label>🔁 Recurrencia</label>
-
-            <TeliSelect
-              value={
-                newEvent.recurrence?.frequency ??
-                "none"
-              }
-              ariaLabel="Elegir recurrencia"
-              options={recurrenceOptions}
-              onChange={frequency =>
-                setNewEvent({
-                  ...newEvent,
-                  recurrence:
-                    frequency === "none"
-                      ? null
-                      : {
-                          frequency,
-                          interval: 1
-                        }
-                })
-              }
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="calendar-mobile-submit"
-          >
-            Agregar evento
-          </button>
-        </form>
-      </section>
-
       <nav className="calendar-mobile-tabs">
         {calendars.map(calendar => (
           <button
@@ -508,7 +415,13 @@ export function CalendarMobile({
       </section>
 
       <section
-        className={`calendar-mobile-grid-card ${slideDirection}`}
+        className={[
+          "calendar-mobile-grid-card",
+          slideDirection,
+          resolvedCalendarPattern
+        ]
+          .filter(Boolean)
+          .join(" ")}
         onTouchStart={handleGridTouchStart}
         onTouchEnd={handleGridTouchEnd}
       >

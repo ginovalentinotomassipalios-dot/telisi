@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <g id="cloud">
+      <path d="M-38 10c0-12 9-22 21-23 4-15 18-25 34-22 13 2 23 12 25 25 13 0 24 10 24 23 0 13-10 23-23 23h-58c-13 0-23-10-23-23Z"/>
+    </g>
+  </defs>
+  <g fill="#F48FB1" opacity="0.92">
+    <use href="#cloud" transform="translate(60 54) scale(0.82)"/>
+    <use href="#cloud" transform="translate(244 68) scale(0.62)"/>
+    <use href="#cloud" transform="translate(156 154) scale(1.0)"/>
+    <use href="#cloud" transform="translate(54 244) scale(0.68)"/>
+    <use href="#cloud" transform="translate(264 250) scale(0.88)"/>
+  </g>
+  <g fill="none" stroke="#EC407A" stroke-width="3" opacity="0.85">
+    <use href="#cloud" transform="translate(272 156) scale(0.54)"/>
+    <use href="#cloud" transform="translate(108 286) scale(0.5)"/>
+  </g>
+  <g fill="#F8BBD0" opacity="0.8">
+    <circle cx="112" cy="30" r="4"/><circle cx="210" cy="112" r="3"/><circle cx="38" cy="136" r="3"/><circle cx="286" cy="28" r="4"/>
+  </g>
+</svg>

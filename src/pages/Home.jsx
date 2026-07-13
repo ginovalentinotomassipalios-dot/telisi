@@ -298,7 +298,7 @@ export function Home({
             <span className="welcome-weather-icon" aria-hidden="true">
               <WelcomeSunIcon />
             </span>
-
+            
             <h2>{greeting()}, {firstName}</h2>
             <p className="welcome-message">{welcomeMessage}</p>
           </div>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <path id="heart" d="M0 14C-22-2-30-18-24-30-18-42-2-42 0-28 2-42 18-42 24-30 30-18 22-2 0 14Z"/>
+  </defs>
+  <g fill="#F06292" opacity="0.95">
+    <use href="#heart" transform="translate(44 62) scale(0.9)"/>
+    <use href="#heart" transform="translate(138 48) scale(0.55)"/>
+    <use href="#heart" transform="translate(262 56) scale(0.72)"/>
+    <use href="#heart" transform="translate(92 148) scale(0.6)"/>
+    <use href="#heart" transform="translate(214 150) scale(1.0)"/>
+    <use href="#heart" transform="translate(40 250) scale(0.52)"/>
+    <use href="#heart" transform="translate(154 272) scale(0.7)"/>
+    <use href="#heart" transform="translate(280 238) scale(0.45)"/>
+  </g>
+  <g fill="none" stroke="#EC407A" stroke-width="3" opacity="0.95">
+    <use href="#heart" transform="translate(190 86) scale(0.62)"/>
+    <use href="#heart" transform="translate(106 232) scale(0.55)"/>
+    <use href="#heart" transform="translate(292 132) scale(0.42)"/>
+  </g>
+  <g fill="#F8BBD0" opacity="0.85">
+    <use href="#heart" transform="translate(32 160) scale(0.34)"/>
+    <use href="#heart" transform="translate(246 264) scale(0.38)"/>
+    <use href="#heart" transform="translate(294 302) scale(0.28)"/>
+  </g>
+</svg>

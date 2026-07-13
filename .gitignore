@@ -9,3 +9,4 @@ dist/
 
 # Documentación auxiliar de agentes
 .agents/
+.vercel

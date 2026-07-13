@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <g id="star5"><path d="M0-18 5.3-5.8 18-5.6 8 2.2 11.2 15 0 8.2-11.2 15-8 2.2-18-5.6-5.3-5.8Z"/></g>
+    <g id="star4"><path d="M0-14 3.5-3.5 14 0 3.5 3.5 0 14-3.5 3.5-14 0-3.5-3.5Z"/></g>
+  </defs>
+  <g fill="#F06292" opacity="0.95">
+    <use href="#star5" transform="translate(40 42) scale(0.85)"/>
+    <use href="#star5" transform="translate(142 36) scale(0.45)"/>
+    <use href="#star5" transform="translate(278 54) scale(0.7)"/>
+    <use href="#star5" transform="translate(95 128) scale(0.55)"/>
+    <use href="#star5" transform="translate(222 144) scale(0.95)"/>
+    <use href="#star5" transform="translate(48 248) scale(0.7)"/>
+    <use href="#star5" transform="translate(176 262) scale(0.6)"/>
+    <use href="#star5" transform="translate(298 246) scale(0.4)"/>
+  </g>
+  <g fill="none" stroke="#EC407A" stroke-width="3" opacity="0.95">
+    <use href="#star5" transform="translate(86 78) scale(0.65)"/>
+    <use href="#star5" transform="translate(248 92) scale(0.5)"/>
+    <use href="#star5" transform="translate(134 210) scale(0.72)"/>
+    <use href="#star5" transform="translate(286 184) scale(0.45)"/>
+  </g>
+  <g fill="#F8BBD0" opacity="0.9">
+    <use href="#star4" transform="translate(28 154) scale(0.55)"/>
+    <use href="#star4" transform="translate(175 92) scale(0.45)"/>
+    <use href="#star4" transform="translate(242 228) scale(0.55)"/>
+    <circle cx="62" cy="190" r="3"/><circle cx="204" cy="52" r="2.5"/><circle cx="302" cy="118" r="3"/>
+  </g>
+</svg>

@@ -1,0 +1,1634 @@
+/* Telisi v0.13.0 — estilos consolidados. Mantener el orden de las secciones. */
+
+/* ===== mobile/mobile.css ===== */
+
+/* Telisi mobile polish v0.7.0 */
+
+/* General mobile rhythm */
+@media (max-width: 760px) {
+  .shell {
+    width: 100%;
+    padding: 10px 10px 112px !important;
+  }
+
+  .app-header {
+    padding: 8px 0;
+  }
+
+  .brand-block {
+    gap: 8px;
+  }
+
+  .app-header h1 {
+    font-size: 19px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+  }
+
+  .logo-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+  }
+
+  .ghost {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+  }
+
+  .dashboard-hero {
+    min-height: 170px !important;
+    padding: 18px !important;
+    border-radius: 28px !important;
+  }
+
+  .dashboard-hero h2 {
+    font-size: 32px !important;
+    line-height: 1;
+  }
+
+  .dashboard-hero span {
+    font-size: 14px;
+  }
+
+  .hero-clock {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .hero-clock strong {
+    font-size: 30px;
+  }
+
+  .today-summary {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .mini-stat {
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .mini-stat span {
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+
+  .mini-stat strong {
+    font-size: 22px;
+  }
+
+  .mini-stat small {
+    font-size: 10px;
+  }
+
+  .next-card,
+  .panel {
+    border-radius: 26px;
+    padding: 16px;
+  }
+
+  .calendar-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-card {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .calendar-card span {
+    grid-row: span 2;
+  }
+
+  .calendar-card strong {
+    margin: 0;
+  }
+
+  .calendar-card small {
+    margin: 0;
+  }
+}
+
+/* Calendar mobile */
+@media (max-width: 760px) {
+  .year-toolbar {
+    margin: 6px 0 10px;
+  }
+
+  .year-toolbar strong {
+    font-size: 26px;
+  }
+
+  .tabs {
+    border-radius: 22px;
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .tabs button {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .calendar-layout-fixed,
+  .layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .annual-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .annual-grid .month {
+    display: block !important;
+    border-radius: 22px;
+  }
+
+  .month h3 {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .month h3 small {
+    font-size: 10px;
+  }
+
+  .weekdays span {
+    padding: 5px 0;
+    font-size: 10px;
+  }
+
+  .day {
+    min-height: 34px;
+    font-size: 12px;
+  }
+
+  .event-panel {
+    position: static !important;
+    margin-top: 0 !important;
+    border-radius: 26px;
+  }
+
+  .event-form {
+    grid-template-columns: 1fr 104px;
+    gap: 8px;
+  }
+
+  .event-form input:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .event-form button {
+    grid-column: 1 / -1;
+  }
+
+  .event-row {
+    grid-template-columns: 70px 1fr 32px;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .event-row:has(.dot) {
+    grid-template-columns: 70px 12px 1fr 32px;
+  }
+}
+
+/* Month modal: make it behave like a native mobile sheet */
+@media (max-width: 760px) {
+  .month-detail-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 100000 !important;
+    display: block !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: rgba(12, 6, 16, .38);
+    backdrop-filter: blur(10px);
+  }
+
+  .month-detail-modal {
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    width: 100vw !important;
+    height: 92dvh !important;
+    max-height: 92dvh !important;
+    margin: 0 !important;
+    padding: 14px !important;
+    border-radius: 28px 28px 0 0 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    animation: sheetUp .22s ease-out both;
+  }
+
+  @keyframes sheetUp {
+    from {
+      transform: translateY(28px);
+      opacity: .8;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .month-detail-header {
+    position: sticky;
+    top: -14px;
+    z-index: 4;
+    margin: -14px -14px 12px;
+    padding: 14px 14px 12px;
+    background: rgba(255,255,255,.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .month-detail-header::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    width: 46px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(36,16,41,.18);
+    transform: translateX(-50%);
+  }
+
+  .month-detail-header h3 {
+    margin-top: 8px;
+    font-size: 23px;
+  }
+
+  .month-detail-header .delete {
+    margin-top: 8px;
+  }
+
+  .month-detail-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .month-detail-layout .month {
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .month-detail-layout .month h3 {
+    position: static;
+    margin: 0;
+  }
+
+  .month-detail-layout .day {
+    min-height: 40px;
+  }
+
+  .month-event-list {
+    padding-bottom: 18px;
+  }
+
+  .month-event-card {
+    grid-template-columns: 66px 38px 1fr;
+    border-radius: 18px;
+    padding: 10px;
+  }
+
+  .month-event-card span {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+  }
+}
+
+/* Bottom nav always reachable on phone */
+@media (max-width: 760px) {
+  .bottom-nav.premium-nav,
+  .premium-nav {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: max(14px, env(safe-area-inset-bottom)) !important;
+    transform: translateX(-50%) !important;
+    width: min(410px, calc(100% - 24px)) !important;
+    z-index: 99990 !important;
+  }
+
+  .premium-nav button {
+    min-height: 52px;
+  }
+}
+@media (max-width: 760px) {
+  .month-detail-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+    display: block !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .month-detail-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+  }
+
+  .month-detail-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+}
+
+/* ===== mobile/mobile-v07.css ===== */
+
+/* Telisi v0.7.0 - mobile/tablet polish */
+
+/* 1) Fecha del reloj: primera palabra con mayúscula, resto minúscula */
+.hero-clock small {
+  text-transform: none !important;
+}
+
+/* 2) Barra inferior siempre visible durante toda la navegación */
+.bottom-nav,
+.bottom-nav.premium-nav,
+.premium-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(14px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  z-index: 999999 !important;
+  width: min(430px, calc(100% - 24px)) !important;
+  pointer-events: auto !important;
+}
+
+.shell {
+  padding-bottom: 132px !important;
+}
+
+/* Evita que algún contenedor padre interfiera con la barra fija */
+body,
+#root {
+  min-height: 100dvh;
+}
+
+/* 3) Mejor soporte para modo horizontal en celular/tablet */
+@media (orientation: landscape) and (max-height: 620px) {
+  .shell {
+    max-width: 100%;
+    padding: 8px 14px 88px !important;
+  }
+
+  .app-header {
+    padding: 6px 0;
+  }
+
+  .logo-mark,
+  .ghost {
+    width: 36px;
+    height: 36px;
+    border-radius: 13px;
+  }
+
+  .app-header h1 {
+    font-size: 18px;
+  }
+
+  .dashboard-hero {
+    min-height: 130px !important;
+    padding: 16px 18px !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    border-radius: 24px !important;
+  }
+
+  .dashboard-hero h2 {
+    font-size: clamp(26px, 4vw, 42px) !important;
+  }
+
+  .dashboard-hero span {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .hero-clock {
+    min-width: 122px;
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  .hero-clock strong {
+    font-size: 30px;
+  }
+
+  .hero-clock small {
+    font-size: 11px;
+  }
+
+  .today-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .next-card,
+  .panel {
+    padding: 14px;
+    border-radius: 24px;
+  }
+
+  .calendar-layout-fixed,
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 320px !important;
+    align-items: start;
+  }
+
+  .annual-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  .month h3 {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .day {
+    min-height: 26px;
+    font-size: 11px;
+  }
+
+  .event-panel {
+    position: sticky !important;
+    top: 10px !important;
+  }
+
+  .premium-nav button {
+    min-height: 44px !important;
+    padding: 6px 4px !important;
+  }
+
+  .premium-nav button svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .premium-nav span {
+    font-size: 10px;
+  }
+}
+
+/* Modal de mes en horizontal: ocupa pantalla y arranca arriba */
+@media (orientation: landscape) and (max-height: 620px) {
+  .month-detail-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1000000 !important;
+    display: block !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .month-detail-modal {
+  position: fixed !important;
+  inset: 0 !important;
+
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1000000 !important;
+
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+
+  margin: 0 !important;
+  border-radius: 0 !important;
+  overflow-y: auto !important;
+  padding: 12px !important;
+
+  background: white !important;
+}
+
+  .month-detail-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .month-detail-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr) !important;
+    gap: 12px !important;
+  }
+}
+/* Modal mensual mobile */
+@media (max-width: 760px) {
+  .month-detail-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+    display: block !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: rgba(12, 6, 16, 0.38);
+    backdrop-filter: blur(10px);
+  }
+
+  .month-detail-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+  }
+
+  .month-detail-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    margin: -16px -16px 12px;
+    padding: 18px 16px 12px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .month-detail-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}/* =========================================================
+   MODAL MENSUAL NATIVO (MOBILE)
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .month-detail-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+
+    display: block !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    background: rgba(15, 8, 18, .45);
+    backdrop-filter: blur(10px);
+    animation: fadeIn .22s ease;
+  }
+
+  .month-detail-modal {
+    position: fixed !important;
+    inset: 0 !important;
+
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+
+    margin: 0 !important;
+    padding: 18px !important;
+
+    border-radius: 0 !important;
+
+    overflow-y: auto !important;
+
+    animation: slideUp .28s cubic-bezier(.22,.61,.36,1);
+  }
+
+  .month-detail-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    margin: -18px -18px 18px;
+    padding: 18px;
+
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid var(--line);
+  }
+
+  .month-detail-header h3 {
+    font-size: 24px;
+  }
+
+  .month-detail-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .month-event-list {
+    padding-bottom: 100px;
+  }
+
+  .month-event-card {
+    border-radius: 18px;
+    padding: 12px;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+/* Modo horizontal - celular/tablet */
+@media (orientation: landscape) and (max-height: 620px) {
+  .shell {
+    max-width: 100%;
+    padding: 8px 14px 84px !important;
+  }
+
+  .app-header {
+    padding: 6px 0;
+  }
+
+  .dashboard-hero {
+    min-height: 120px !important;
+    padding: 14px 18px !important;
+    grid-template-columns: 1fr auto !important;
+    border-radius: 24px !important;
+  }
+
+  .dashboard-hero h2 {
+    font-size: 32px !important;
+  }
+
+  .hero-clock {
+    min-width: 120px;
+    padding: 10px 12px;
+  }
+
+  .today-summary {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dashboard-grid,
+  .calendar-layout-fixed,
+  .layout {
+    grid-template-columns: 1fr 320px !important;
+    gap: 14px !important;
+  }
+
+  .annual-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .month h3 {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .day {
+    min-height: 25px !important;
+    font-size: 11px;
+  }
+
+  .event-panel {
+    position: sticky !important;
+    top: 10px !important;
+  }
+
+  .bottom-nav {
+    width: min(390px, calc(100% - 24px)) !important;
+  }
+
+  .bottom-nav button {
+    min-height: 44px !important;
+    padding: 6px 4px !important;
+  }
+}
+/* Quitar resaltado celeste al tocar en mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+.month,
+.calendar-card,
+.event-row,
+.tabs button,
+.bottom-nav button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+/* ALINEACIÓN FINAL DE LA BARRA INFERIOR EN ANDROID */
+.bottom-nav,
+.premium-nav {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  align-items: center !important;
+}
+
+.bottom-nav > button,
+.premium-nav > button {
+  width: calc(100% - 12px) !important;
+  max-width: 120px;
+  align-self: center !important;
+  justify-self: stretch !important;
+  margin: 0 auto !important;
+}
+
+/* El botón + mantiene su forma circular */
+.bottom-nav .add-event-button,
+.premium-nav .add-event-button {
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  max-width: 56px !important;
+  justify-self: center !important;
+  margin: 0 !important;
+  transform: none !important;
+  translate: none !important;
+}
+
+.bottom-nav .add-event-button:hover,
+.premium-nav .add-event-button:hover {
+  transform: none !important;
+}
+
+.bottom-nav .add-event-button:active,
+.premium-nav .add-event-button:active {
+  transform: scale(0.96) !important;
+}
+
+/* ===== mobile/calendar-mobile.css ===== */
+/* =========================================
+   TELISI — CALENDARIO MOBILE
+========================================= */
+
+.calendar-mobile {
+
+  --calendar-text: var(--text-main);
+  --calendar-text-secondary: var(--text-secondary);
+  --calendar-text-soft: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 12px 120px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
+/* =========================================
+   CREAR EVENTO
+========================================= */
+
+.calendar-mobile-create {
+  --calendar-text: var(--text-main);
+  --calendar-text-secondary: var(--text-secondary);
+  --calendar-text-soft: var(--text-soft);
+  width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  border: 1px solid rgba(124, 77, 139, 0.14);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow:
+    0 12px 32px rgba(38, 19, 45, 0.08);
+}
+
+.calendar-mobile-create h2 {
+  margin: 0 0 14px;
+  color: var(--brand-dark);
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.calendar-mobile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.calendar-mobile-form input,
+.calendar-mobile-form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  background: var(--surface-secondary);
+  color: var(--brand-dark);
+  font: inherit;
+}
+
+.calendar-mobile-form input:focus,
+.calendar-mobile-form select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(124, 77, 139, 0.12);
+}
+
+.calendar-mobile-date-time {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.calendar-mobile-form > button {
+  min-height: 48px;
+  border: none;
+  border-radius: 15px;
+  background: var(--brand);
+  color: white;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow:
+    0 8px 18px rgba(67, 28, 76, 0.2);
+}
+
+.calendar-mobile-form > button:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================
+   SOLAPAS DE CALENDARIOS
+========================================= */
+
+.calendar-mobile-tabs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  padding: 2px 1px 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.calendar-mobile-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.calendar-mobile-tabs button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(80, 61, 86, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.calendar-mobile-tabs button.active {
+  border-color: transparent;
+  background: var(--brand);
+  color: white;
+  box-shadow:
+    0 7px 16px rgba(67, 28, 76, 0.18);
+}
+
+.calendar-mobile-tabs .calendar-mobile-plus {
+  width: 40px;
+  padding: 0;
+  font-size: 22px;
+}
+
+
+/* =========================================
+   AÑO Y BARRA HORIZONTAL DE MESES
+========================================= */
+
+.calendar-mobile-months {
+  width: 100%;
+  padding: 16px 0 4px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 8px 26px rgba(38, 19, 45, 0.06);
+}
+
+.calendar-mobile-year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 14px 14px;
+}
+
+.calendar-mobile-year strong {
+  min-width: 76px;
+  color: var(--text-main);
+  font-size: 19px;
+  text-align: center;
+}
+
+.calendar-mobile-year button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: var(--brand-light);
+color: var(--brand-dark);
+  font-size: 19px;
+  cursor: pointer;
+}
+
+
+/* =========================================
+   CUADRÍCULA DEL MES
+========================================= */
+
+.calendar-mobile-grid-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 12px 32px rgba(38, 19, 45, 0.07);
+
+  touch-action: pan-y;
+  user-select: none;
+}
+
+/* Fondo del patrón */
+.calendar-mobile-grid-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background-image:
+    var(
+      --month-pattern,
+      url("/patterns/topography.svg")
+    );
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* Todo el contenido queda por encima del patrón */
+.calendar-mobile-grid-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-mobile-grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.calendar-mobile-grid-header h2 {
+  margin: 0;
+  color: var(--brand-dark);
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-grid-header span {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.calendar-mobile-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 9px 6px;
+  border-radius: 999px;
+background: var(--brand-light);
+  background: var(--brand-light);
+}
+
+.calendar-mobile-weekdays span {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.calendar-mobile-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.calendar-mobile-empty-day {
+  aspect-ratio: 1;
+}
+
+.calendar-mobile-day-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: 13px;
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.calendar-mobile-day-button:active {
+  transform: scale(0.92);
+}
+
+.calendar-mobile-day-number {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.calendar-mobile-day-button.today {
+ background: var(--brand-light);
+color: var(--brand-dark);
+}
+
+.calendar-mobile-day-button.today::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(124, 77, 139, 0.22);
+  border-radius: 11px;
+}
+
+.calendar-mobile-day-button.selected {
+  background: var(--brand);
+  color: white;
+  border: 2px solid var(--brand-dark);
+}
+
+.calendar-mobile-day-event-dot {
+  position: absolute;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.calendar-mobile-day-button.selected
+.calendar-mobile-day-event-dot {
+  background: white;
+}
+
+@media (max-width: 360px) {
+  .calendar-mobile-grid-card {
+    padding: 14px;
+  }
+
+  .calendar-mobile-days-grid {
+    gap: 3px;
+  }
+
+  .calendar-mobile-day-button {
+    border-radius: 10px;
+  }
+
+  .calendar-mobile-day-number {
+    font-size: 12px;
+  }
+}
+
+/* =========================================
+   DETALLE DEL MES
+========================================= */
+
+.calendar-mobile-detail {
+  width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 12px 32px rgba(38, 19, 45, 0.07);
+}
+
+.calendar-mobile-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.calendar-mobile-detail-header small {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.calendar-mobile-detail-header h2 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 25px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-detail-header > span {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 9px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: rgba(124, 77, 139, 0.1);
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.calendar-mobile-empty {
+  padding: 30px 16px;
+  border: 1px dashed rgba(124, 77, 139, 0.22);
+  border-radius: 18px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+
+/* =========================================
+   EVENTOS AGRUPADOS POR DÍA
+========================================= */
+
+.calendar-mobile-events {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.calendar-mobile-day {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-mobile-day h3 {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-event-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 13px 10px 13px 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid rgba(80, 61, 86, 0.1);
+  border-radius: 18px;
+  background: var(--surface-soft);
+}
+
+.calendar-mobile-event-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 18px 0 0 18px;
+  background: var(--brand);
+}
+
+.calendar-mobile-event-time {
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.calendar-mobile-event-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 5px;
+}
+
+.calendar-mobile-event-info strong {
+  overflow: hidden;
+  color: var(--text-main);
+  font-size: 15px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-mobile-event-info small {
+  overflow: hidden;
+  color: var(--text-soft);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-mobile-delete {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(122, 81, 127, 0.08);
+  color: var(--text-secondary);
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.calendar-mobile-delete:active {
+  transform: scale(0.94);
+}
+
+
+/* =========================================
+   PANTALLAS MUY PEQUEÑAS
+========================================= */
+
+@media (max-width: 360px) {
+  .calendar-mobile {
+    padding-inline: 8px;
+  }
+
+  .calendar-mobile-create,
+  .calendar-mobile-detail {
+    padding: 15px;
+  }
+
+  .calendar-mobile-date-time {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-mobile-event-card {
+    grid-template-columns: 52px minmax(0, 1fr) 32px;
+    gap: 8px;
+  }
+}
+
+
+/* =========================================
+   SEGURIDAD: SOLO CELULAR
+========================================= */
+
+@media (min-width: 769px) {
+  .calendar-mobile {
+    display: none;
+  }
+}
+/* =========================================
+   ANIMACIÓN AL CAMBIAR DE MES
+========================================= */
+
+.calendar-mobile-grid-card {
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+  will-change: transform, opacity;
+}
+
+.calendar-mobile-grid-card.slide-left {
+  transform: translateX(-45px);
+  opacity: 0;
+}
+
+.calendar-mobile-grid-card.slide-right {
+  transform: translateX(45px);
+  opacity: 0;
+}
+
+.calendar-mobile-grid-card.enter-right {
+  animation: calendar-enter-right 220ms ease;
+}
+
+.calendar-mobile-grid-card.enter-left {
+  animation: calendar-enter-left 220ms ease;
+}
+
+@keyframes calendar-enter-right {
+  from {
+    transform: translateX(45px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes calendar-enter-left {
+  from {
+    transform: translateX(-45px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+/* =========================================
+   BARRA INFINITA DE MESES
+========================================= */
+
+.calendar-mobile-month-window {
+  position: relative;
+  width: 100%;
+  height: 54px;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+/* Pastilla fija en el centro */
+.calendar-mobile-month-window::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  z-index: 2;
+  width: 20%;
+  min-width: 82px;
+  max-width: 100px;
+  height: 48px;
+  border-radius: 15px;
+  background: var(--brand);
+  transform: translateX(-50%);
+  box-shadow:
+    0 7px 16px rgba(67, 28, 76, 0.2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/*
+ * La pista mide 140% del contenedor.
+ * Cada uno de los 7 meses ocupa 20% del ancho visible.
+ * El cuarto mes queda exactamente en el centro.
+ */
+.calendar-mobile-month-track {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 140%;
+  height: 54px;
+  transform: translateX(-50%);
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+  will-change: transform, opacity;
+}
+
+.calendar-mobile-month-name {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 54px;
+  padding: 0 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.calendar-mobile-month-name span {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-mobile-month-name small {
+  margin-top: 1px;
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.calendar-mobile-month-name.current {
+  color: white;
+}
+
+/* Salida hacia el mes siguiente */
+.calendar-mobile-month-track.months-moving-left {
+  transform:
+    translateX(calc(-50% - 14.2857%));
+  opacity: 0;
+}
+
+/* Salida hacia el mes anterior */
+.calendar-mobile-month-track.months-moving-right {
+  transform:
+    translateX(calc(-50% + 14.2857%));
+  opacity: 0;
+}
+
+/* Entrada del nuevo conjunto de meses */
+.calendar-mobile-month-track.months-enter-right {
+  animation:
+    months-enter-right 220ms ease;
+}
+
+.calendar-mobile-month-track.months-enter-left {
+  animation:
+    months-enter-left 220ms ease;
+}
+
+@keyframes months-enter-right {
+  from {
+    transform:
+      translateX(calc(-50% + 14.2857%));
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      translateX(-50%);
+    opacity: 1;
+  }
+}
+
+@keyframes months-enter-left {
+  from {
+    transform:
+      translateX(calc(-50% - 14.2857%));
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      translateX(-50%);
+    opacity: 1;
+  }
+}
+/* =================================
+   CREACIÓN DE EVENTOS EN MÓVIL
+================================= */
+
+.calendar-mobile-event-option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.calendar-mobile-event-option label {
+  padding-left: 3px;
+  color: #655d6c;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.calendar-mobile-event-option .teli-select-trigger {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--brand) 24%,
+      #ded9e2
+    );
+
+  border-radius: 15px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand) 7%,
+      white
+    );
+
+  color:
+    color-mix(
+      in srgb,
+      var(--brand) 74%,
+      #353039
+    );
+
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.calendar-mobile-event-option
+.teli-select-trigger.is-open,
+.calendar-mobile-event-option
+.teli-select-trigger:focus-visible {
+  border-color: var(--brand);
+
+  box-shadow:
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--brand) 14%,
+      transparent
+    );
+}
+
+.calendar-mobile-form
+.calendar-mobile-submit {
+  width: 100%;
+  min-height: 46px;
+  border: 0;
+  border-radius: 15px;
+
+  background: var(--brand);
+  color: white;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}

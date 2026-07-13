@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { AppHeader } from "./components/layout/AppHeader";
 import { NewCalendarModal } from "./components/modals/NewCalendarModal";
 import { NewEventModal } from "./components/modals/NewEventModal";
@@ -15,6 +17,9 @@ import { Login } from "./pages/Login";
 import { Settings } from "./pages/Settings";
 import { useTelicore } from "./telicore/kernel/useTelicore";
 
+const DEFAULT_CALENDAR_PATTERN = "pattern-topography";
+const CALENDAR_PATTERN_STORAGE_KEY = "telisi-calendar-pattern";
+
 export function App() {
   const isMobile = useIsMobile();
   const hideHeader = useHideHeader();
@@ -22,13 +27,31 @@ export function App() {
   const ui = useAppUi();
   const core = useTelicore();
 
+  const [calendarPattern, setCalendarPattern] = useState(() => {
+    return (
+      localStorage.getItem(CALENDAR_PATTERN_STORAGE_KEY) ||
+      DEFAULT_CALENDAR_PATTERN
+    );
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      CALENDAR_PATTERN_STORAGE_KEY,
+      calendarPattern
+    );
+  }, [calendarPattern]);
+
   async function addEvent(event) {
     event.preventDefault();
+
     if (!ui.newEvent.text.trim()) return;
 
     await core.createEvent({
       ...ui.newEvent,
-      calendarId: core.active === "todos" ? "academico" : core.active
+      calendarId:
+        core.active === "todos"
+          ? "academico"
+          : core.active
     });
 
     ui.resetNewEvent();
@@ -43,7 +66,10 @@ export function App() {
       ui.resetNewCalendar();
       ui.closeCalendarModal();
     } catch (error) {
-      console.error("No se pudo crear el calendario:", error);
+      console.error(
+        "No se pudo crear el calendario:",
+        error
+      );
     }
   }
 
@@ -59,7 +85,9 @@ export function App() {
     );
   }
 
-  if (!core.user) return <Login />;
+  if (!core.user) {
+    return <Login />;
+  }
 
   const calendarProps = {
     year: core.year,
@@ -72,18 +100,23 @@ export function App() {
     setNewEvent: ui.setNewEvent,
     addEvent,
     deleteEvent: core.deleteEvent,
-    openModal: ui.openCalendarModal
+    openModal: ui.openCalendarModal,
+    openEventModal: ui.openEventModal,
+
+    // Patrón seleccionado en Settings
+    calendarPattern
   };
 
   return (
     <main
-      className={`shell app-theme-${core.appTheme}`}
+      className={`shell app-theme-${core.appTheme} ${calendarPattern}`}
       style={{ "--accent": "var(--brand)" }}
     >
       <AppHeader
         view={ui.view}
         hideHeader={hideHeader}
         onOpenMenu={ui.openMenu}
+        onNavigate={ui.setView}
       />
 
       <SideMenu
@@ -107,29 +140,32 @@ export function App() {
           />
         )}
 
-        {ui.view === "calendar" && (
-          isMobile ? (
+        {ui.view === "calendar" &&
+          (isMobile ? (
             <CalendarMobile {...calendarProps} />
           ) : (
-            <CalendarPage
-              {...calendarProps}
-              openEventModal={ui.openEventModal}
-            />
-          )
-        )}
+            <CalendarPage {...calendarProps} />
+          ))}
 
-        {ui.view === "integrations" && <IntegrationsPage />}
+        {ui.view === "integrations" && (
+          <IntegrationsPage />
+        )}
 
         {ui.view === "settings" && (
           <Settings
             appTheme={core.appTheme}
             setAppTheme={core.setAppTheme}
-            exportData={core.exportData}
-          />
+            calendarPattern={calendarPattern}
+            setCalendarPattern={setCalendarPattern}
+                     />
         )}
       </div>
 
-      <BottomNav view={ui.view} setView={ui.setView} />
+      <BottomNav
+        view={ui.view}
+        setView={ui.setView}
+        openEventModal={ui.openEventModal}
+      />
 
       {splash && (
         <div className="splash-screen">

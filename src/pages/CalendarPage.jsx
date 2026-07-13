@@ -10,33 +10,13 @@ import { monthNames } from "../data";
 import { getCalendar } from "../utils/calendar";
 import { shortDate } from "../utils/date";
 
-const reminderOptions = [
-  { value: -1, label: "Sin aviso" },
-  { value: 0, label: "Al comenzar" },
-  { value: 5, label: "5 minutos antes" },
-  { value: 10, label: "10 minutos antes" },
-  { value: 30, label: "30 minutos antes" },
-  { value: 60, label: "1 hora antes" }
-];
-
-const recurrenceOptions = [
-  { value: "none", label: "No repetir" },
-  { value: "daily", label: "Todos los días" },
-  { value: "weekly", label: "Todas las semanas" },
-  { value: "monthly", label: "Todos los meses" },
-  { value: "yearly", label: "Todos los años" }
-];
-
 function getRecurrenceLabel(event) {
   const frequency = event?.recurrence?.frequency;
 
-  if (frequency === "daily") {
-    return "Todos los días";
-  }
+  if (frequency === "daily") return "Todos los días";
 
   if (frequency === "weekly") {
     const date = new Date(`${event.date}T00:00:00`);
-
     const weekday = date.toLocaleDateString("es-AR", {
       weekday: "long"
     });
@@ -46,13 +26,11 @@ function getRecurrenceLabel(event) {
 
   if (frequency === "monthly") {
     const day = Number(event.date.split("-")[2]);
-
     return `Todos los días ${day}`;
   }
 
   if (frequency === "yearly") {
     const date = new Date(`${event.date}T00:00:00`);
-
     const yearlyDate = date.toLocaleDateString("es-AR", {
       day: "numeric",
       month: "long"
@@ -65,9 +43,7 @@ function getRecurrenceLabel(event) {
 }
 
 function getSeriesId(event) {
-  if (event.cloudId) {
-    return event.cloudId;
-  }
+  if (event.cloudId) return event.cloudId;
 
   return [
     event.text,
@@ -87,52 +63,42 @@ export function CalendarPage({
   visibleEvents,
   newEvent,
   setNewEvent,
-  addEvent,
   deleteEvent,
-  openModal,
   openEventModal
 }) {
   const calendarGridRef = useRef(null);
-  const [calendarHeight, setCalendarHeight] =
-    useState(null);
+  const [calendarHeight, setCalendarHeight] = useState(null);
 
-  const activeCalendar =
-    getCalendar(calendars, active);
+  const activeCalendar = getCalendar(calendars, active);
+
+  const calendarOptions = calendars.map((calendar) => ({
+    value: calendar.id,
+    label:
+      calendar.id === "todos"
+        ? "Todos los calendarios"
+        : `${calendar.icon} ${calendar.name}`
+  }));
 
   useLayoutEffect(() => {
     const grid = calendarGridRef.current;
 
-    if (!grid) {
-      return undefined;
-    }
+    if (!grid) return undefined;
 
     function updateHeight() {
-      const nextHeight = Math.ceil(
-        grid.getBoundingClientRect().height
+      setCalendarHeight(
+        Math.ceil(grid.getBoundingClientRect().height)
       );
-
-      setCalendarHeight(nextHeight);
     }
 
     updateHeight();
 
-    const observer =
-      new ResizeObserver(updateHeight);
-
+    const observer = new ResizeObserver(updateHeight);
     observer.observe(grid);
-
-    window.addEventListener(
-      "resize",
-      updateHeight
-    );
+    window.addEventListener("resize", updateHeight);
 
     return () => {
       observer.disconnect();
-
-      window.removeEventListener(
-        "resize",
-        updateHeight
-      );
+      window.removeEventListener("resize", updateHeight);
     };
   }, []);
 
@@ -142,15 +108,13 @@ export function CalendarPage({
         event?.recurrence?.frequency
       );
 
-      if (!isRecurring) {
-        return true;
-      }
+      if (!isRecurring) return true;
 
       const seriesId = getSeriesId(event);
 
       return (
         allEvents.findIndex(
-          currentEvent =>
+          (currentEvent) =>
             getSeriesId(currentEvent) === seriesId
         ) === index
       );
@@ -170,81 +134,78 @@ export function CalendarPage({
     openEventModal();
   }
 
+  function handleNewEvent() {
+    setNewEvent({
+      ...newEvent,
+      text: ""
+    });
+
+    openEventModal();
+  }
+
   return (
-    <section>
-      <div className="year-toolbar">
-        <button
-          type="button"
-          onClick={() =>
-            setYear(Number(year) - 1)
-          }
-        >
-          ←
-        </button>
-
-        <strong>{year}</strong>
-
-        <button
-          type="button"
-          onClick={() =>
-            setYear(Number(year) + 1)
-          }
-        >
-          →
-        </button>
-      </div>
-
-      <nav className="tabs">
-        {calendars.map(calendar => (
+    <section className="calendar-page-desktop">
+      <header className="calendar-page-toolbar">
+        <div className="calendar-year-control">
           <button
             type="button"
-            key={calendar.id}
-            onClick={() =>
-              setActive(calendar.id)
-            }
-            className={
-              active === calendar.id
-                ? "active"
-                : ""
-            }
-            style={{
-              "--tab": "var(--brand)"
-            }}
+            onClick={() => setYear(Number(year) - 1)}
+            aria-label="Año anterior"
           >
-            {calendar.icon} {calendar.name}
+            ←
           </button>
-        ))}
 
-        <button
-          type="button"
-          className="plus-tab"
-          onClick={openModal}
-        >
-          +
-        </button>
-      </nav>
+          <strong>{year}</strong>
 
-      <section className="layout calendar-layout-fixed">
+          <button
+            type="button"
+            onClick={() => setYear(Number(year) + 1)}
+            aria-label="Año siguiente"
+          >
+            →
+          </button>
+        </div>
+
+        <div className="calendar-page-actions">
+          <div className="calendar-filter-select">
+            <TeliSelect
+              value={active}
+              options={calendarOptions}
+              ariaLabel="Elegir calendario"
+              onChange={setActive}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="calendar-new-event-button"
+            onClick={handleNewEvent}
+          >
+            <span aria-hidden="true">＋</span>
+            Nuevo evento
+          </button>
+        </div>
+      </header>
+
+      <section className="layout calendar-layout-fixed calendar-layout-annual">
         <section
           ref={calendarGridRef}
-          className="calendar-grid annual-grid"
+          className="calendar-grid annual-grid annual-grid-four-columns"
         >
-          {monthNames.map(
-            (monthName, monthIndex) => (
-              <Month
-                key={monthName}
-                year={Number(year)}
-                month={monthIndex}
-                events={visibleEvents}
-                calendars={calendars}
-                onDayClick={handleDayClick}
-              />
-            )
-          )}
+          {monthNames.map((monthName, monthIndex) => (
+            <Month
+              key={monthName}
+              year={Number(year)}
+              month={monthIndex}
+              events={visibleEvents}
+              calendars={calendars}
+              onDayClick={handleDayClick}
+            />
+          ))}
         </section>
 
         <aside
-          className="panel event-panel"
+          className="panel event-panel annual-event-panel"
           style={
             calendarHeight
               ? {
@@ -254,101 +215,31 @@ export function CalendarPage({
               : undefined
           }
         >
-          <h2>
-            {active === "todos"
-              ? "Todos los eventos"
-              : `${activeCalendar.icon} ${activeCalendar.name}`}
-          </h2>
+          <div className="annual-event-panel-heading">
+            <div>
+              <small>Agenda</small>
 
-          <form
-            className="event-form"
-            onSubmit={addEvent}
-          >
-            <input
-              type="date"
-              min={`${year}-01-01`}
-              max={`${year}-12-31`}
-              value={newEvent.date}
-              onChange={event =>
-                setNewEvent({
-                  ...newEvent,
-                  date: event.target.value
-                })
-              }
-            />
-
-            <input
-              type="time"
-              value={newEvent.time}
-              onChange={event =>
-                setNewEvent({
-                  ...newEvent,
-                  time: event.target.value
-                })
-              }
-            />
-
-            <input
-              placeholder="Nuevo evento"
-              value={newEvent.text}
-              onChange={event =>
-                setNewEvent({
-                  ...newEvent,
-                  text: event.target.value
-                })
-              }
-            />
-
-            <div className="quick-event-option">
-              <label>🔔 Recordatorio</label>
-
-              <TeliSelect
-                value={newEvent.reminder ?? 10}
-                ariaLabel="Elegir recordatorio"
-                options={reminderOptions}
-                onChange={value =>
-                  setNewEvent({
-                    ...newEvent,
-                    reminder: Number(value)
-                  })
-                }
-              />
+              <h2>
+                {active === "todos"
+                  ? "Todos los eventos"
+                  : `${activeCalendar.icon} ${activeCalendar.name}`}
+              </h2>
             </div>
 
-            <div className="quick-event-option">
-              <label>🔁 Recurrencia</label>
-
-              <TeliSelect
-                value={
-                  newEvent.recurrence?.frequency ??
-                  "none"
-                }
-                ariaLabel="Elegir recurrencia"
-                options={recurrenceOptions}
-                onChange={frequency =>
-                  setNewEvent({
-                    ...newEvent,
-                    recurrence:
-                      frequency === "none"
-                        ? null
-                        : {
-                            frequency,
-                            interval: 1
-                          }
-                  })
-                }
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="quick-event-submit"
-            >
-              Agregar
-            </button>
-          </form>
+            <span>{listEvents.length}</span>
+          </div>
 
           <div className="events-list">
+            {listEvents.length === 0 && (
+              <div className="annual-events-empty">
+                <span aria-hidden="true">◇</span>
+                <strong>No hay eventos agendados</strong>
+                <small>
+                  Creá uno nuevo o elegí otro calendario.
+                </small>
+              </div>
+            )}
+
             {listEvents.map((event, index) => {
               const calendar = getCalendar(
                 calendars,
@@ -370,11 +261,7 @@ export function CalendarPage({
                   className="event-row"
                 >
                   <div>
-                    <b
-                      style={{
-                        color: "var(--brand)"
-                      }}
-                    >
+                    <b style={{ color: "var(--brand)" }}>
                       {isRecurring
                         ? "Recurrente"
                         : shortDate(event.date)}
@@ -393,8 +280,7 @@ export function CalendarPage({
                       title={calendar?.name}
                       style={{
                         background:
-                          calendar?.color ||
-                          "var(--brand)"
+                          calendar?.color || "var(--brand)"
                       }}
                     />
                   )}
@@ -404,9 +290,7 @@ export function CalendarPage({
                   <button
                     type="button"
                     className="delete"
-                    onClick={() =>
-                      deleteEvent(event)
-                    }
+                    onClick={() => deleteEvent(event)}
                     aria-label={
                       isRecurring
                         ? `Eliminar toda la serie ${event.text}`
