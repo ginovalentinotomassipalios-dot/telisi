@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024">
+  <defs>
+    <linearGradient id="cupFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffafd"/>
+      <stop offset="1" stop-color="#f7e7ef"/>
+    </linearGradient>
+    <linearGradient id="pinkStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9ec6"/>
+      <stop offset="1" stop-color="#ef5d9b"/>
+    </linearGradient>
+    <linearGradient id="coffee" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a41752"/>
+      <stop offset="1" stop-color="#c82f70"/>
+    </linearGradient>
+    <linearGradient id="potBand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff84b5"/>
+      <stop offset="1" stop-color="#f24b93"/>
+    </linearGradient>
+    <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffc0d9"/>
+      <stop offset="1" stop-color="#f46ba5"/>
+    </linearGradient>
+    <linearGradient id="leafB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffafd0"/>
+      <stop offset="1" stop-color="#ef5a9a"/>
+    </linearGradient>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#d75c94" flood-opacity=".18"/>
+    </filter>
+  </defs>
+
+  <!-- Fondo transparente -->
+
+  <g fill="none" stroke="url(#pinkStroke)" stroke-width="16" stroke-linecap="round">
+    <path d="M490 360c-28-48 24-72 7-121"/>
+    <path d="M588 360c-25-52 33-84 7-154"/>
+    <path d="M696 360c-23-46 26-70 5-118"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <ellipse cx="603" cy="760" rx="388" ry="45"
+             fill="#fff9fc" stroke="url(#pinkStroke)" stroke-width="12"/>
+    <path d="M218 761c61 85 710 88 770 0"
+          fill="none" stroke="#f36ca4" stroke-width="12"/>
+
+    <path d="M356 429h468v165c0 139-97 236-234 236S356 733 356 594z"
+          fill="url(#cupFill)" stroke="url(#pinkStroke)" stroke-width="14"/>
+    <ellipse cx="590" cy="430" rx="234" ry="34"
+             fill="#fff5fa" stroke="url(#pinkStroke)" stroke-width="14"/>
+    <ellipse cx="590" cy="433" rx="202" ry="20" fill="url(#coffee)"/>
+
+    <path d="M816 495h52c83 0 108 134 44 188-29 24-72 29-110 14"
+          fill="none" stroke="url(#pinkStroke)" stroke-width="18" stroke-linecap="round"/>
+    <path d="M826 526h34c43 0 57 75 22 103-16 13-36 16-62 8"
+          fill="none" stroke="#f8c6d9" stroke-width="14" stroke-linecap="round"/>
+
+    <path d="M390 461c5 97 4 143 35 198"
+          fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" opacity=".72"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <path d="M978 555h244l-26 276h-190z"
+          fill="url(#cupFill)" stroke="#f276aa" stroke-width="10"/>
+    <rect x="972" y="535" width="256" height="104" rx="18"
+          fill="url(#potBand)" stroke="#ef5798" stroke-width="8"/>
+    <path d="M1014 657c4 77 0 122 25 156"
+          fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" opacity=".62"/>
+  </g>
+
+  <g>
+    <path d="M1091 536c-7-95-7-169 6-226 32 73 31 151 4 226z"
+          fill="url(#leafA)"/>
+    <path d="M1098 536c31-83 76-136 133-157-7 77-49 130-121 167z"
+          fill="url(#leafB)"/>
+    <path d="M1083 536c-49-79-96-124-145-142 13 80 61 130 140 160z"
+          fill="url(#leafA)"/>
+    <path d="M1090 536c-23-71-58-114-103-134 11 68 44 114 100 145z"
+          fill="url(#leafB)"/>
+    <path d="M1103 536c62-50 124-73 184-66-34 61-90 92-171 97z"
+          fill="url(#leafA)"/>
+
+    <path d="M1097 522c-2-59-6-113 0-164"
+          fill="none" stroke="#ef5798" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1100 532c32-54 68-91 109-114"
+          fill="none" stroke="#ef5798" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1088 532c-35-56-74-95-115-116"
+          fill="none" stroke="#ef5798" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <path d="M102 786H1321" stroke="#ef77aa" stroke-width="12" stroke-linecap="round"/>
+  <path d="M232 846H1323" stroke="#ef77aa" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="1354" cy="846" r="10" fill="#ef77aa"/>
+</svg>

@@ -1,0 +1,242 @@
+/* ===========================
+   TELISI EVENT MODAL
+=========================== */
+
+
+.telisi-modal-overlay {
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:rgba(20,10,30,.35);
+
+  backdrop-filter:blur(8px);
+
+  animation:telisiFade .2s ease;
+
+}
+
+
+
+.telisi-modal-card {
+
+  width:420px;
+  max-width:90vw;
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:28px;
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.25);
+
+
+  animation:
+    telisiPop .25s ease;
+
+}
+
+
+
+.telisi-modal-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  margin-bottom:25px;
+
+}
+
+
+
+.telisi-modal-header small {
+
+  font-size:.7rem;
+
+  letter-spacing:2px;
+
+  color:white;
+
+  font-weight:800;
+
+}
+
+
+
+.telisi-modal-header h2 {
+
+  margin:5px 0 0;
+
+}
+
+
+
+.telisi-modal-close {
+
+  border:none;
+
+  background:#eee;
+
+  width:35px;
+
+  height:35px;
+
+  border-radius:50%;
+
+  font-size:22px;
+
+  cursor:pointer;
+
+}
+
+
+
+.telisi-modal-form {
+
+  display:grid;
+
+  gap:15px;
+
+}
+
+
+
+.field {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:7px;
+
+}
+
+
+
+.field label {
+
+  font-size:.85rem;
+
+  font-weight:700;
+
+}
+
+
+
+.field input {
+
+  padding:13px;
+
+  border-radius:15px;
+
+  border:1px solid #ddd;
+
+  font-size:15px;
+
+}
+
+
+
+.full {
+
+  grid-column:1/-1;
+
+}
+
+
+
+.telisi-modal-actions {
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:10px;
+
+  margin-top:10px;
+
+}
+
+
+
+.telisi-modal-actions button {
+
+  border:none;
+
+  padding:12px 20px;
+
+  border-radius:999px;
+
+  cursor:pointer;
+
+}
+
+
+
+.cancel {
+
+  background:#eee;
+
+}
+
+
+
+.save {
+
+ background: var(--brand);
+
+  color:white;
+
+}
+
+
+
+@keyframes telisiFade {
+
+  from {
+    opacity:0;
+  }
+
+  to {
+    opacity:1;
+  }
+
+}
+
+
+
+@keyframes telisiPop {
+
+  from {
+
+    opacity:0;
+
+    transform:
+      translateY(20px)
+      scale(.95);
+
+  }
+
+
+  to {
+
+    opacity:1;
+
+    transform:
+      translateY(0)
+      scale(1);
+
+  }
+
+}

@@ -4,6 +4,14 @@ import { Bootstrap } from "./Bootstrap";
 
 // Base
 import "./styles/base/styles.css";
+import "./styles/layout/legacy-ui.css";
+import "./styles/components/event-modal.css";
+import "./styles/components/notifications.css";
+import "./styles/pages/login.css";
+import "./styles/components/reminders.css";
+import "./styles/components/teli-select.css";
+import "./styles/components/quick-event-form.css";
+import "./styles/layout/calendar-event-panel.css";
 
 // Layout
 import "./styles/layout/dashboard.css";

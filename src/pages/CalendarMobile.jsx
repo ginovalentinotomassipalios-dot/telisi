@@ -5,6 +5,7 @@ import {
   useState
 } from "react";
 
+import { TeliSelect } from "../components/ui/TeliSelect";
 import { monthNames } from "../data";
 import { getCalendar } from "../utils/calendar";
 import { shortDate } from "../utils/date";
@@ -17,6 +18,23 @@ const weekDays = [
   "Vie",
   "Sáb",
   "Dom"
+];
+
+const reminderOptions = [
+  { value: -1, label: "Sin aviso" },
+  { value: 0, label: "Al comenzar" },
+  { value: 5, label: "5 minutos antes" },
+  { value: 10, label: "10 minutos antes" },
+  { value: 30, label: "30 minutos antes" },
+  { value: 60, label: "1 hora antes" }
+];
+
+const recurrenceOptions = [
+  { value: "none", label: "No repetir" },
+  { value: "daily", label: "Todos los días" },
+  { value: "weekly", label: "Todas las semanas" },
+  { value: "monthly", label: "Todos los meses" },
+  { value: "yearly", label: "Todos los años" }
 ];
 
 export function CalendarMobile({
@@ -36,37 +54,38 @@ export function CalendarMobile({
 
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth();
- 
 
   const [selectedMonth, setSelectedMonth] =
     useState(currentMonth);
-const [slideDirection, setSlideDirection] =
-  useState("");
 
-  
-const gridTouchStartRef = useRef(null);
-const monthBarTouchStartRef = useRef(null);
+  const [slideDirection, setSlideDirection] =
+    useState("");
 
-const [monthBarAnimation, setMonthBarAnimation] =
-  useState("");
+  const gridTouchStartRef = useRef(null);
+  const monthBarTouchStartRef = useRef(null);
+
+  const [monthBarAnimation, setMonthBarAnimation] =
+    useState("");
+
   const visibleMonthItems = useMemo(() => {
-  return [-3, -2, -1, 0, 1, 2, 3].map(
-    offset => {
-      const date = new Date(
-        Number(year),
-        selectedMonth + offset,
-        1
-      );
+    return [-3, -2, -1, 0, 1, 2, 3].map(
+      offset => {
+        const date = new Date(
+          Number(year),
+          selectedMonth + offset,
+          1
+        );
 
-      return {
-        offset,
-        monthIndex: date.getMonth(),
-        year: date.getFullYear(),
-        name: monthNames[date.getMonth()]
-      };
-    }
-  );
-}, [year, selectedMonth]);
+        return {
+          offset,
+          monthIndex: date.getMonth(),
+          year: date.getFullYear(),
+          name: monthNames[date.getMonth()]
+        };
+      }
+    );
+  }, [year, selectedMonth]);
+
   const monthGridDays = useMemo(() => {
     const selectedYear = Number(year);
 
@@ -101,11 +120,11 @@ const [monthBarAnimation, setMonthBarAnimation] =
   }, [year, selectedMonth]);
 
   useEffect(() => {
-  setYear(currentYear);
-  setSelectedMonth(currentMonth);
-}, []);
+    setYear(currentYear);
+    setSelectedMonth(currentMonth);
+  }, []);
 
-const monthEvents = useMemo(() => {
+  const monthEvents = useMemo(() => {
     return visibleEvents
       .filter(event => {
         if (!event.date) {
@@ -163,95 +182,97 @@ const monthEvents = useMemo(() => {
   }, [monthEvents]);
 
   function handleMonthItemClick(item) {
-  if (item.offset === 0) {
-    return;
+    if (item.offset === 0) {
+      return;
+    }
+
+    moveToRelativeMonth(item.offset);
   }
 
-  moveToRelativeMonth(item.offset);
-}
-
-function moveToRelativeMonth(offset) {
-  const direction =
-    offset > 0 ? 1 : -1;
-
-  setMonthBarAnimation(
-    direction > 0
-      ? "months-moving-left"
-      : "months-moving-right"
-  );
-
-  setSlideDirection(
-    direction > 0
-      ? "slide-left"
-      : "slide-right"
-  );
-
-  setTimeout(() => {
-    const nextDate = new Date(
-      Number(year),
-      selectedMonth + offset,
-      1
-    );
-
-    setYear(nextDate.getFullYear());
-    setSelectedMonth(nextDate.getMonth());
+  function moveToRelativeMonth(offset) {
+    const direction =
+      offset > 0 ? 1 : -1;
 
     setMonthBarAnimation(
       direction > 0
-        ? "months-enter-right"
-        : "months-enter-left"
+        ? "months-moving-left"
+        : "months-moving-right"
     );
 
     setSlideDirection(
       direction > 0
-        ? "enter-right"
-        : "enter-left"
+        ? "slide-left"
+        : "slide-right"
     );
 
     setTimeout(() => {
-      setMonthBarAnimation("");
-      setSlideDirection("");
-    }, 220);
-  }, 180);
-}
-function changeMonth(direction) {
-  moveToRelativeMonth(direction);
-}
+      const nextDate = new Date(
+        Number(year),
+        selectedMonth + offset,
+        1
+      );
 
-function handleGridTouchStart(event) {
-  gridTouchStartRef.current =
-    event.touches[0].clientX;
-}
+      setYear(nextDate.getFullYear());
+      setSelectedMonth(nextDate.getMonth());
 
-function handleGridTouchEnd(event) {
-  if (gridTouchStartRef.current === null) {
-    return;
+      setMonthBarAnimation(
+        direction > 0
+          ? "months-enter-right"
+          : "months-enter-left"
+      );
+
+      setSlideDirection(
+        direction > 0
+          ? "enter-right"
+          : "enter-left"
+      );
+
+      setTimeout(() => {
+        setMonthBarAnimation("");
+        setSlideDirection("");
+      }, 220);
+    }, 180);
   }
 
-  const touchEndX =
-    event.changedTouches[0].clientX;
+  function changeMonth(direction) {
+    moveToRelativeMonth(direction);
+  }
 
-  const swipeDistance =
-    touchEndX - gridTouchStartRef.current;
+  function handleGridTouchStart(event) {
+    gridTouchStartRef.current =
+      event.touches[0].clientX;
+  }
 
-  const minimumSwipeDistance = 50;
+  function handleGridTouchEnd(event) {
+    if (gridTouchStartRef.current === null) {
+      return;
+    }
 
-  if (
-    Math.abs(swipeDistance) <
-    minimumSwipeDistance
-  ) {
+    const touchEndX =
+      event.changedTouches[0].clientX;
+
+    const swipeDistance =
+      touchEndX - gridTouchStartRef.current;
+
+    const minimumSwipeDistance = 50;
+
+    if (
+      Math.abs(swipeDistance) <
+      minimumSwipeDistance
+    ) {
+      gridTouchStartRef.current = null;
+      return;
+    }
+
+    if (swipeDistance < 0) {
+      changeMonth(1);
+    } else {
+      changeMonth(-1);
+    }
+
     gridTouchStartRef.current = null;
-    return;
   }
 
-  if (swipeDistance < 0) {
-    changeMonth(1);
-  } else {
-    changeMonth(-1);
-  }
-
-  gridTouchStartRef.current = null;
-}
   function handleMobileDayClick(day) {
     const monthNumber =
       String(selectedMonth + 1).padStart(
@@ -275,41 +296,40 @@ function handleGridTouchEnd(event) {
   }
 
   function handleMonthBarTouchStart(event) {
-  monthBarTouchStartRef.current =
-    event.touches[0].clientX;
-}
-
-function handleMonthBarTouchEnd(event) {
-  if (
-    monthBarTouchStartRef.current === null
-  ) {
-    return;
+    monthBarTouchStartRef.current =
+      event.touches[0].clientX;
   }
 
-  const touchEndX =
-    event.changedTouches[0].clientX;
+  function handleMonthBarTouchEnd(event) {
+    if (
+      monthBarTouchStartRef.current === null
+    ) {
+      return;
+    }
 
-  const swipeDistance =
-    touchEndX -
-    monthBarTouchStartRef.current;
+    const touchEndX =
+      event.changedTouches[0].clientX;
 
-  monthBarTouchStartRef.current = null;
+    const swipeDistance =
+      touchEndX -
+      monthBarTouchStartRef.current;
 
-  if (Math.abs(swipeDistance) < 45) {
-    return;
+    monthBarTouchStartRef.current = null;
+
+    if (Math.abs(swipeDistance) < 45) {
+      return;
+    }
+
+    if (swipeDistance < 0) {
+      changeMonth(1);
+    } else {
+      changeMonth(-1);
+    }
   }
 
-  if (swipeDistance < 0) {
-    changeMonth(1);
-  } else {
-    changeMonth(-1);
-  }
-}
   return (
     <section className="calendar-mobile">
-
       <section className="calendar-mobile-create">
-
         <h2>Crear evento</h2>
 
         <form
@@ -329,7 +349,6 @@ function handleMonthBarTouchEnd(event) {
           />
 
           <div className="calendar-mobile-date-time">
-
             <input
               type="date"
               value={newEvent.date}
@@ -351,57 +370,60 @@ function handleMonthBarTouchEnd(event) {
                 })
               }
             />
-
           </div>
 
-          <select
-            value={newEvent.reminder ?? 10}
-            onChange={event =>
-              setNewEvent({
-                ...newEvent,
-                reminder: Number(
-                  event.target.value
-                )
-              })
-            }
+          <div className="calendar-mobile-event-option">
+            <label>🔔 Recordatorio</label>
+
+            <TeliSelect
+              value={newEvent.reminder ?? 10}
+              ariaLabel="Elegir recordatorio"
+              options={reminderOptions}
+              onChange={value =>
+                setNewEvent({
+                  ...newEvent,
+                  reminder: Number(value)
+                })
+              }
+            />
+          </div>
+
+          <div className="calendar-mobile-event-option">
+            <label>🔁 Recurrencia</label>
+
+            <TeliSelect
+              value={
+                newEvent.recurrence?.frequency ??
+                "none"
+              }
+              ariaLabel="Elegir recurrencia"
+              options={recurrenceOptions}
+              onChange={frequency =>
+                setNewEvent({
+                  ...newEvent,
+                  recurrence:
+                    frequency === "none"
+                      ? null
+                      : {
+                          frequency,
+                          interval: 1
+                        }
+                })
+              }
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="calendar-mobile-submit"
           >
-            <option value="-1">
-              Sin recordatorio
-            </option>
-
-            <option value="0">
-              Al comenzar
-            </option>
-
-            <option value="5">
-              5 minutos antes
-            </option>
-
-            <option value="10">
-              10 minutos antes
-            </option>
-
-            <option value="30">
-              30 minutos antes
-            </option>
-
-            <option value="60">
-              1 hora antes
-            </option>
-          </select>
-
-          <button type="submit">
             Agregar evento
           </button>
-
         </form>
-
       </section>
 
       <nav className="calendar-mobile-tabs">
-
         {calendars.map(calendar => (
-
           <button
             key={calendar.id}
             type="button"
@@ -416,7 +438,6 @@ function handleMonthBarTouchEnd(event) {
           >
             {calendar.icon} {calendar.name}
           </button>
-
         ))}
 
         <button
@@ -427,13 +448,10 @@ function handleMonthBarTouchEnd(event) {
         >
           +
         </button>
-
       </nav>
 
       <section className="calendar-mobile-months">
-
         <div className="calendar-mobile-year">
-
           <button
             type="button"
             onClick={() =>
@@ -445,9 +463,7 @@ function handleMonthBarTouchEnd(event) {
             ←
           </button>
 
-          <strong>
-            {year}
-          </strong>
+          <strong>{year}</strong>
 
           <button
             type="button"
@@ -459,82 +475,61 @@ function handleMonthBarTouchEnd(event) {
           >
             →
           </button>
-
         </div>
 
         <div
-  className="calendar-mobile-month-window"
-  onTouchStart={handleMonthBarTouchStart}
-  onTouchEnd={handleMonthBarTouchEnd}
->
-
-  <div
-    className={
-      `calendar-mobile-month-track ${monthBarAnimation}`
-    }
-  >
-
-    {visibleMonthItems.map(item => (
-
-      <button
-        key={`${item.year}-${item.monthIndex}-${item.offset}`}
-        type="button"
-        className={
-          item.offset === 0
-            ? "calendar-mobile-month-name current"
-            : "calendar-mobile-month-name"
-        }
-        onClick={() =>
-          handleMonthItemClick(item)
-        }
-      >
-        <span>
-  {item.name}
-</span>
-      </button>
-
-    ))}
-
-  </div>
-
-</div>
-
+          className="calendar-mobile-month-window"
+          onTouchStart={handleMonthBarTouchStart}
+          onTouchEnd={handleMonthBarTouchEnd}
+        >
+          <div
+            className={
+              `calendar-mobile-month-track ${monthBarAnimation}`
+            }
+          >
+            {visibleMonthItems.map(item => (
+              <button
+                key={`${item.year}-${item.monthIndex}-${item.offset}`}
+                type="button"
+                className={
+                  item.offset === 0
+                    ? "calendar-mobile-month-name current"
+                    : "calendar-mobile-month-name"
+                }
+                onClick={() =>
+                  handleMonthItemClick(item)
+                }
+              >
+                <span>{item.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </section>
 
-  <section
-  className={`calendar-mobile-grid-card ${slideDirection}`}
-  onTouchStart={handleGridTouchStart}
-  onTouchEnd={handleGridTouchEnd}
->
-
+      <section
+        className={`calendar-mobile-grid-card ${slideDirection}`}
+        onTouchStart={handleGridTouchStart}
+        onTouchEnd={handleGridTouchEnd}
+      >
         <header className="calendar-mobile-grid-header">
-
           <h2>
             {monthNames[selectedMonth]}
           </h2>
 
-          <span>
-            {year}
-          </span>
-
+          <span>{year}</span>
         </header>
 
         <div className="calendar-mobile-weekdays">
-
           {weekDays.map(dayName => (
-
             <span key={dayName}>
               {dayName}
             </span>
-
           ))}
-
         </div>
 
         <div className="calendar-mobile-days-grid">
-
           {monthGridDays.map((day, index) => {
-
             if (!day) {
               return (
                 <span
@@ -571,7 +566,6 @@ function handleMonthBarTouchEnd(event) {
               eventCountByDate[dateString] || 0;
 
             return (
-
               <button
                 key={dateString}
                 type="button"
@@ -592,36 +586,26 @@ function handleMonthBarTouchEnd(event) {
                   `${day} de ${monthNames[selectedMonth]}`
                 }
               >
-
                 <span className="calendar-mobile-day-number">
                   {day}
                 </span>
 
-                {
-                  eventCount > 0 && (
-                    <span
-                      className="calendar-mobile-day-event-dot"
-                      aria-label={
-                        `${eventCount} eventos`
-                      }
-                    />
-                  )
-                }
-
+                {eventCount > 0 && (
+                  <span
+                    className="calendar-mobile-day-event-dot"
+                    aria-label={
+                      `${eventCount} eventos`
+                    }
+                  />
+                )}
               </button>
-
             );
-
           })}
-
         </div>
-
       </section>
 
       <section className="calendar-mobile-detail">
-
         <header className="calendar-mobile-detail-header">
-
           <div>
             <small>Eventos de</small>
 
@@ -630,105 +614,79 @@ function handleMonthBarTouchEnd(event) {
             </h2>
           </div>
 
-          <span>
-            {monthEvents.length}
-          </span>
-
+          <span>{monthEvents.length}</span>
         </header>
 
-        {
-          monthEvents.length === 0 ? (
+        {monthEvents.length === 0 ? (
+          <div className="calendar-mobile-empty">
+            No hay eventos durante este mes.
+          </div>
+        ) : (
+          <div className="calendar-mobile-events">
+            {Object.entries(
+              groupedEvents
+            ).map(([date, events]) => (
+              <section
+                key={date}
+                className="calendar-mobile-day"
+              >
+                <h3>{shortDate(date)}</h3>
 
-            <div className="calendar-mobile-empty">
-              No hay eventos durante este mes.
-            </div>
-
-          ) : (
-
-            <div className="calendar-mobile-events">
-
-              {Object.entries(
-                groupedEvents
-              ).map(([date, events]) => (
-
-                <section
-                  key={date}
-                  className="calendar-mobile-day"
-                >
-
-                  <h3>
-                    {shortDate(date)}
-                  </h3>
-
-                  {events.map(
-                    (event, index) => {
-                      const eventCalendar =
-                        getCalendar(
-                          calendars,
-                          event.calendarId
-                        );
-
-                      return (
-
-                        <article
-                          key={
-                            event.cloudId ||
-                            `${event.date}-${event.time}-${index}`
-                          }
-                          className="calendar-mobile-event-card"
-                        >
-
-                          <div className="calendar-mobile-event-time">
-                            {event.time || "Sin hora"}
-                          </div>
-
-                          <div className="calendar-mobile-event-info">
-
-                            <strong>
-                              {event.text}
-                            </strong>
-
-                            {
-                              eventCalendar && (
-                                <small>
-                                  {eventCalendar.icon}{" "}
-                                  {eventCalendar.name}
-                                </small>
-                              )
-                            }
-
-                          </div>
-
-                          <button
-                            type="button"
-                            className="calendar-mobile-delete"
-                            onClick={() =>
-                              deleteEvent(event)
-                            }
-                            aria-label={
-                              `Eliminar ${event.text}`
-                            }
-                          >
-                            ×
-                          </button>
-
-                        </article>
-
+                {events.map(
+                  (event, index) => {
+                    const eventCalendar =
+                      getCalendar(
+                        calendars,
+                        event.calendarId
                       );
-                    }
-                  )}
 
-                </section>
+                    return (
+                      <article
+                        key={
+                          event.occurrenceId ||
+                          event.cloudId ||
+                          `${event.date}-${event.time}-${index}`
+                        }
+                        className="calendar-mobile-event-card"
+                      >
+                        <div className="calendar-mobile-event-time">
+                          {event.time || "Sin hora"}
+                        </div>
 
-              ))}
+                        <div className="calendar-mobile-event-info">
+                          <strong>
+                            {event.text}
+                          </strong>
 
-            </div>
+                          {eventCalendar && (
+                            <small>
+                              {eventCalendar.icon}{" "}
+                              {eventCalendar.name}
+                            </small>
+                          )}
+                        </div>
 
-          )
-        }
-
+                        <button
+                          type="button"
+                          className="calendar-mobile-delete"
+                          onClick={() =>
+                            deleteEvent(event)
+                          }
+                          aria-label={
+                            `Eliminar ${event.text}`
+                          }
+                        >
+                          ×
+                        </button>
+                      </article>
+                    );
+                  }
+                )}
+              </section>
+            ))}
+          </div>
+        )}
       </section>
-
     </section>
   );
 }

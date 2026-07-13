@@ -1,0 +1,250 @@
+/* Telisi v0.2.1 additions */
+
+.view-fade {
+  animation: fadeSlide .22s ease both;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-dark {
+  --bg: #140b18;
+  --card: rgba(35, 22, 40, .82);
+  --card-solid: #24182a;
+  --ink: #f7eff8;
+  --muted: var(--text-soft, #9ca3af);
+  --line: rgba(255,255,255,.12);
+  --dark: #0f0712;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+
+.theme-dark .hero-card {
+  background:
+    linear-gradient(135deg, rgba(15,7,18,.98), rgba(82,48,95,.92)),
+    radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 45%);
+}
+
+.theme-dark input,
+.theme-dark .tabs button,
+.theme-dark .calendar-card,
+.theme-dark .month,
+.theme-dark .modal,
+.theme-dark .event-form input {
+  background: rgba(35,22,40,.95);
+  color: var(--ink);
+}
+
+.theme-dark .day {
+  background: rgba(45,29,52,.78);
+}
+
+.theme-dark .day.empty {
+  background: rgba(73,51,82,.55);
+}
+
+.theme-dark .weekdays span {
+  background: rgba(255,255,255,.06);
+}
+
+.today-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mini-stat {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 14px;
+  background: var(--card);
+  box-shadow: 0 12px 30px rgba(36,16,41,.07);
+}
+
+.mini-stat span {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--stat) 18%, transparent);
+  color: var(--stat);
+  font-size: 20px;
+}
+
+.mini-stat strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.mini-stat small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.pill-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+}
+
+.calendar-card,
+.next-card,
+.panel,
+.mini-stat,
+.month,
+.bottom-nav {
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.calendar-card:active,
+.bottom-nav button:active,
+.tabs button:active {
+  transform: scale(.98);
+}
+.event-sheet-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+
+  z-index: 9999 !important;
+
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+
+  background: rgba(0,0,0,.35) !important;
+}
+
+
+.event-sheet {
+
+  width: min(520px, 95%) !important;
+
+  background: white !important;
+
+  border-radius: 30px 30px 0 0 !important;
+
+  padding: 25px !important;
+
+  margin-bottom: 0 !important;
+
+  animation: sheetUp .3s ease !important;
+
+}
+
+
+@keyframes sheetUp {
+
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+
+}
+.telisi-event-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: rgba(0,0,0,.35) !important;
+  backdrop-filter: blur(8px) !important;
+
+  z-index: 99999 !important;
+}
+
+
+.telisi-event-window {
+
+  width: 420px !important;
+
+  background: white !important;
+
+  border-radius: 28px !important;
+
+  padding: 28px !important;
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.25) !important;
+
+  animation:
+    telisiPopup .25s ease-out !important;
+
+}
+
+
+.telisi-event-window h3 {
+
+  margin-top:0;
+
+}
+
+
+
+.telisi-event-window label {
+
+  display:flex !important;
+
+  flex-direction:column !important;
+
+  gap:8px !important;
+
+  margin-bottom:15px !important;
+
+}
+
+
+
+.telisi-event-window input {
+
+  width:100% !important;
+
+  box-sizing:border-box !important;
+
+  padding:12px !important;
+
+  border-radius:14px !important;
+
+}
+
+
+
+@keyframes telisiPopup {
+
+  from {
+
+    opacity:0;
+
+    transform:
+      scale(.92)
+      translateY(20px);
+
+  }
+
+
+  to {
+
+    opacity:1;
+
+    transform:
+      scale(1)
+      translateY(0);
+
+  }
+
+}
